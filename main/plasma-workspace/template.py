@@ -1,5 +1,5 @@
 pkgname = "plasma-workspace"
-pkgver = "6.2.2"
+pkgver = "6.2.4"
 pkgrel = 1
 build_style = "cmake"
 # TODO: -DINSTALL_SDDM_WAYLAND_SESSION=ON experiments?
@@ -95,6 +95,7 @@ makedepends = [
     "prison-devel",
     "qcoro-devel",
     "qt6-qt5compat-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtpositioning-devel",
     "qt6-qtsvg-devel",
@@ -128,7 +129,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "MIT AND GPL-3.0-only AND LGPL-3.0-only"
 url = "https://api.kde.org/plasma/plasma-workspace/html"
 source = f"$(KDE_SITE)/plasma/{'.'.join(pkgver.split('.')[0:3])}/plasma-workspace-{pkgver}.tar.xz"
-sha256 = "becc89473d57dcc574a8d9d626cc83b446df2567a478a663f81d58fd6ea3f853"
+sha256 = "32aa3bda29d7b76a7dae7e1f8c9789cfe7f609eb878e1a793db4b1490ca3c174"
 hardening = ["vis"]
 
 

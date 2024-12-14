@@ -1,6 +1,6 @@
 pkgname = "plasma-integration"
-pkgver = "6.2.2"
-pkgrel = 0
+pkgver = "6.2.4"
+pkgrel = 1
 build_style = "cmake"
 configure_args = ["-DBUILD_QT5=OFF"]
 make_check_args = [
@@ -30,6 +30,7 @@ makedepends = [
     "kstatusnotifieritem-devel",
     "kxmlgui-devel",
     "plasma-wayland-protocols",
+    "qt6-qtbase-private-devel",  # qgenericunixthemes_p.h/qgenericunixservices_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtwayland-devel",
     "wayland-devel",
@@ -43,5 +44,5 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.0-or-later"
 url = "https://invent.kde.org/plasma/plasma-integration"
 source = f"$(KDE_SITE)/plasma/{pkgver}/plasma-integration-{pkgver}.tar.xz"
-sha256 = "d32d054be6947627f05ddb574260a6a497686a7c93ec62d1c929168074bfb539"
+sha256 = "8d3d9b022aef411a36aada564931aad4ec81df8b8ef6e3f4091e362522295cc7"
 hardening = ["vis"]

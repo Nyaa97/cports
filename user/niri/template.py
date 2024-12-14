@@ -1,5 +1,5 @@
 pkgname = "niri"
-pkgver = "0.1.9"
+pkgver = "0.1.10.1"
 pkgrel = 0
 build_style = "cargo"
 make_build_args = [
@@ -30,11 +30,11 @@ depends = [
     "so:libEGL.so.1!libegl",
 ]
 pkgdesc = "Scrollable-tiling wayland compositor"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "GPL-3.0-or-later"
 url = "https://github.com/YaLTeR/niri"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "70427efcde50a9d262c341befbd4df4e24557afd8311753bf912a4be1bf243a7"
+sha256 = "d8854830436a87215b0bc6a60b6d43f350d927a03a2798c75f0fbda228bac8d3"
 
 # TODO: dinit graphical user session service, --notify-fd, etc
 

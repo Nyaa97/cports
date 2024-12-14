@@ -1,6 +1,6 @@
 pkgname = "aerc"
 pkgver = "0.18.2"
-pkgrel = 5
+pkgrel = 7
 build_style = "makefile"
 make_build_args = ["LIBEXECDIR=/usr/lib/aerc"]
 make_install_args = [*make_build_args]
@@ -17,7 +17,7 @@ checkdepends = [
     "gpgme",
 ]
 pkgdesc = "Terminal email client"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "MIT"
 url = "https://sr.ht/~rjarry/aerc"
 source = f"https://git.sr.ht/~rjarry/aerc/archive/{pkgver}.tar.gz"

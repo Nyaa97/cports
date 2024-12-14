@@ -1,5 +1,5 @@
 pkgname = "containerd"
-pkgver = "1.7.23"
+pkgver = "2.0.0"
 pkgrel = 1
 build_style = "makefile"
 make_build_args = [
@@ -27,11 +27,11 @@ depends = [
     "oci-runtime",
 ]
 pkgdesc = "Industry-standard container runtime"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://github.com/containerd/containerd"
 source = f"{url}/archive/v{pkgver}.tar.gz"
-sha256 = "393bfde8ca1766a0bca3441e18eddc3f5a5c8d97ef676bde0d6c9903e1b0ec0c"
+sha256 = "346d644e1b96e1f4a39bfe9d1eb0eb01ca676f806c12d95e5dbe35325bbc1780"
 # can't run tests inside namespaces
 options = ["!check"]
 

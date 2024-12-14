@@ -1,5 +1,5 @@
 pkgname = "intel-media-driver"
-pkgver = "24.4.1"
+pkgver = "24.4.4"
 pkgrel = 0
 # doesn't build elsewhere
 archs = ["x86_64"]
@@ -21,11 +21,11 @@ makedepends = [
     "linux-headers",
 ]
 pkgdesc = "Intel Media Driver for VAAPI"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "BSD-3-Clause"
 url = "https://github.com/intel/media-driver"
 source = f"{url}/archive/refs/tags/intel-media-{pkgver}.tar.gz"
-sha256 = "cbc2ccdae2cf84bd1e36a9d5acec4861922ae68f849e89ddcc2f2c5579bd6022"
+sha256 = "3000723faf4dc56eb8276f402c4aa798459bbce860b408a0c480d863b28130ed"
 # INT: crashes during certain vaapi decode (twitch.tv?)
 hardening = ["vis", "!cfi", "!int"]
 

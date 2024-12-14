@@ -1,7 +1,8 @@
 # keep pkgver AND pkgrel in sync with qt6-qtwayland
+# rebuild qt6-qtbase-private-devel consumers on upgrades
 pkgname = "qt6-qtbase"
-pkgver = "6.8.0"
-pkgrel = 2
+pkgver = "6.8.1"
+pkgrel = 0
 build_style = "cmake"
 configure_args = [
     "-DBUILD_WITH_PCH=OFF",
@@ -75,7 +76,7 @@ license = (
 )
 url = "https://www.qt.io"
 source = f"https://download.qt.io/official_releases/qt/{pkgver[:-2]}/{pkgver}/submodules/qtbase-everywhere-src-{pkgver}.tar.xz"
-sha256 = "1bad481710aa27f872de6c9f72651f89a6107f0077003d0ebfcc9fd15cba3c75"
+sha256 = "40b14562ef3bd779bc0e0418ea2ae08fa28235f8ea6e8c0cb3bce1d6ad58dcaf"
 # FIXME
 hardening = ["!int"]
 # TODO
@@ -153,6 +154,7 @@ def init_check(self):
         "tst_qopenglwidget",  # execution failed with exit code Segmentation fault.
         "tst_qcomplextext",  # tst_QComplexText::bidiCursorMovement(data46) 'newX <= x' returned FALSE
         "tst_qsharedmemory",  # tst_QSharedMemory::simpleThreadedProducerConsumer(POSIX:5 consumers, producer is this) 'p.producer.isAttached()' returned FALSE
+        "tst_qaccessibility",  # tst_QAccessibility::mdiSubWindowTest() Compared values are not the same
         "test_qt_extract_metatypes",  # fails to find qt6config.cmake in the test
         "test_qt_add_resources_rebuild",  # ditto
         "test_collecting_plugins",  # unknown platform linux-clang
@@ -162,6 +164,7 @@ def init_check(self):
         "tst_qdir",  # flaky
         "tst_qsqltablemodel",  # tst_QSqlTableModel::modelInAnotherThread() 't.isFinished()' returned FALSE. ()
         "tst_qtimer_no_glib",  # times out after 300s
+        "tst_qtimer",  # flaky, times out after 300s in tst_QTimer::singleShotToFunctors()
         "tst_qmetatype",  # times out after 300s when busy in threadsafety test
         "tst_qfilesystemmodel",
         "tst_qthread",
@@ -285,6 +288,20 @@ def _(self):
     return ["usr/lib/*.a"]
 
 
+@subpackage("qt6-qtbase-private-devel")
+def _(self):
+    self.subdesc = "private development files"
+    self.depends += [self.with_pkgver("qt6-qtbase-devel")]
+    return [
+        "usr/include/**/private",
+        # usr/lib/cmake/*Private excluded due to anything using qt6_add_qml_module()
+        # etc failing to configure as a false-positive in most cases, else build fails
+        "usr/lib/qt6/metatypes/*private_*_metatypes.json",
+        # without usr/lib/qt6/mkspecs/modules/*_private.pri qmake won't find libatomic
+        "usr/lib/qt6/modules/*Private.json",
+    ]
+
+
 @subpackage("qt6-qtbase-devel")
 def _(self):
     self.depends += [
@@ -294,6 +311,9 @@ def _(self):
         self.with_pkgver("qt6-qtbase-devel-static"),
         *makedepends,
     ]
+    # keep qt6_add_qml_module() working with split -private-devel by satisfying
+    # Qt6::QmlPrivate /usr/include/qt6/QtCore/6.*/QtCore etc with empty dirs
+    self.options = ["keepempty"]
     return self.default_devel(
         extra=[
             "usr/bin/androiddeployqt6",

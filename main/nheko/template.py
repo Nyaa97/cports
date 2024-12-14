@@ -1,6 +1,6 @@
 pkgname = "nheko"
 pkgver = "0.12.0"
-pkgrel = 2
+pkgrel = 4
 build_style = "cmake"
 hostmakedepends = [
     "asciidoctor",
@@ -23,6 +23,7 @@ makedepends = [
     "nlohmann-json",
     "olm-devel",
     "openssl-devel",
+    "qt6-qtbase-private-devel",  # qqmlincubator_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtmultimedia-devel",
     "qt6-qtsvg-devel",
@@ -38,7 +39,7 @@ depends = [
 ]
 checkdepends = [*depends]
 pkgdesc = "Qt-based matrix client"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "GPL-3.0-or-later"
 url = "https://nheko-reborn.github.io"
 source = (

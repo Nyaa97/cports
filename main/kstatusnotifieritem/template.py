@@ -1,6 +1,6 @@
 pkgname = "kstatusnotifieritem"
-pkgver = "6.7.0"
-pkgrel = 0
+pkgver = "6.8.0"
+pkgrel = 1
 build_style = "cmake"
 hostmakedepends = [
     "cmake",
@@ -10,7 +10,7 @@ hostmakedepends = [
 ]
 makedepends = [
     "kwindowsystem-devel",
-    "qt6-qtbase-devel",
+    "qt6-qtbase-private-devel",  # qwidgetwindow_p.h
     "qt6-qttools-devel",
 ]
 pkgdesc = "KDE Implementation of Status Notifier Items"
@@ -18,7 +18,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.0-or-later"
 url = "https://invent.kde.org/frameworks/kstatusnotifieritem"
 source = f"$(KDE_SITE)/frameworks/{pkgver[:pkgver.rfind('.')]}/kstatusnotifieritem-{pkgver}.tar.xz"
-sha256 = "80eae2693cdb5da669b4ed6a8228bddc39816aca0fde928f231e4894827d1de0"
+sha256 = "6e4ff81b80d7842d2a10e7b758e497b3724fc54ea3a6da6f09bee80636439832"
 hardening = ["vis"]
 
 

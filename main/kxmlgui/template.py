@@ -1,6 +1,6 @@
 pkgname = "kxmlgui"
-pkgver = "6.7.0"
-pkgrel = 0
+pkgver = "6.8.0"
+pkgrel = 1
 build_style = "cmake"
 make_check_env = {"QT_QPA_PLATFORM": "offscreen"}
 make_check_wrapper = ["dbus-run-session"]
@@ -19,6 +19,7 @@ makedepends = [
     "ki18n-devel",
     "kiconthemes-devel",
     "kitemviews-devel",
+    "qt6-qtbase-private-devel",  # qlocale_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qttools-devel",
 ]
@@ -31,7 +32,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.1-only AND LGPL-2.1-or-later"
 url = "https://api.kde.org/frameworks/kxmlgui/html"
 source = f"$(KDE_SITE)/frameworks/{pkgver[:pkgver.rfind('.')]}/kxmlgui-{pkgver}.tar.xz"
-sha256 = "a451c16d70a591de13973079115f35905e3c42302f5c8c8ae3ec75d76a06fca1"
+sha256 = "997f310a46ec2c153010fc5967753390a99bc50621d19f926488164172c51fcc"
 hardening = ["vis"]
 
 

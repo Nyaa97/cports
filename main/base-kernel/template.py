@@ -1,12 +1,19 @@
 pkgname = "base-kernel"
 pkgver = "0.2"
-pkgrel = 3
+pkgrel = 7
 depends = [
     "kmod",
     "procps",
+    "rsync",
     "cmd:findmnt!mount",
 ]
-triggers = ["/usr/lib/modules"]
+# all paths that should result in kernel.d hooks being rerun
+triggers = [
+    "+/usr/lib/firmware",
+    "+/usr/lib/modules/*",
+    "+/usr/share/initramfs-tools",
+    "+/usr/src",
+]
 pkgdesc = "Common data and scripts for Linux kernels in Chimera"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "custom:meta"
@@ -17,14 +24,15 @@ options = ["!check", "keepempty"]
 
 def install(self):
     # kernel.d helpers
+    self.install_dir("usr/lib/base-kernel")
     self.install_dir("usr/libexec/base-kernel")
 
+    # obsolete scripts only for old kernel packages
+    # to be removed in some months...
     for f in [
         "kernel-clean-initramfs",
-        "kernel-root-detect",
         "kernel-pre-upgrade",
         "kernel-post-upgrade",
-        "run-kernel-d",
         "script-funcs",
         "script-pre-deinstall",
         "script-pre-install",
@@ -35,6 +43,16 @@ def install(self):
         self.install_file(
             self.files_path / "libexec" / f,
             "usr/libexec/base-kernel",
+            mode=0o755,
+        )
+
+    for f in [
+        "kernel-root-detect",
+        "run-kernel-d",
+    ]:
+        self.install_file(
+            self.files_path / "libexec" / f,
+            "usr/lib/base-kernel",
             mode=0o755,
         )
 
@@ -78,11 +96,28 @@ def install(self):
         name="chimera-stripko",
     )
 
+    # this is for the old kernel system, remove later
     self.install_file(
         self.files_path / "chimera-prunekernels.sh",
         "usr/bin",
         mode=0o755,
         name="chimera-prunekernels",
+    )
+
+    self.install_file(
+        self.files_path / "49-depmod.sh", "usr/lib/kernel.d", mode=0o755
+    )
+
+    # setup and prune hooks
+    self.install_file(
+        self.files_path / "00-setup-kernels.sh",
+        "usr/lib/kernel.d",
+        mode=0o755,
+    )
+    self.install_file(
+        self.files_path / "05-prune-kernels.sh",
+        "usr/lib/kernel.d",
+        mode=0o755,
     )
 
 

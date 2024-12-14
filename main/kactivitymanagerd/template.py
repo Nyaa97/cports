@@ -1,5 +1,5 @@
 pkgname = "kactivitymanagerd"
-pkgver = "6.2.2"
+pkgver = "6.2.4"
 pkgrel = 0
 build_style = "cmake"
 hostmakedepends = [
@@ -24,7 +24,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-2.0-only OR GPL-3.0-only"
 url = "https://invent.kde.org/plasma/kactivitymanagerd"
 source = f"$(KDE_SITE)/plasma/{pkgver}/kactivitymanagerd-{pkgver}.tar.xz"
-sha256 = "f250a0428c1f901e14c3759adbe11f1b2708c088966037acb203165d400a2ce1"
+sha256 = "17672c65500c731eeb3c43649cf52ecae115adfd1942c24599055ece3e4a90da"
 hardening = ["vis"]
 
 

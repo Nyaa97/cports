@@ -1,5 +1,5 @@
 pkgname = "vulkan-loader"
-pkgver = "1.3.300"
+pkgver = "1.4.303"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
@@ -27,7 +27,7 @@ url = "https://www.khronos.org/vulkan"
 source = (
     f"https://github.com/KhronosGroup/Vulkan-Loader/archive/v{pkgver}.tar.gz"
 )
-sha256 = ["56fd9d3d8dfe97261a375595c90731a0c26ada2b20e8b7376a3d9a155ae600d6"]
+sha256 = ["248a5f7dbf990609f61dac34d19e43f441ccc31fd5ec49b64e807740099057a9"]
 hardening = ["vis", "!cfi"]
 # tests disabled
 options = ["!check"]
@@ -35,4 +35,5 @@ options = ["!check"]
 
 @subpackage("vulkan-loader-devel")
 def _(self):
+    self.depends += ["vulkan-headers"]
     return self.default_devel()

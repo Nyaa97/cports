@@ -1,5 +1,5 @@
 pkgname = "runc"
-pkgver = "1.2.0"
+pkgver = "1.2.2"
 pkgrel = 0
 build_style = "makefile"
 make_build_args = ["all", "man", f"COMMIT=chimera-r{pkgrel}"]
@@ -13,18 +13,15 @@ hostmakedepends = [
     "pkgconf",
 ]
 makedepends = [
-    "libatomic-chimera-devel-static",
     "libseccomp-devel",
-    "libunwind-devel-static",
     "linux-headers",
-    "musl-devel-static",  # runc-dmz
 ]
 pkgdesc = "CLI tool for spawning and running containers on Linux"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://github.com/opencontainers/runc"
 source = f"{url}/archive/v{pkgver}.tar.gz"
-sha256 = "25072beb84f4adae316a968241dc74ac30982d38e4459635074aa9e9d87d3de7"
+sha256 = "0eabc936d481d123be92c429588f9d1de7cafd36b37a8a5085b1412e758796a1"
 # tests create namespaces and fail because no perms
 options = ["!check"]
 

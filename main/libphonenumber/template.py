@@ -1,5 +1,5 @@
 pkgname = "libphonenumber"
-pkgver = "8.13.49"
+pkgver = "8.13.51"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
@@ -22,11 +22,11 @@ makedepends = [
     "zlib-ng-compat-devel",
 ]
 pkgdesc = "Library for parsing, formatting, and validating phone numbers"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://github.com/google/libphonenumber"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "491a8c0d7febb14a36f68f2a5fc23aa8e7e1fa024a88633a638049be66648d3e"
+sha256 = "c96da523824546a91b4bd6753a54f2ab7f4979d87729407170b58066e245f5bc"
 
 
 @subpackage("libphonenumber-devel")

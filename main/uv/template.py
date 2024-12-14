@@ -1,5 +1,5 @@
 pkgname = "uv"
-pkgver = "0.4.29"
+pkgver = "0.5.7"
 pkgrel = 0
 build_style = "python_pep517"
 hostmakedepends = [
@@ -15,11 +15,11 @@ makedepends = [
     "zstd-devel",
 ]
 pkgdesc = "Python package installer"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0 OR MIT"
 url = "https://github.com/astral-sh/uv"
 source = f"{url}/archive/refs/tags/{pkgver}.tar.gz"
-sha256 = "f8c9d6aaab083671267afd0b8846525808bd92f3e947cca5f2f12d87bc67a76c"
+sha256 = "e259e93e264b83f9e89e1d81cab1dfc13e762d110e48c6866d5ea201bcc38278"
 # too many of them need net
 # completions with host bin
 options = ["!check", "!cross"]

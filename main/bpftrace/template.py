@@ -1,6 +1,6 @@
 pkgname = "bpftrace"
 pkgver = "0.21.2"
-pkgrel = 1
+pkgrel = 2
 build_style = "cmake"
 configure_args = [
     # cant run them anyway
@@ -28,7 +28,7 @@ makedepends = [
     "zlib-ng-compat-devel",
 ]
 pkgdesc = "High-level eBPF tracing language"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://github.com/bpftrace/bpftrace"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"

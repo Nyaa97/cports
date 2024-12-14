@@ -1,6 +1,6 @@
 pkgname = "ncdu"
-pkgver = "1.20"
-pkgrel = 1
+pkgver = "1.21"
+pkgrel = 0
 build_style = "gnu_configure"
 hostmakedepends = [
     "automake",
@@ -8,11 +8,11 @@ hostmakedepends = [
 ]
 makedepends = ["ncurses-devel", "linux-headers"]
 pkgdesc = "Disk usage analyzer with an ncurses interface"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "MIT"
 url = "https://dev.yorhel.nl/ncdu"
 source = f"https://dev.yorhel.nl/download/ncdu-{pkgver}.tar.gz"
-sha256 = "5fe2bb841abe72374bb242dbb93293c4ae053078432d896a7481b2ff10be9572"
+sha256 = "a894d3a9b46bce578a6039bef48f54533ec402fb589b0769bfbb1d1edf9601a6"
 hardening = ["vis", "cfi"]
 
 

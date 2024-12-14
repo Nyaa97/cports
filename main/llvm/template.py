@@ -1,6 +1,6 @@
 pkgname = "llvm"
-pkgver = "18.1.8"
-pkgrel = 6
+pkgver = "19.1.5"
+pkgrel = 0
 build_style = "cmake"
 configure_args = [
     "-DCMAKE_BUILD_TYPE=Release",
@@ -55,7 +55,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "Apache-2.0 WITH LLVM-exception AND NCSA"
 url = "https://llvm.org"
 source = f"https://github.com/llvm/llvm-project/releases/download/llvmorg-{pkgver}/llvm-project-{pkgver}.src.tar.xz"
-sha256 = "0b58557a6d32ceee97c8d533a59b9212d87e0fc4d2833924eb6c611247db2f2a"
+sha256 = "bd8445f554aae33d50d3212a15e993a667c0ad1b694ac1977f3463db3338e542"
 # reduce size of debug symbols
 debug_level = 1
 # lto does not kick in until stage 2
@@ -115,13 +115,13 @@ else:
     configure_args += [
         "-DLLVM_ENABLE_LIBEDIT=OFF",
         "-DLLVM_ENABLE_LIBPFM=OFF",
-        "-DLLVM_ENABLE_TERMINFO=OFF",
         # for stage 0 bootstrap, avoid all the optional runtime
         "-DCOMPILER_RT_BUILD_SANITIZERS=OFF",
         "-DCOMPILER_RT_BUILD_XRAY=OFF",
         "-DCOMPILER_RT_BUILD_LIBFUZZER=OFF",
         "-DCOMPILER_RT_BUILD_PROFILE=OFF",
         "-DCOMPILER_RT_BUILD_MEMPROF=OFF",
+        "-DCOMPILER_RT_BUILD_CTX_PROFILE=OFF",
     ]
 
 _enable_flang = False
@@ -180,11 +180,13 @@ def init_configure(self):
         "-DLLVM_NATIVE_TOOL_DIR=/usr/bin",
         "-DLLVM_CONFIG_PATH=/usr/bin/llvm-config",
         "-DLLVM_TABLEGEN=/usr/bin/llvm-tblgen",
+        "-DLLVM_HEADERS_TABLEGEN=/usr/bin/llvm-tblgen",
         "-DCLANG_TABLEGEN=/usr/bin/clang-tblgen",
         "-DCLANG_PSEUDO_GEN=/usr/bin/clang-pseudo-gen",
         "-DCLANG_TIDY_CONFUSABLE_CHARS_GEN=/usr/bin/clang-tidy-confusable-chars-gen",
         "-DMLIR_TABLEGEN=/usr/bin/mlir-tblgen",
         "-DMLIR_PDLL_TABLEGEN=/usr/bin/mlir-pdll",
+        "-DMLIR_MLIR_SRC_SHARDER_TABLEGEN=/usr/bin/mlir-src-sharder",
         "-DMLIR_LINALG_ODS_YAML_GEN=/usr/bin/mlir-linalg-ods-yaml-gen",
     ]
 
@@ -249,6 +251,9 @@ def post_install(self):
     # extra cross bins, not super useful outside of that but harmless
     self.install_bin("build/bin/clang-tidy-confusable-chars-gen")
     self.install_bin("build/bin/clang-pseudo-gen")
+    # FIXME: make it build for cross so we get consistent packages
+    if _enable_mlir and not self.profile().cross:
+        self.install_bin("build/bin/mlir-src-sharder")
 
 
 @subpackage("clang-tools-extra-static")
@@ -355,6 +360,7 @@ def _(self):
         "usr/bin/c++",
         "usr/lib/cmake/clang",
         "usr/share/clang",
+        "usr/share/clang-doc",
     ]
 
 
@@ -497,7 +503,7 @@ def _(self):
 
     return [
         "usr/include/mlir*",
-        "usr/lib/libMLIR.so",
+        "usr/lib/libMLIR*.so",
         "usr/lib/libmlir*.so",
         "usr/lib/cmake/mlir",
     ]
@@ -509,7 +515,7 @@ def _(self):
     self.provides = [self.with_pkgver("libmlir")]
 
     return [
-        "usr/lib/libMLIR.so.*",
+        "usr/lib/libMLIR*.so.*",
         "usr/lib/libmlir*.so.*",
     ]
 
@@ -577,9 +583,11 @@ def _(self):
     self.options = ["ltostrip", "!splitstatic"]
 
     return [
+        "usr/lib/libc++.modules.json",
         "usr/lib/libc++.so",
         "usr/lib/libc++experimental.a",
         "usr/include/c++",
+        "usr/share/libc++",
     ]
 
 

@@ -1,6 +1,6 @@
 pkgname = "libvips"
 pkgver = "8.16.0"
-pkgrel = 0
+pkgrel = 1
 build_style = "meson"
 configure_args = ["-Db_ndebug=true"]
 hostmakedepends = [
@@ -31,7 +31,7 @@ makedepends = [
     "zlib-ng-compat-devel",
 ]
 pkgdesc = "Fast image processing library"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "LGPL-2.1-or-later"
 url = "https://github.com/libvips/libvips"
 source = f"https://github.com/libvips/libvips/releases/download/v{pkgver}/vips-{pkgver}.tar.xz"

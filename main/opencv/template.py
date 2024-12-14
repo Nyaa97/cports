@@ -1,6 +1,6 @@
 pkgname = "opencv"
 pkgver = "4.10.0"
-pkgrel = 10
+pkgrel = 11
 build_style = "cmake"
 configure_args = [
     # rm NDEBUG
@@ -75,7 +75,7 @@ makedepends = [
     "vulkan-loader-devel",
 ]
 pkgdesc = "Computer vision and machine learning libraries"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://opencv.org"
 source = [

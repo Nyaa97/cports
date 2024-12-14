@@ -1,5 +1,5 @@
 pkgname = "wasmtime"
-pkgver = "26.0.0"
+pkgver = "27.0.0"
 pkgrel = 0
 # no implementation for other architectures
 archs = ["aarch64", "riscv64", "x86_64"]
@@ -21,11 +21,11 @@ makedepends = [
     "zstd-devel",
 ]
 pkgdesc = "Runtime for webassembly"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://wasmtime.dev"
 source = f"https://github.com/bytecodealliance/wasmtime/releases/download/v{pkgver}/wasmtime-v{pkgver}-src.tar.gz"
-sha256 = "a5755f1e8738ab95f96a906fc1880ba9f1ec8ffc085b27e21eff215552ea171e"
+sha256 = "53d9ebdf7528eeece139e467f13cb52dd7e0e354bed41aa4f5abbb2c400391ee"
 # wast tests take like an hour
 options = ["!check"]
 

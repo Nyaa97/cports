@@ -1,11 +1,11 @@
 pkgname = "bluetuith"
 pkgver = "0.2.3"
-pkgrel = 3
+pkgrel = 4
 build_style = "go"
 hostmakedepends = ["go"]
 depends = ["bluez"]
 pkgdesc = "TUI bluetooth manager"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "MIT"
 url = "https://github.com/darkhz/bluetuith"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"

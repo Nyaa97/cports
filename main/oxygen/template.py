@@ -1,6 +1,6 @@
 pkgname = "oxygen"
-pkgver = "6.2.2"
-pkgrel = 0
+pkgver = "6.2.4"
+pkgrel = 1
 build_style = "cmake"
 configure_args = ["-DBUILD_QT5=OFF"]
 hostmakedepends = [
@@ -21,6 +21,7 @@ makedepends = [
     "kservice-devel",
     "kwindowsystem-devel",
     "libplasma-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtdeclarative-devel",
 ]
 depends = [
@@ -33,7 +34,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-2.0-or-later"  # FIXME
 url = "https://invent.kde.org/plasma/oxygen"
 source = f"$(KDE_SITE)/plasma/{pkgver}/oxygen-{pkgver}.tar.xz"
-sha256 = "a8838f2363ab8fc2ff6e8d5735c1f034a6965c31f1515a164e1424cbb58aa7b8"
+sha256 = "866a58bda3f361f2b078c447b95885b9d3905d80b285454861193d3e863a1452"
 hardening = ["vis"]
 
 

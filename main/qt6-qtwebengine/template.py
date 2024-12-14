@@ -1,9 +1,9 @@
 pkgname = "qt6-qtwebengine"
-pkgver = "6.8.0"
-pkgrel = 3
+pkgver = "6.8.1"
+pkgrel = 0
 # latest from https://github.com/qt/qtwebengine-chromium/commits/122-based
 # check CHROMIUM_VERSION on qt majors
-_qtwebengine_gitrev = "dd235a0c36d5de464380e5f42d4584f91a079654"
+_qtwebengine_gitrev = "207acfe0ee54df6dc713b2df6c60390fd8bf7748"
 archs = ["aarch64", "ppc64le", "x86_64"]
 build_style = "cmake"
 configure_args = [
@@ -72,7 +72,7 @@ makedepends = [
     "opus-devel",
     "pciutils-devel",
     "pipewire-devel",
-    "qt6-qtbase-devel",
+    "qt6-qtbase-private-devel",
     "qt6-qtdeclarative-devel",
     "qt6-qttools-devel",
     "qt6-qtwebchannel-devel",
@@ -81,7 +81,7 @@ makedepends = [
 ]
 depends = ["hwdata-usb"]
 pkgdesc = "Qt6 webengine component"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = (
     "LGPL-2.1-only AND LGPL-3.0-only AND GPL-3.0-only WITH Qt-GPL-exception-1.0"
 )
@@ -92,8 +92,8 @@ source = [
 ]
 source_paths = [".", "3rdparty-chromium"]
 sha256 = [
-    "2484459248a8624c16b70780bef3fe4bc7f4eace2178f84233d4e711cb7f7452",
-    "efd65222fe9de6fd4ed056e3b2337671d920e80f20a0b71c975f4e871bf877fe",
+    "1ba8e03ac8edcf50ce830e49b63db983de22e96757452975c1d3e6d120ae91bc",
+    "c89941e2e74838e09db2285b1c6ebacf80e63d11ba8a6c8fdbf9530e7a1c61d0",
 ]
 debug_level = 1  # defatten, especially with LTO
 tool_flags = {

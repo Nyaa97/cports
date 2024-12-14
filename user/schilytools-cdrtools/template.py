@@ -8,12 +8,12 @@ build_style = "makefile"
 make_build_args = ["INS_BASE=/usr"]
 make_install_args = ["-j1", "CHGRPPROG=true", *make_build_args]
 make_use_env = True
-hostmakedepends = ["gmake", "libcap-progs"]
+hostmakedepends = ["libcap-progs"]
 makedepends = ["e2fsprogs-devel", "linux-headers"]
 # provide the default distro-name-expected name, since in most places it's unprefixed
 provides = [self.with_pkgver("cdrtools")]
 pkgdesc = "Collection of tools formerly made by Jörg Schilling"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 # lol
 license = "LGPL-2.1-only AND GPL-2.0-or-later AND custom:CDDL-schily"
 url = "https://codeberg.org/schilytools/schilytools"

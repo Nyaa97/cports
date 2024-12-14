@@ -1,6 +1,6 @@
 pkgname = "libppd"
 pkgver = "2.1.0"
-pkgrel = 0
+pkgrel = 2
 build_style = "gnu_configure"
 configure_args = [
     # TODO mupdf deptree
@@ -20,7 +20,7 @@ makedepends = [
     "linux-headers",
 ]
 pkgdesc = "Legacy support library for PPD files"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0 AND custom:gpl-exception"
 url = "https://github.com/OpenPrinting/libppd"
 source = f"{url}/releases/download/{pkgver}/libppd-{pkgver}.tar.xz"

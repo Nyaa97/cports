@@ -1,6 +1,6 @@
 pkgname = "kdbusaddons"
-pkgver = "6.7.0"
-pkgrel = 0
+pkgver = "6.8.0"
+pkgrel = 1
 build_style = "cmake"
 make_check_wrapper = ["dbus-run-session"]
 hostmakedepends = [
@@ -9,7 +9,7 @@ hostmakedepends = [
     "ninja",
 ]
 makedepends = [
-    "qt6-qtbase-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qttools-devel",
 ]
 checkdepends = [
@@ -20,7 +20,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.1-only OR LGPL-3.0-only"
 url = "https://api.kde.org/frameworks/kdbusaddons/html"
 source = f"$(KDE_SITE)/frameworks/{pkgver[:pkgver.rfind('.')]}/kdbusaddons-{pkgver}.tar.xz"
-sha256 = "e87d08f6d0037d8fa33f1e7d16a4e3aa17d7d0b12c6aa96f76323f78344e151b"
+sha256 = "6c760a0dc372af0a2f825b65575bfabd1950c76c0e37f87de21d47cec8d58bc7"
 hardening = ["vis"]
 
 

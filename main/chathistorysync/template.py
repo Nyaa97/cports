@@ -1,13 +1,13 @@
 pkgname = "chathistorysync"
 pkgver = "0.2.1"
-pkgrel = 4
+pkgrel = 5
 build_style = "go"
 hostmakedepends = [
     "go",
     "scdoc",
 ]
 pkgdesc = "Synchronization tool for IRC chat history"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "AGPL-3.0-only"
 url = "https://git.sr.ht/~emersion/chathistorysync"
 source = f"{url}/archive/v{pkgver}.tar.gz"

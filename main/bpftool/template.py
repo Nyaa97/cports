@@ -1,6 +1,6 @@
 pkgname = "bpftool"
 pkgver = "7.5.0"
-pkgrel = 0
+pkgrel = 1
 build_wrksrc = "src"
 build_style = "makefile"
 make_build_args = [
@@ -24,7 +24,7 @@ makedepends = [
     "llvm-devel",
 ]
 pkgdesc = "Linux kernel bpf manipulation tool"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "https://github.com/libbpf/bpftool"
 source = [

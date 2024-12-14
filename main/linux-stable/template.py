@@ -1,7 +1,7 @@
 # update linux-stable-zfs-bin when bumping
 pkgname = "linux-stable"
-pkgver = "6.11.5"
-pkgrel = 1
+pkgver = "6.12.4"
+pkgrel = 0
 archs = ["aarch64", "ppc64le", "ppc64", "riscv64", "x86_64"]
 make_dir = "build"
 hostmakedepends = ["base-kernel-devel"]
@@ -12,7 +12,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "https://kernel.org"
 source = f"https://cdn.kernel.org/pub/linux/kernel/v{pkgver[0]}.x/linux-{pkgver}.tar.xz"
-sha256 = "471485b3b7f2fb637bd8fe3d00944c4c135c7d8ee02f357f33690baab0752a07"
+sha256 = "6f35f821433d8421be7167990747c7c4a0c451958fb96883446301af13d71152"
 # no meaningful checking to be done
 options = [
     "!check",
@@ -40,13 +40,6 @@ def _(self):
     from cbuild.util import linux
 
     linux.update_configs(self, archs, _flavor)
-
-
-def init_configure(self):
-    # generate scripts for packaging, just hooking to base-kernel helpers
-    from cbuild.util import linux
-
-    linux.generate_scripts(self, _flavor)
 
 
 def configure(self):
@@ -84,4 +77,4 @@ def _(self):
         "execstack",
         "textrels",
     ]
-    return ["usr/lib/debug", "boot/System.map-*"]
+    return ["usr/lib/debug", "usr/lib/modules/*/apk-dist/boot/System.map-*"]

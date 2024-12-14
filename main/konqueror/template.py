@@ -1,6 +1,6 @@
 pkgname = "konqueror"
-pkgver = "24.08.2"
-pkgrel = 0
+pkgver = "24.08.3"
+pkgrel = 1
 build_style = "cmake"
 make_check_args = [
     "-E",
@@ -40,16 +40,17 @@ makedepends = [
     "kwallet-devel",
     "kwindowsystem-devel",
     "plasma-activities-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtwebengine-devel",
     "sonnet-devel",
 ]
 checkdepends = ["dbus", "xwayland-run"]
 pkgdesc = "KDE web browser and file previewer"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "LGPL-3.0-only AND GPL-2.0-or-later"
 url = "https://apps.kde.org/konqueror"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/konqueror-{pkgver}.tar.xz"
-sha256 = "37a2e74e5a4188c4e4a9394f793bbb70ee4b701890ea0b2c3ff03a240a3e0738"
+sha256 = "8dea2ff8070830a50daefd3b84882cefb41153a89e25107fe2c621f8d62905d0"
 hardening = ["vis"]
 
 

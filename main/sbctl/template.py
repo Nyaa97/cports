@@ -1,5 +1,5 @@
 pkgname = "sbctl"
-pkgver = "0.15.4"
+pkgver = "0.16"
 pkgrel = 1
 build_style = "go"
 make_build_args = ["./cmd/sbctl"]
@@ -13,7 +13,7 @@ maintainer = "flukey <flukey@vapourmail.eu>"
 license = "MIT"
 url = "https://github.com/Foxboron/sbctl"
 source = f"{url}/releases/download/{pkgver}/sbctl-{pkgver}.tar.gz"
-sha256 = "0435097f79fc30c9b3567a50a8beb8d7d71fcea6121533b5da543ca64241cfff"
+sha256 = "528f852285cea2c96175db8872aa83427f5e200e2d09ea9383037432d45965be"
 # fails
 options = ["!cross"]
 
@@ -37,6 +37,7 @@ def post_build(self):
 
 def post_install(self):
     self.install_man("docs/sbctl.8")
+    self.install_man("docs/sbctl.conf.5")
 
     self.install_completion("sbctl.bash", "bash")
     self.install_completion("sbctl.zsh", "zsh")

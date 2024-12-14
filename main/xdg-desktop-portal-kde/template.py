@@ -1,6 +1,6 @@
 pkgname = "xdg-desktop-portal-kde"
-pkgver = "6.2.2"
-pkgrel = 0
+pkgver = "6.2.4"
+pkgrel = 1
 build_style = "cmake"
 make_check_env = {"QT_QPA_PLATFORM": "offscreen"}
 make_check_wrapper = ["dbus-run-session"]
@@ -25,6 +25,7 @@ makedepends = [
     "kstatusnotifieritem-devel",
     "kwayland-devel",
     "plasma-wayland-protocols",
+    "qt6-qtbase-private-devel",  # qxkbcommon_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtwayland-devel",
     "wayland-protocols",
@@ -45,7 +46,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.0-or-later"
 url = "https://invent.kde.org/plasma/xdg-desktop-portal-kde"
 source = f"$(KDE_SITE)/plasma/{pkgver}/xdg-desktop-portal-kde-{pkgver}.tar.xz"
-sha256 = "669f9c1446a9b73490c3ed142895b22738eda9887eecbf62ccd9d6d1050a3dd3"
+sha256 = "daf2d8769d0f45264ef1f48b63f5274446222574ff832e40f21d06a4c3822d1d"
 hardening = ["vis"]
 
 

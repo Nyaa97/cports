@@ -1,11 +1,10 @@
 pkgname = "mesa"
-pkgver = "24.2.6"
-pkgrel = 0
+pkgver = "24.3.1"
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "-Db_ndebug=true",
     "-Ddefault_library=shared",
-    "-Ddri3=enabled",
     "-Degl=enabled",
     "-Dgbm=enabled",
     "-Dgles1=enabled",
@@ -88,7 +87,7 @@ _subproject_list = [
     "unicode-ident",
 ]
 source = f"https://mesa.freedesktop.org/archive/mesa-{pkgver.replace('_', '-')}.tar.xz"
-sha256 = "2b68c4a6f204c1999815a457299f81c41ba7bf48c4674b0b2d1d8864f41f3709"
+sha256 = "9c795900449ce5bc7c526ba0ab3532a22c3c951cab7e0dd9de5fcac41b0843af"
 # lots of issues in swrast and so on
 hardening = ["!int"]
 # cba to deal with cross patching nonsense
@@ -265,7 +264,10 @@ def _(self):
     self.pkgdesc = "Generic Buffer Management"
     self.subdesc = "runtime library"
 
-    return ["usr/lib/libgbm.so.*"]
+    return [
+        "usr/lib/gbm",
+        "usr/lib/libgbm.so.*",
+    ]
 
 
 @subpackage("libgbm-devel")
@@ -352,13 +354,6 @@ def _(self):
     ]
 
 
-@subpackage("mesa-vaapi", _have_hwdec)
-def _(self):
-    self.pkgdesc = "Mesa VA-API drivers"
-
-    return ["usr/lib/dri/*_drv_video.so"]
-
-
 @subpackage("mesa-libgallium")
 def _(self):
     self.pkgdesc = "Mesa gallium loader"
@@ -369,6 +364,8 @@ def _(self):
 def _(self):
     self.pkgdesc = "Mesa DRI drivers"
     self.install_if = [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("mesa-vaapi")]
 
     return ["usr/lib/dri"]
 

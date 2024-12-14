@@ -1,5 +1,5 @@
 pkgname = "tailscale"
-pkgver = "1.76.3"
+pkgver = "1.78.3"
 pkgrel = 0
 build_style = "go"
 make_build_args = [
@@ -16,7 +16,7 @@ maintainer = "Val Packett <val@packett.cool>"
 license = "BSD-3-Clause"
 url = "https://github.com/tailscale/tailscale"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "1cc2ef1b7b6491c48446ec4c20c413c2300e8b7e171b119d843af46d0ce3125f"
+sha256 = "bac059152e3fa8ab379ee5ec7a03940114e7ac65c6e1baea4f840f6fadd17d57"
 # check: needs network access
 # cross: completions with host bin
 options = ["!check", "!cross"]
@@ -35,6 +35,8 @@ def post_build(self):
 
 def post_install(self):
     self.install_license("LICENSE")
-    self.install_service(self.files_path / "tailscaled")
+    self.install_service("^/tailscaled")
+    self.install_tmpfiles("^/tmpfiles.conf")
+    self.install_file("^/envfile", "usr/share/tailscale")
     for shell in ["bash", "fish", "zsh"]:
         self.install_completion(f"tailscale.{shell}", shell)

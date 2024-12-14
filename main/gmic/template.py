@@ -1,6 +1,6 @@
 pkgname = "gmic"
 pkgver = "3.4.3"
-pkgrel = 0
+pkgrel = 1
 build_style = "makefile"
 make_build_args = [
     "QMAKE=qmake6",
@@ -9,7 +9,6 @@ make_build_args = [
 make_use_env = True
 hostmakedepends = [
     "bash",
-    "gimp",
     "pkgconf",
     "qt6-qtbase",
 ]
@@ -25,7 +24,7 @@ makedepends = [
     "qt6-qtbase-devel",
 ]
 pkgdesc = "Full-featured Open-Source Framework for Image Processing"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "CECILL-2.1"
 url = "https://gmic.eu"
 source = f"https://gmic.eu/files/source/gmic_{pkgver}.tar.gz"

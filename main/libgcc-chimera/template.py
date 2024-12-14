@@ -1,5 +1,5 @@
 pkgname = "libgcc-chimera"
-pkgver = "18.1.8"
+pkgver = "19.1.5"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
@@ -20,6 +20,7 @@ configure_args = [
     "-DCOMPILER_RT_BUILD_SANITIZERS=OFF",
     "-DCOMPILER_RT_BUILD_XRAY=OFF",
     "-DCOMPILER_RT_BUILD_ORC=OFF",
+    "-DCOMPILER_RT_BUILD_CTX_PROFILE=OFF",
     # simplifies lookup
     "-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=ON",
 ]
@@ -37,7 +38,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "Apache-2.0 WITH LLVM-exception AND NCSA"
 url = "https://llvm.org"
 source = f"https://github.com/llvm/llvm-project/releases/download/llvmorg-{pkgver}/llvm-project-{pkgver}.src.tar.xz"
-sha256 = "0b58557a6d32ceee97c8d533a59b9212d87e0fc4d2833924eb6c611247db2f2a"
+sha256 = "bd8445f554aae33d50d3212a15e993a667c0ad1b694ac1977f3463db3338e542"
 # shim
 options = ["!check", "!lto"]
 

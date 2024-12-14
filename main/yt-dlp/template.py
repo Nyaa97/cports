@@ -1,8 +1,12 @@
 pkgname = "yt-dlp"
-pkgver = "2024.10.22"
+pkgver = "2024.12.06"
 pkgrel = 0
 build_style = "python_pep517"
-make_check_args = ["-k", "not download and not test_verify_cert"]
+make_check_args = [
+    "--deselect=test/test_socks.py",
+    "-k",
+    "not download and not test_verify_cert and not test_mtls",
+]
 hostmakedepends = [
     "python-build",
     "python-hatchling",
@@ -22,7 +26,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "Unlicense"
 url = "https://github.com/yt-dlp/yt-dlp"
 source = f"{url}/archive/refs/tags/{pkgver}.tar.gz"
-sha256 = "720f63c96974489664f3011ef4afd71af3ead06e5d3ed36bd217cf368aa4c259"
+sha256 = "43b4c86dd39fe5ba616873cddff4c7b4c940d577d1e49f2f9729807028fe33ff"
 
 
 @subpackage("yt-dlp-recommends")

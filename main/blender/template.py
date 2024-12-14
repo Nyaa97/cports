@@ -1,5 +1,5 @@
 pkgname = "blender"
-pkgver = "4.2.3"
+pkgver = "4.3.1"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
@@ -60,7 +60,8 @@ makedepends = [
     "pugixml-devel",
     "python-devel",
     "python-numpy",
-    "sdl-devel",
+    "shaderc-devel",
+    "vulkan-loader-devel",
     "wayland-devel",
     "zstd-devel",
 ]
@@ -74,7 +75,7 @@ maintainer = "Erica Z <zerica@callcc.eu>"
 license = "GPL-2.0-or-later"
 url = "https://www.blender.org"
 source = f"https://download.blender.org/source/blender-{pkgver}.tar.xz"
-sha256 = "be009fcf5ff68d87004fb985a81d2db16ea44c88a5b89e10febb02b6802eee76"
+sha256 = "81bce671a7eb80d6880b728e042f4a4f65e1c4ccca86429a21615b45f7aef2e9"
 tool_flags = {
     "CFLAGS": ["-D_GNU_SOURCE"],
     # guilty until proven innocent

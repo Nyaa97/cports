@@ -1,6 +1,6 @@
 pkgname = "okular"
-pkgver = "24.08.2"
-pkgrel = 0
+pkgver = "24.08.3"
+pkgrel = 1
 build_style = "cmake"
 # FIXME segfaults/weird failures
 make_check_args = [
@@ -47,6 +47,7 @@ makedepends = [
     "plasma-activities-devel",
     "poppler-devel",
     "purpose-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtspeech-devel",
     "qt6-qtsvg-devel",
@@ -54,11 +55,11 @@ makedepends = [
 ]
 checkdepends = ["dbus", "xwayland-run"]
 pkgdesc = "KDE document viewer"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "GPL-2.0-or-later"
 url = "https://apps.kde.org/okular"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/okular-{pkgver}.tar.xz"
-sha256 = "4089c77d5be60aedbd45da0d4ba319e3909b15a640cd51d361b01d95ad33c8fb"
+sha256 = "b398ab3302edd540c56ddd826f31d83a246e9a53c86a52e033347ab947fedc9b"
 tool_flags = {"CFLAGS": ["-D_GNU_SOURCE"]}
 hardening = ["vis"]
 # TODO

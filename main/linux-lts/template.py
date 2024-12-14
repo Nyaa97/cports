@@ -1,7 +1,7 @@
 # update linux-lts-zfs-bin when bumping
 pkgname = "linux-lts"
-pkgver = "6.6.58"
-pkgrel = 1
+pkgver = "6.6.65"
+pkgrel = 0
 archs = ["aarch64", "ppc64le", "ppc64", "riscv64", "x86_64"]
 make_dir = "build"
 hostmakedepends = ["base-kernel-devel"]
@@ -12,7 +12,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "https://kernel.org"
 source = f"https://cdn.kernel.org/pub/linux/kernel/v{pkgver[0]}.x/linux-{pkgver}.tar.xz"
-sha256 = "e7df81e588d70fab5ec3ec3bb04ac53d51f0860fc3b1ec45e0a4167a026899db"
+sha256 = "7ae1476e8b4c86e7754e581d45d6fbce5932bfefce934758a2907d6d79eca3e0"
 # no meaningful checking to be done
 options = [
     "!check",
@@ -40,13 +40,6 @@ def _(self):
     from cbuild.util import linux
 
     linux.update_configs(self, archs, _flavor)
-
-
-def init_configure(self):
-    # generate scripts for packaging, just hooking to base-kernel helpers
-    from cbuild.util import linux
-
-    linux.generate_scripts(self, _flavor)
 
 
 def configure(self):
@@ -84,4 +77,4 @@ def _(self):
         "execstack",
         "textrels",
     ]
-    return ["usr/lib/debug", "boot/System.map-*"]
+    return ["usr/lib/debug", "usr/lib/modules/*/apk-dist/boot/System.map-*"]

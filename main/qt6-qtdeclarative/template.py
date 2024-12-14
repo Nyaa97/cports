@@ -1,6 +1,6 @@
 pkgname = "qt6-qtdeclarative"
-pkgver = "6.8.0"
-pkgrel = 3
+pkgver = "6.8.1"
+pkgrel = 0
 build_style = "cmake"
 configure_args = ["-DQT_BUILD_TESTS=ON"]
 hostmakedepends = [
@@ -12,7 +12,7 @@ hostmakedepends = [
     "qt6-qtbase",
     "qt6-qtshadertools",
 ]
-makedepends = ["qt6-qtbase-devel", "qt6-qtshadertools-devel"]
+makedepends = ["qt6-qtbase-private-devel", "qt6-qtshadertools-devel"]
 pkgdesc = "Qt6 declarative component"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = (
@@ -20,7 +20,7 @@ license = (
 )
 url = "https://www.qt.io"
 source = f"https://download.qt.io/official_releases/qt/{pkgver[:-2]}/{pkgver}/submodules/qtdeclarative-everywhere-src-{pkgver}.tar.xz"
-sha256 = "3b41a36b42e919a3aa0da1f71107591504200f41707bee2ad8e8d4f99b5644c2"
+sha256 = "95d15d5c1b6adcedb1df6485219ad13b8dc1bb5168b5151f2f1f7246a4c039fc"
 # FIXME
 hardening = ["!int"]
 # TODO
@@ -91,7 +91,10 @@ def _(self):
     self.depends = []
     self.install_if = []
 
-    return ["usr/lib/*.a"]
+    return [
+        "usr/lib/qt6/qml/**/lib*plugin.a",
+        "usr/lib/*.a",
+    ]
 
 
 @subpackage("qt6-qtdeclarative-devel")

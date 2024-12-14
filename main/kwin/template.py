@@ -1,6 +1,6 @@
 pkgname = "kwin"
-pkgver = "6.2.2"
-pkgrel = 0
+pkgver = "6.2.4"
+pkgrel = 1
 build_style = "cmake"
 make_check_args = [
     "-E",
@@ -70,6 +70,7 @@ makedepends = [
     "plasma-activities-devel",
     "plasma-wayland-protocols",
     "qt6-qt5compat-devel",
+    "qt6-qtbase-private-devel",  # qtguiglobal_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtsensors-devel",
     "qt6-qtsvg-devel",
@@ -98,7 +99,7 @@ license = (
 )
 url = "https://invent.kde.org/plasma/kwin"
 source = f"$(KDE_SITE)/plasma/{'.'.join(pkgver.split('.')[0:3])}/kwin-{pkgver}.tar.xz"
-sha256 = "fb5c2ff3e8007722f3fa528872e6494dc21d48c8a6b632b748486389486bc061"
+sha256 = "d4b78ebdc9432cb1e224621ac43cfb81b92dbcee034afe90bbeb5b22f218f321"
 file_modes = {
     "usr/bin/kwin_wayland": ("root", "root", 0o755),
 }

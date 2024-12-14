@@ -1,5 +1,5 @@
 pkgname = "cargo-bootstrap"
-pkgver = "1.80.0"
+pkgver = "1.82.0"
 pkgrel = 0
 # satisfy runtime dependencies
 hostmakedepends = ["curl"]
@@ -16,23 +16,23 @@ options = ["!strip"]
 match self.profile().arch:
     case "aarch64":
         sha256 = (
-            "704f5b459035aaf5c429310e30ae1ac6026374c49f2d04d9ac59a73aa9b14be5"
+            "08df611e582eafc2da662dd37da2aebd78d1148dcef57d240fe3c47742277614"
         )
     case "ppc64le":
         sha256 = (
-            "4d89b33177f815cb82673ebe033f27585df3c7d41ddc8a87b1efc597f6a15581"
+            "a00378c7b88b722c8984929aa03fb2e8ae6e21270d28af05c767e9da551874a9"
         )
     case "ppc64":
         sha256 = (
-            "39d54973e2575e8a76f0784bf2b954f7fda67302156aa82aabd626bb57e23b04"
+            "76368bb3321aee21d4cd38692cc834badb516b017ba8142ee6fce6edd5f7893c"
         )
     case "riscv64":
         sha256 = (
-            "76f4af68a66c7f323b6416b46359d74c9a533ebbbe48814ea84adf94281c0c5a"
+            "2c7a5dfc86c881b10e14ada1502bd04b35c6a791d35fdcef4608c6e87a4d924b"
         )
     case "x86_64":
         sha256 = (
-            "18edce00b995f3692bee21469c7d05f71255c8609e80df37768f6f3365fc847d"
+            "28bb0371cd54263a3f39fa4ebf4c0229c6afaa6d9e8811957be643b3c5d7f8c1"
         )
     case _:
         broken = f"not yet built for {self.profile().arch}"

@@ -1,6 +1,6 @@
 pkgname = "lldb"
-pkgver = "18.1.8"
-pkgrel = 2
+pkgver = "19.1.5"
+pkgrel = 0
 build_style = "cmake"
 configure_args = [
     "-DCMAKE_BUILD_TYPE=Release",
@@ -38,8 +38,8 @@ source = [
 ]
 source_paths = [".", "llvm-cmake"]
 sha256 = [
-    "cac2db253ee3566c01774a888cc0ac3853f1e141c5c9962f04ee562bdb0af426",
-    "59badef592dd34893cd319d42b323aaa990b452d05c7180ff20f23ab1b41e837",
+    "b49072d9b11d2a7a6ecbbe2cb620d124d1772e80cdd1caaec9eceafb604b9830",
+    "a08ae477571fd5e929c27d3d0d28c6168d58dd00b6354c2de3266ae0d86ad44f",
 ]
 # tests are not enabled
 options = ["!check"]

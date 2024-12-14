@@ -1,5 +1,5 @@
 pkgname = "glib"
-pkgver = "2.82.2"
+pkgver = "2.82.3"
 pkgrel = 0
 build_style = "meson"
 configure_args = [
@@ -7,6 +7,7 @@ configure_args = [
     "-Dintrospection=enabled",
     "-Dman-pages=enabled",
     "-Dselinux=disabled",
+    "-Dsysprof=enabled",
 ]
 make_check_args = ["--timeout-multiplier", "5"]
 make_check_wrapper = ["dbus-run-session"]
@@ -26,6 +27,7 @@ makedepends = [
     "libffi-devel",
     "libmount-devel",
     "pcre2-devel",
+    "sysprof-capture",
     "zlib-ng-compat-devel",
 ]
 checkdepends = [
@@ -40,7 +42,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "LGPL-2.1-or-later"
 url = "https://wiki.gnome.org/Projects/GLib"
 source = f"$(GNOME_SITE)/glib/{pkgver[:-2]}/glib-{pkgver}.tar.xz"
-sha256 = "ab45f5a323048b1659ee0fbda5cecd94b099ab3e4b9abf26ae06aeb3e781fd63"
+sha256 = "5d669bd01ad23b8ef8082c58a0d205f4007a9b9c42b0a69fe7aeb17bbee58ce4"
 # FIXME int - strfuncs failure
 hardening = ["!int"]
 

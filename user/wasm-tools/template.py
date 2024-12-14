@@ -1,5 +1,5 @@
 pkgname = "wasm-tools"
-pkgver = "1.219.1"
+pkgver = "1.221.2"
 pkgrel = 0
 # wasmtime
 archs = ["aarch64", "riscv64", "x86_64"]
@@ -10,11 +10,11 @@ hostmakedepends = [
 ]
 makedepends = ["rust-std"]
 pkgdesc = "CLI for manipulation of wasm modules"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT"
 url = "https://github.com/bytecodealliance/wasm-tools"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "16dfd1dfb07bf95f12459fcfd846a23b7afaff1d17ba7aa550091f0aa2f7e5ec"
+sha256 = "9940c19aa878f500a031282f13401fb6177517a238220246bbcea0d642ee8934"
 # needs checked out submodules and whatever
 options = ["!check"]
 

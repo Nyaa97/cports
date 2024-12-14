@@ -1,5 +1,5 @@
 pkgname = "qt6-qttools"
-pkgver = "6.8.0"
+pkgver = "6.8.1"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
@@ -23,7 +23,7 @@ makedepends = [
     "clang-devel",
     "clang-tools-extra",
     "llvm-devel",
-    "qt6-qtbase-devel",
+    "qt6-qtbase-private-devel",
     "qt6-qtdeclarative-devel",
 ]
 depends = [self.with_pkgver("qt6-qttools-qdbus")]
@@ -34,7 +34,7 @@ license = (
 )
 url = "https://www.qt.io"
 source = f"https://download.qt.io/official_releases/qt/{pkgver[:-2]}/{pkgver}/submodules/qttools-everywhere-src-{pkgver}.tar.xz"
-sha256 = "403115d8268503c6cc6e43310c8ae28eb9e605072a5d04e4a2de8b6af39981f7"
+sha256 = "9d43d409be08b8681a0155a9c65114b69c9a3fc11aef6487bb7fdc5b283c432d"
 # FIXME
 hardening = ["!int"]
 # TODO

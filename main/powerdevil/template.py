@@ -1,6 +1,6 @@
 pkgname = "powerdevil"
-pkgver = "6.2.2"
-pkgrel = 0
+pkgver = "6.2.4"
+pkgrel = 1
 build_style = "cmake"
 # FIXME: all tests broken like on alpine, migrateconfig_test*
 make_check_args = [
@@ -43,7 +43,7 @@ makedepends = [
     "plasma-workspace-devel",
     "plasma-wayland-protocols",
     "qcoro-devel",
-    "qt6-qtbase-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtwayland-devel",
 ]
 checkdepends = [
@@ -52,14 +52,14 @@ checkdepends = [
 depends = [
     "upower",
 ]
-# locale file conflicts ~6.2.2
-replaces = ["plasma-workspace<6.2.2"]
+# locale file conflicts ~6.2.3
+replaces = ["plasma-workspace<6.2.3"]
 pkgdesc = "KDE Plasma shell power consumption settings manager"
 maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-2.0-or-later AND LGPL-2.0-or-later"
 url = "https://invent.kde.org/plasma/powerdevil"
 source = f"$(KDE_SITE)/plasma/{pkgver}/powerdevil-{pkgver}.tar.xz"
-sha256 = "4006f2f49574c4e0036bb25bd3b1a1e5c47a521b26806fa4030d8073fdb17bd9"
+sha256 = "17c440d7d596be07797f604985c4b25f9297128aafd6f11b88a4a9afe20bddaf"
 file_modes = {
     "usr/libexec/org_kde_powerdevil": ("root", "root", 0o755),
 }

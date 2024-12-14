@@ -1,5 +1,5 @@
 pkgname = "vim"
-pkgver = "9.1.0816"
+pkgver = "9.1.0880"
 pkgrel = 0
 build_style = "gnu_configure"
 configure_args = [
@@ -27,11 +27,11 @@ makedepends = [
 ]
 depends = [self.with_pkgver("xxd")]
 pkgdesc = "Vi-style text editor"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Vim"
 url = "https://www.vim.org"
 source = f"https://github.com/vim/vim/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "bc7fe5cb897da845126a5aeed8be717ce29d49548df1cf7072fe94714ecc4460"
+sha256 = "011d2653dffbd74239794348fdd01d67fcdaddb55c27f7b706f4cc00a3b16f22"
 tool_flags = {"CFLAGS": ['-DSYS_VIMRC_FILE="/etc/vim/vimrc"']}
 hardening = ["vis", "!cfi"]
 # require a million system-specific fixes

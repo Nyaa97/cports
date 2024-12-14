@@ -1,5 +1,5 @@
 pkgname = "scrcpy"
-pkgver = "2.7"
+pkgver = "3.0.2"
 pkgrel = 0
 build_style = "meson"
 configure_args = [
@@ -19,7 +19,7 @@ makedepends = [
 ]
 depends = ["android-tools"]
 pkgdesc = "Display and control an Android device"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "triallax <triallax@tutanota.com>"
 license = "Apache-2.0"
 url = "https://github.com/Genymobile/scrcpy"
 source = [
@@ -27,8 +27,8 @@ source = [
     f"!{url}/releases/download/v{pkgver}/scrcpy-server-v{pkgver}",
 ]
 sha256 = [
-    "3ceea215f6eccb59535f68a16db6db2b05a8a1c91bdcb4a6e222d3093a9daf8c",
-    "a23c5659f36c260f105c022d27bcb3eafffa26070e7baa9eda66d01377a1adba",
+    "5ab92d091f308679fe81851666acec1b161e6810ac73eb9bade705ade285e109",
+    "e19fe024bfa3367809494407ad6ca809a6f6e77dac95e99f85ba75144e0ba35d",
 ]
 
 

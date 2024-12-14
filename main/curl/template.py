@@ -1,6 +1,6 @@
 pkgname = "curl"
-pkgver = "8.10.1"
-pkgrel = 0
+pkgver = "8.11.0"
+pkgrel = 4
 build_style = "gnu_configure"
 configure_args = [
     "--disable-optimize",
@@ -23,7 +23,7 @@ configure_args = [
     "ac_cv_path_NROFF=/usr/bin/mandoc",
     "ac_cv_sizeof_off_t=8",
 ]
-hostmakedepends = ["pkgconf", "perl", "mandoc"]
+hostmakedepends = ["automake", "pkgconf", "perl", "mandoc", "slibtool"]
 makedepends = [
     "c-ares-devel",
     "libidn2-devel",
@@ -47,10 +47,8 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "MIT"
 url = "https://curl.haxx.se"
 source = f"{url}/download/curl-{pkgver}.tar.xz"
-sha256 = "73a4b0e99596a09fa5924a4fb7e4b995a85fda0d18a2c02ab9cf134bebce04ee"
+sha256 = "db59cf0d671ca6e7f5c2c5ec177084a33a79e04c97e71cf183a5cdea235054eb"
 hardening = ["vis", "!cfi"]
-# workaround for test 1119
-exec_wrappers = [("/usr/bin/clang-cpp", "cpp")]
 
 
 def post_install(self):
@@ -89,6 +87,3 @@ def _(self):
     self.pkgdesc = "Multiprotocol file transfer library"
 
     return self.default_devel()
-
-
-configure_gen = []

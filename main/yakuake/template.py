@@ -1,6 +1,6 @@
 pkgname = "yakuake"
-pkgver = "24.08.2"
-pkgrel = 0
+pkgver = "24.08.3"
+pkgrel = 1
 build_style = "cmake"
 hostmakedepends = [
     "cmake",
@@ -27,6 +27,7 @@ makedepends = [
     "kwayland-devel",
     "kwidgetsaddons-devel",
     "kwindowsystem-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtsvg-devel",
 ]
@@ -36,4 +37,4 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-2.0-only OR GPL-3.0-only"
 url = "https://apps.kde.org/yakuake"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/yakuake-{pkgver}.tar.xz"
-sha256 = "fb08a3db36484b15c3d2efb276946b9abf45a97d57eb676a1817232d4641f1a7"
+sha256 = "a487af0adcb805926ca6d1c317a9ec70e3f3ab4b45518b21bcb1a05ddcf9b914"

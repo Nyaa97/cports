@@ -1169,7 +1169,7 @@ def do_prune_sources(tgt):
     for tmpln in tmpls:
         with (paths.distdir() / tmpln / "template.py").open("r") as inf:
             for ln in inf.readlines():
-                for sha in re.findall('"[0-9a-fA-F]{64}"', ln):
+                for sha in re.findall(r'"[0-9a-fA-F]{64}"', ln):
                     shaset.add(sha.strip('"').lower())
     shalist = list(shaset)
     shalist.sort()
@@ -1705,6 +1705,8 @@ def do_pkg(tgt, pkgn=None, force=None, check=None, stage=None):
             raise errors.CbuildException(f"{tgt} eneeds two arguments")
         tgt = "custom:" + cmdline.command[1]
         pkgn = cmdline.command[2]
+    elif tgt == "pkg" and len(cmdline.command) > 2:
+        return do_bulkpkg(tgt)
     elif not pkgn:
         if len(cmdline.command) <= 1 and tgt != "chroot":
             raise errors.CbuildException(f"{tgt} needs a package name")
@@ -2215,6 +2217,9 @@ def do_prepare_upgrade(tgt):
     )
     oldsha = list(tmpl.sha256)
 
+    # be less confusing with the output
+    tmpl.pkgrel = 0
+
     chroot.prepare_arch(opt_arch, opt_dirty)
     build.build(
         "fetch",
@@ -2345,7 +2350,7 @@ command_handlers = {
         "Print a newline-separated versioned list of unbuilt templates",
     ),
     "patch": (do_pkg, "Run up to patch phase of a template"),
-    "pkg": (do_pkg, "Build a package"),
+    "pkg": (do_pkg, "Build a package or multiple packages"),
     "prepare": (do_pkg, "Run up to prepare phase of a template"),
     "prepare-upgrade": (
         do_prepare_upgrade,

@@ -1,6 +1,6 @@
 pkgname = "kdeconnect"
-pkgver = "24.08.2"
-pkgrel = 0
+pkgver = "24.08.3"
+pkgrel = 1
 build_style = "cmake"
 # needs more setup
 make_check_args = ["-E", "mdnstest"]
@@ -35,6 +35,7 @@ makedepends = [
     "modemmanager-qt-devel",
     "pulseaudio-qt-devel",
     "qqc2-desktop-style-devel",
+    "qt6-qtbase-private-devel",  # qtx11extras_p.h
     "qt6-qtconnectivity-devel",
     "qt6-qtdeclarative-devel",
     "qt6-qtmultimedia-devel",
@@ -48,13 +49,13 @@ depends = [
 ]
 checkdepends = ["xwayland-run", *depends]
 pkgdesc = "KDE plugin for communicating with a smartphone device"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = " GPL-2.0-only OR GPL-3.0-only"
 url = "https://community.kde.org/KDEConnect"
 source = (
     f"$(KDE_SITE)/release-service/{pkgver}/src/kdeconnect-kde-{pkgver}.tar.xz"
 )
-sha256 = "d7178d96b445ef660923f305a90fc6aecccae4049cc99a39ee6c17ac0bf51c69"
+sha256 = "10e05e89bdaa02291d8b6d07ec1af90040a87ec2bc01bf96a68c8a11434fff68"
 
 
 def post_install(self):

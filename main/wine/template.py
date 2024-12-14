@@ -1,5 +1,5 @@
 pkgname = "wine"
-pkgver = "9.20"
+pkgver = "9.22"
 pkgrel = 0
 archs = ["x86_64"]
 build_style = "gnu_configure"
@@ -52,12 +52,12 @@ makedepends = [
 # not traced but needed
 depends = ["libxrandr"]
 pkgdesc = "Compatibility layer for running Windows programs on Linux"
-maintainer = "psykose <alice@ayaya.dev>"
+maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "LGPL-2.1-or-later"
 url = "https://www.winehq.org"
 # the url is .0 for .0 and .x for >0
 source = f"https://dl.winehq.org/wine/source/9.x/wine-{pkgver}.tar.xz"
-sha256 = "95f2b45b1458125be7d9fccc94ca5f8cce0a5e4ae11d0d193cfb7dddb35e7a86"
+sha256 = "e150d29742aa54f768ef3e976ed861aaa4f9f48542e409bea902d0f49b359683"
 # FIXME: int breaks wine
 # trivial-auto-var-init relies on memset() symbol existing during link for vars
 # which isn't the case for loader/preloader.o:(map_so_lib)

@@ -1,6 +1,6 @@
 pkgname = "libetonyek"
-pkgver = "0.1.10"
-pkgrel = 5
+pkgver = "0.1.12"
+pkgrel = 0
 build_style = "gnu_configure"
 make_dir = "."
 hostmakedepends = [
@@ -24,7 +24,7 @@ url = "https://wiki.documentfoundation.org/DLP/Libraries/libetonyek"
 source = (
     f"https://dev-www.libreoffice.org/src/libetonyek/libetonyek-{pkgver}.tar.xz"
 )
-sha256 = "b430435a6e8487888b761dc848b7981626eb814884963ffe25eb26a139301e9a"
+sha256 = "b9fa82fbeb8cb7a701101060e4f3e1e4ef7c38f574b2859d3ecbe43604c21f83"
 
 
 def init_configure(self):

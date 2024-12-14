@@ -1294,7 +1294,7 @@ A more comprehensive `build_style`, written around `cbuild.util.gnu_configure`.
 Default values:
 
 * `make_dir` = `build`
-* `configure_gen` = `["autoreconf", "-if"]`
+* `configure_gen` = `["autoreconf", "-if", "-W", "none"]`
 
 Sets `configure`, `build`, `check`, `install`.
 
@@ -1703,7 +1703,7 @@ is a command, and will make a `cmd:foo` for `usr/bin/foo`.
 
 There are some `options` you can use to control this. With `!scanrundeps`,
 no dependencies will be scanned. As for provides, that can be controlled
-with `scanshlibs`, `scanpkgconf` and `scancmd`.
+with `scanshlibs`, `scanpkgconf`, `scancmd`, and `scanservices`.
 
 #### Development packages and install_if
 
@@ -1834,6 +1834,8 @@ for subpackages separately if needed:
   shared libraries to be provided by the package.
 * `scanpkgconf` *(true)* If disabled, the package will not be scanned for
   `.pc` files.
+* `scanservices` *(true)* If disabled, the package will not be scanned for
+  service files.
 * `scandevelif` *(true)* If disabled, `install_if` will not be generated
   for development packages.
 * `scancmd` *(true)* If disabled, the package will not be scanned for
@@ -3478,7 +3480,7 @@ If `generator` is `None`, it is taken from `pkg.configure_gen`. If it ends
 up being non-empty, it is used as a command to generate the `configure_script`
 and run in `cwd` with the same environment as the subsequent configure script.
 Generally for `gnu_configure` build-styled templates, this will end up calling
-`autoreconf -if` unless overridden.
+`autoreconf -if -W none` unless overridden.
 
 Then, the `configure_script` is called (which lives in `configure_dir`, by
 default `.`, which lives in `chroot_cwd`, and its name is by default

@@ -1,8 +1,9 @@
 pkgname = "udev"
-pkgver = "256.7"
+pkgver = "256.9"
 pkgrel = 1
 build_style = "meson"
 configure_args = [
+    "--libexecdir=/usr/lib",  # XXX drop libexec
     "-Dacl=enabled",
     "-Dadm-group=false",
     "-Danalyze=false",
@@ -123,7 +124,7 @@ url = "https://github.com/systemd/systemd"
 source = (
     f"https://github.com/systemd/systemd/archive/refs/tags/v{pkgver}.tar.gz"
 )
-sha256 = "896d76ff65c88f5fd9e42f90d152b0579049158a163431dd77cdc57748b1d7b0"
+sha256 = "9f2bda967a30ec4602e7ea93d565eb43670ca1dffbb808c72758d5f0213508c8"
 # the tests that can run are mostly useless
 options = ["!splitudev", "!check"]
 
@@ -160,11 +161,11 @@ def init_configure(self):
 def post_install(self):
     # oh boy, big cleanup time
 
-    # put measure into libexec, we want it for ukify
+    # put measure into lib, we want it for ukify
     if _have_sd_boot:
         self.rename(
             "usr/lib/systemd/systemd-measure",
-            "usr/libexec/systemd-measure",
+            "usr/lib/systemd-measure",
             relative=False,
         )
 
@@ -197,17 +198,15 @@ def post_install(self):
     self.install_initramfs(self.files_path / "udev.init-top", "init-top")
     self.install_initramfs(self.files_path / "udev.init-bottom", "init-bottom")
     # services
-    self.install_dir("usr/libexec")
-    self.install_link("usr/libexec/udevd", "../bin/udevadm")
-    self.install_file(
-        self.files_path / "udevd.wrapper", "usr/libexec", mode=0o755
-    )
-    self.install_file(self.files_path / "dinit-devd", "usr/libexec", mode=0o755)
+    self.install_dir("usr/lib")
+    self.install_link("usr/lib/udevd", "../bin/udevadm")
+    self.install_file(self.files_path / "udevd.wrapper", "usr/lib", mode=0o755)
+    self.install_file(self.files_path / "dinit-devd", "usr/lib", mode=0o755)
     self.install_tmpfiles(self.files_path / "tmpfiles.conf", name="udev")
     self.install_service(self.files_path / "udevd", enable=True)
     # systemd-boot
     if _have_sd_boot:
-        self.install_file("build/systemd-bless-boot", "usr/libexec", mode=0o755)
+        self.install_file("build/systemd-bless-boot", "usr/lib", mode=0o755)
         self.install_file(
             self.files_path / "99-gen-systemd-boot.sh",
             "usr/lib/kernel.d",
@@ -239,7 +238,7 @@ def _(self):
         "usr/bin/bootctl",
         "usr/bin/gen-systemd-boot",
         "usr/lib/kernel.d/99-gen-systemd-boot.sh",
-        "usr/libexec/systemd-bless-boot",
+        "usr/lib/systemd-bless-boot",
         "usr/share/bash-completion/completions/bootctl",
         "usr/share/zsh/site-functions/_bootctl",
         "usr/share/man/man1/bootctl.1",
@@ -275,7 +274,7 @@ def _(self):
     return [
         "cmd:ukify",
         # only used here, don't bring in tss2 deps elsewhere
-        "usr/libexec/systemd-measure",
+        "usr/lib/systemd-measure",
     ]
 
 

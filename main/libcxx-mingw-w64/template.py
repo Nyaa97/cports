@@ -1,5 +1,5 @@
 pkgname = "libcxx-mingw-w64"
-pkgver = "18.1.8"
+pkgver = "19.1.5"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
@@ -32,7 +32,15 @@ configure_args = [
     "-DLIBCXXABI_HAS_C_LIB=OFF",
 ]
 cmake_dir = "runtimes"
-hostmakedepends = ["base-cross", "cmake", "ninja", "python"]
+hostmakedepends = [
+    "base-cross",
+    "clang-devel-static",
+    "clang-tools-extra",
+    "cmake",
+    "llvm-devel",
+    "ninja",
+    "python",
+]
 depends = [
     self.with_pkgver("libcxxabi-mingw-w64"),
     "mingw-w64-headers",
@@ -42,7 +50,8 @@ maintainer = "Erica Z <zerica@callcc.eu>"
 license = "Apache-2.0 WITH LLVM-exception AND NCSA"
 url = "https://llvm.org"
 source = f"https://github.com/llvm/llvm-project/releases/download/llvmorg-{pkgver}/llvm-project-{pkgver}.src.tar.xz"
-sha256 = "0b58557a6d32ceee97c8d533a59b9212d87e0fc4d2833924eb6c611247db2f2a"
+sha256 = "bd8445f554aae33d50d3212a15e993a667c0ad1b694ac1977f3463db3338e542"
+hardening = ["!scp"]
 # crosstoolchain
 options = ["!check", "empty", "!relr"]
 
@@ -100,8 +109,16 @@ def install(self):
 
         # move target-specific paths to sysroot so clang can find them later
         at = an + "-w64-mingw32"
-        self.rename(f"usr/include/{at}", f"usr/{at}/include", relative=False)
-        self.rename(f"usr/lib/{at}", f"usr/{at}/lib", relative=False)
+        self.rename(
+            f"usr/include/{an}-w64-*",
+            f"usr/{at}/include",
+            relative=False,
+            glob=True,
+        )
+        self.rename(
+            f"usr/lib/{an}-w64-*", f"usr/{at}/lib", relative=False, glob=True
+        )
+        self.rename("usr/share/libc++", f"usr/{at}/share", relative=False)
 
         # why are dlls installed to a target-agnostic path anyway????
         self.rename("usr/bin", f"usr/{at}/bin", relative=False)
