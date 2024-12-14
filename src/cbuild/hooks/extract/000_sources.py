@@ -29,6 +29,7 @@ suffixes = {
     "*.sh": "txt",
     "*.7z": "7z",
     "*.crate": "crate",
+    "*.in": "txt",
 }
 
 
