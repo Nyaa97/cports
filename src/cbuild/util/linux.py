@@ -28,11 +28,11 @@ def _build_env(pkg, menv, base_env, env):
     return renv
 
 
-def configure(pkg, flavor, build_dir=None, env=None):
+def configure(pkg, extra_args=[], build_dir=None, env=None):
     cfgarch = pkg.profile().arch
-    cfgname = f"config-{cfgarch}.{flavor}"
 
-    pkg.cp(pkg.files_path / cfgname, pkg.cwd)
+    for f in pkg.files_path.glob("config-*"):
+        pkg.cp(f, ".")
 
     epoch = pkg.source_date_epoch or 0
     args = []
@@ -48,22 +48,27 @@ def configure(pkg, flavor, build_dir=None, env=None):
         "chimera-buildkernel",
         "prepare",
         f"ARCH={get_arch(pkg)}",
-        f"CONFIG_FILE={pkg.chroot_cwd}/{cfgname}",
+        f"CONFIG_FILE=config-{cfgarch}",
         f"OBJDIR={bdir}",
         f"JOBS={pkg.make_jobs}",
-        f"LOCALVERSION=-{pkg.pkgrel}-{flavor}",
         f"EPOCH={epoch}",
+        f"SPLIT_DBG={'1' if pkg.build_dbg else '0'}",
         *args,
+        *extra_args,
         env=_build_env(pkg, pkg.configure_env, None, env),
     )
 
 
-def update_configs(pkg, archs, flavor):
+def update_configs(pkg, archs, extra_args=[]):
+    flavor = "generic"
+    for flv in extra_args:
+        if flv.startswith("FLAVOR="):
+            flavor = flv.removeprefix("FLAVOR=")
     for a in archs:
         with pkg.profile(a):
             with pkg.stamp(f"{a}_config"):
                 pkg.log(f"configuring {a}...")
-                configure(pkg, flavor, f"{pkg.make_dir}-{a}")
+                configure(pkg, extra_args, f"{pkg.make_dir}-{a}")
                 pkg.log("now perform other config (press enter once done)")
                 input()
                 pkg.cp(
@@ -73,7 +78,7 @@ def update_configs(pkg, archs, flavor):
     pkg.log_green("SUCCESS: kernel configs have been updated")
 
 
-def build(pkg, flavor, env=None):
+def build(pkg, env=None):
     pkg.do(
         "chimera-buildkernel",
         "build",
@@ -81,24 +86,26 @@ def build(pkg, flavor, env=None):
     )
 
 
-def install(pkg, flavor, env=None):
+def install(pkg, env=None):
     pkg.do(
         "chimera-buildkernel",
         "install",
         pkg.chroot_destdir,
         env=_build_env(pkg, pkg.make_env, pkg.make_install_env, env),
     )
-    kpath = f"usr/lib/modules/{pkg.pkgver}-{pkg.pkgrel}-{flavor}"
+    kdest = list(
+        (pkg.destdir / "usr/lib/modules").glob(f"{pkg.pkgver}-{pkg.pkgrel}-*")
+    )[0]
     # most things get relocated to a distribution directory
-    pkg.install_dir(f"{kpath}/apk-dist/boot")
+    pkg.install_dir(f"{kdest.relative_to(pkg.destdir)}/apk-dist/boot")
     # write the series into a special file...
-    with open(pkg.destdir / kpath / "apk-dist/.apk-series", "w") as sf:
+    with open(kdest / "apk-dist/.apk-series", "w") as sf:
         sf.write(f"{pkg.pkgname}\n")
     # relocate boot files
     for f in (pkg.destdir / "boot").iterdir():
-        pkg.mv(f, pkg.destdir / kpath / "apk-dist/boot")
+        pkg.mv(f, kdest / "apk-dist/boot")
     # and relocate other distribution files
-    for f in (pkg.destdir / kpath).iterdir():
+    for f in kdest.iterdir():
         match f.name:
             case "modules.builtin" | "modules.builtin.modinfo":
                 pass

@@ -7,6 +7,7 @@ rtpath = None
 
 global_cfg = None
 cmdline = None
+parser = None
 
 opt_apkcmd = "apk"
 opt_bwcmd = "bwrap"
@@ -102,6 +103,7 @@ def handle_options():
 
     global global_cfg
     global cmdline
+    global parser
 
     global opt_apkcmd, opt_bwcmd, opt_dryrun, opt_bulkcont, opt_timing
     global opt_arch, opt_cflags, opt_cxxflags, opt_fflags, opt_tltocache
@@ -823,19 +825,37 @@ def do_keygen(tgt):
 def do_clean(tgt):
     import shutil
 
-    from cbuild.core import paths, errors, chroot
+    from cbuild.core import paths, chroot, template, logger
+
+    ctmpl = cmdline.command[1] if len(cmdline.command) >= 2 else None
+    if ctmpl:
+        tmpl = template.Template(
+            template.sanitize_pkgname(ctmpl),
+            chroot.host_cpu(),
+            True,
+            False,
+            (1, 1),
+            False,
+            False,
+            None,
+            target="lint",
+        )
+    else:
+        tmpl = None
 
     chroot.cleanup_world(None)
-    dirp = paths.builddir() / "builddir"
-    if dirp.is_dir():
-        shutil.rmtree(dirp)
-    elif dirp.exists():
-        raise errors.CbuildException("broken container (builddir invalid)")
-    dirp = paths.builddir() / "destdir"
-    if dirp.is_dir():
-        shutil.rmtree(dirp)
-    elif dirp.exists():
-        raise errors.CbuildException("broken container (destdir invalid)")
+
+    for dirn in ["builddir", "destdir"]:
+        dirp = paths.builddir() / dirn
+        if tmpl:
+            dirp = dirp / f"{tmpl.pkgname}-{tmpl.pkgver}"
+        if not dirp.exists():
+            continue
+        logger.get().out(f"cleaning '{dirp}'...")
+        if dirp.is_dir():
+            shutil.rmtree(dirp)
+        else:
+            dirp.unlink()
 
 
 def do_zap(tgt):
@@ -1702,7 +1722,7 @@ def do_pkg(tgt, pkgn=None, force=None, check=None, stage=None):
         bstage = stage
     if tgt == "invoke-custom":
         if len(cmdline.command) != 3:
-            raise errors.CbuildException(f"{tgt} eneeds two arguments")
+            raise errors.CbuildException(f"{tgt} needs two arguments")
         tgt = "custom:" + cmdline.command[1]
         pkgn = cmdline.command[2]
     elif tgt == "pkg" and len(cmdline.command) > 2:
@@ -1851,11 +1871,13 @@ def _bulkpkg(pkgs, statusf, do_build, do_raw):
         rpkgs.add(npn)
 
     # visited "intermediate" templates, includes stuff that is "to be done"
+    # which will be force-added after base-cbuild is handled, as we don't
+    # want this to influence the graph of base-cbuild
     #
     # ignore minor errors in templates like lint as those do not concern us
     # allow broken because that does not concern us yet either (handled later)
     # do not ignore missing tmpls because that is likely error in main tmpl
-    pvisit = set(rpkgs)
+    pvisit = set()
 
     # this is visited stuff in base-cbuild, we do checks against it later
     # to figure out if to add the implicit base-cbuild "dep" in the topology
@@ -1867,7 +1889,7 @@ def _bulkpkg(pkgs, statusf, do_build, do_raw):
         if do_raw:
             return True
         # add base-cbuild "dependency" for correct implicit sorting
-        if not cbinit and pn not in cbvisit:
+        if not cbinit and pn not in cbvisit and pn != "main/base-cbuild":
             depg.add(pn, "main/base-cbuild")
         # now add the rest of the stuff
         return _add_deps_graph(
@@ -1906,6 +1928,10 @@ def _bulkpkg(pkgs, statusf, do_build, do_raw):
         ),
         True,
     )
+
+    # finally add the "to be done" stuff...
+    for pkg in rpkgs:
+        pvisit.add(pkg)
 
     rpkgs = sorted(rpkgs)
 
@@ -2305,6 +2331,115 @@ def do_bump_pkgrel(tgt):
             )
 
 
+class InteractiveCompleter:
+    def complete(self, text, state):
+        import pathlib
+        import readline
+        import shlex
+
+        if state == 0:
+            self.matches = []
+            lbuf = readline.get_line_buffer()
+            lbeg = readline.get_begidx()
+            lend = readline.get_endidx()
+            ptext = lbuf[0:lbeg]
+            ctext = lbuf[lbeg:lend]
+            # previously matched a category, so match a template now
+            if ptext.endswith("/"):
+                pcat = shlex.split(ptext)[-1][0:-1]
+                for cat in opt_allowcat.split():
+                    if cat == pcat:
+                        break
+                else:
+                    # no category match
+                    return None
+                # matched category so try to find a template
+                cp = pathlib.Path(pcat)
+                if not cp.is_dir():
+                    return None
+                if "*" not in text:
+                    text += "*"
+                for gl in cp.glob(text):
+                    if gl.is_symlink() or not gl.is_dir():
+                        continue
+                    self.matches.append(gl.name)
+            else:
+                if "alias" in global_cfg:
+                    alias_map = global_cfg["alias"]
+                else:
+                    alias_map = None
+                carr = shlex.split(lbuf)
+                if len(carr) == 0:
+                    ctext = ""
+                else:
+                    ctext = carr[-1]
+                for v in command_handlers:
+                    if not ctext or v.startswith(ctext):
+                        self.matches.append(v.removeprefix(ptext))
+                for v in alias_map:
+                    if not ctext or v.startswith(ctext):
+                        self.matches.append(v.removeprefix(ptext))
+                for v in opt_allowcat.split():
+                    if not ctext or v.startswith(ctext):
+                        self.matches.append(v.removeprefix(ptext) + "/")
+                self.matches.sort()
+        try:
+            return self.matches[state]
+        except IndexError:
+            pass
+        return None
+
+
+def do_interactive(tgt):
+    import os
+    import shlex
+    import readline
+
+    from cbuild.core import logger
+
+    global cmdline
+
+    readline.set_completer(InteractiveCompleter().complete)
+    # default is something like ' \t\n`~!@#$%^&*()-=+[{]}\\|;:\'",<>/?'
+    readline.set_completer_delims(" \t\n/")
+
+    bkend = "readline"
+    try:
+        bkend = readline.backend
+    except AttributeError:
+        if readline._READLINE_LIBRARY_VERSION.startswith("EditLine"):
+            bkend = "editline"
+
+    if bkend == "readline":
+        readline.parse_and_bind("set editing-mode vi")
+    elif bkend == "editline":
+        readline.parse_and_bind("python:bind -v")
+
+    readline.set_history_length(1000)
+
+    try:
+        if os.path.exists("etc/inputrc"):
+            readline.read_init_file("etc/inputrc")
+        else:
+            readline.read_init_file()
+    except OSError:
+        pass
+
+    if bkend == "readline":
+        readline.parse_and_bind("tab: complete")
+    elif bkend == "editline":
+        readline.parse_and_bind("python:bind ^I rl_complete")
+
+    while True:
+        pmpt = shlex.split(input("cbuild> "))
+        try:
+            cmdline = parser.parse_intermixed_args(pmpt)
+        except SystemExit:
+            logger.get().out("\f[red]cbuild: invalid command line")
+            continue
+        fire_cmd()
+
+
 #
 # MAIN ENTRYPOINT
 #
@@ -2396,12 +2531,52 @@ command_handlers = {
     ),
     "update-check": (do_update_check, "Check a template for upstream updates"),
     "zap": (do_zap, "Remove the bldroot"),
+    "interactive": (do_interactive, "Enter interactive prompt"),
 }
+
+
+def fire_cmd():
+    import shutil
+    import sys
+
+    from cbuild.core import logger, paths
+
+    retcode = None
+
+    if "alias" in global_cfg:
+        alias_map = global_cfg["alias"]
+    else:
+        alias_map = None
+
+    def bodyf():
+        nonlocal retcode
+        cmd = cmdline.command[0]
+        if "/" in cmd and len(cmdline.command) >= 2:
+            # allow reverse order for commands taking package names
+            ncmd = cmdline.command[1]
+            cmdline.command[0] = ncmd
+            cmdline.command[1] = cmd
+            cmd = ncmd
+        # if aliased, get the rel name
+        if alias_map:
+            cmd = alias_map.get(cmd, fallback=cmd)
+        if cmd in command_handlers:
+            retcode = command_handlers[cmd][0](cmd)
+        else:
+            logger.get().out(f"\f[red]cbuild: invalid target {cmd}")
+            sys.exit(1)
+        return None
+
+    ret, failed = pkg_run_exc(bodyf)
+
+    if opt_mdirtemp and not opt_keeptemp:
+        shutil.rmtree(paths.bldroot())
+
+    return ret, failed, retcode
 
 
 def fire():
     import sys
-    import shutil
     import subprocess
 
     from cbuild.core import build, chroot, logger, template, profile
@@ -2464,28 +2639,8 @@ def fire():
 
     build.register_hooks()
     template.register_cats(opt_allowcat.strip().split())
-    retcode = None
 
-    def bodyf():
-        nonlocal retcode
-        cmd = cmdline.command[0]
-        if "/" in cmd and len(cmdline.command) >= 2:
-            # allow reverse order for commands taking package names
-            ncmd = cmdline.command[1]
-            cmdline.command[0] = ncmd
-            cmdline.command[1] = cmd
-            cmd = ncmd
-        if cmd in command_handlers:
-            retcode = command_handlers[cmd][0](cmd)
-        else:
-            logger.get().out(f"\f[red]cbuild: invalid target {cmd}")
-            sys.exit(1)
-        return None
-
-    ret, failed = pkg_run_exc(bodyf)
-
-    if opt_mdirtemp and not opt_keeptemp:
-        shutil.rmtree(paths.bldroot())
+    ret, failed, retcode = fire_cmd()
 
     if failed:
         sys.exit(1)
