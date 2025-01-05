@@ -31,7 +31,6 @@ configure_args = [
     "-DWITH_IPP=OFF",
     "-DWITH_OPENCL=ON",
     "-DWITH_OPENGL=ON",
-    "-DWITH_OPENMP=ON",
     "-DWITH_QT=ON",
     "-DWITH_TBB=ON",
     "-DWITH_VA=ON",
@@ -57,7 +56,6 @@ makedepends = [
     "gst-plugins-base-devel",
     "gstreamer-devel",
     "harfbuzz-devel",
-    "libomp-devel",
     "libva-devel",
     "libwebp-devel",
     "libxkbcommon-devel",
@@ -135,6 +133,9 @@ _libs = [
     "xphoto",
 ]
 
+if self.profile().arch in ["aarch64", "ppc64le", "ppc64", "riscv64", "x86_64"]:
+    configure_args += ["-DWITH_OPENMP=ON"]
+    makedepends += ["libomp-devel"]
 
 match self.profile().arch:
     case "ppc64" | "ppc":
