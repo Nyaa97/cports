@@ -19,11 +19,11 @@ hostmakedepends = [
     "pkgconf",
 ]
 makedepends = [
-    "libiptc-devel",
+    "iptables-devel",
     "libmnl-devel",
     "libnftnl-devel",
-    "libuuid-devel",
     "linux-headers",
+    "util-linux-uuid-devel",
 ]
 depends = ["nftables"]
 checkdepends = ["iproute2"]

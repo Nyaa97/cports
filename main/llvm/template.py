@@ -1,6 +1,6 @@
 pkgname = "llvm"
-pkgver = "19.1.6"
-pkgrel = 0
+pkgver = "19.1.7"
+pkgrel = 1
 build_style = "cmake"
 configure_args = [
     "-DCMAKE_BUILD_TYPE=Release",
@@ -55,7 +55,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "Apache-2.0 WITH LLVM-exception AND NCSA"
 url = "https://llvm.org"
 source = f"https://github.com/llvm/llvm-project/releases/download/llvmorg-{pkgver}/llvm-project-{pkgver}.src.tar.xz"
-sha256 = "e3f79317adaa9196d2cfffe1c869d7c100b7540832bc44fe0d3f44a12861fa34"
+sha256 = "82401fea7b79d0078043f7598b835284d6650a75b93e64b6f761ea7b63097501"
 # reduce size of debug symbols
 debug_level = 1
 # lto does not kick in until stage 2
@@ -87,11 +87,11 @@ _enabled_runtimes = ["compiler-rt", "libcxx", "libcxxabi", "libunwind"]
 
 if self.stage > 0:
     configure_args += ["-DLLVM_ENABLE_FFI=ON"]
-    hostmakedepends += ["libffi-devel"]
+    hostmakedepends += ["libffi8-devel"]
     makedepends += [
         "python-devel",
         "libedit-devel",
-        "libffi-devel",
+        "libffi8-devel",
         "zstd-devel",
         "linux-headers",
     ]
@@ -130,7 +130,7 @@ _enable_mlir = self.stage >= 2
 
 match self.profile().arch:
     # consistently runs out of memory in flang ConvertExpr
-    case "ppc64" | "riscv64":
+    case "ppc64" | "riscv64" | "loongarch64":
         pass
     # unsupported on 32 bit cpus
     case "ppc" | "armhf" | "armv7":
@@ -156,6 +156,8 @@ match self.profile().arch:
         _arch = "RISCV64"
     case "armhf" | "armv7":
         _arch = "ARM"
+    case "loongarch64" | "loongarch32":
+        _arch = "LoongArch"
     case _:
         broken = f"Unknown CPU architecture: {self.profile().arch}"
 

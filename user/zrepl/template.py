@@ -1,6 +1,6 @@
 pkgname = "zrepl"
-pkgver = "0.9.2"
-pkgrel = 0
+pkgver = "0.9.4"
+pkgrel = 1
 build_style = "go"
 hostmakedepends = ["go"]
 depends = ["zfs"]
@@ -9,7 +9,7 @@ maintainer = "Robert David <robert.david@posteo.net>"
 license = "MIT"
 url = "https://github.com/dsh2dsh/zrepl"
 source = f"{url}/archive/v{pkgver}.tar.gz"
-sha256 = "1262c854c32e66cf67dd1d8c2ca6e546b6d42100c9bca9857ba37b6a16a5b1d1"
+sha256 = "ed6f5dea5216683aa6cc271dc00bb7ec52a27c75565c7f77f0c57514ea6dfb67"
 # check needs to run zfs command
 options = ["!check"]
 

@@ -1,12 +1,12 @@
 pkgname = "openboard"
 pkgver = "1.7.3"
-pkgrel = 0
+pkgrel = 1
 build_style = "cmake"
 configure_args = ["-DCMAKE_CXX_STANDARD=20"]
 hostmakedepends = ["cmake", "ninja", "pkgconf"]
 makedepends = [
     "ffmpeg-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "poppler-devel",
     "qt6-qt5compat-devel",
     "qt6-qtbase-devel",

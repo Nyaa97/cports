@@ -1,6 +1,6 @@
 pkgname = "unbound"
 pkgver = "1.22.0"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--enable-cachedb",
@@ -34,7 +34,7 @@ makedepends = [
     "libevent-devel",
     "libsodium-devel",
     "nghttp2-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "protobuf-c-devel",
 ]
 depends = ["dns-root-data"]
@@ -57,15 +57,16 @@ def post_install(self):
     self.install_service(self.files_path / "unbound")
 
 
-@subpackage("libunbound")
+@subpackage("unbound-libs")
 def _(self):
-    self.subdesc = "runtime library"
+    # transitional
+    self.provides = [self.with_pkgver("libunbound")]
 
     return self.default_libs()
 
 
 @subpackage("unbound-devel")
 def _(self):
-    self.depends += ["openssl-devel", "libsodium-devel"]
+    self.depends += ["openssl3-devel", "libsodium-devel"]
 
     return self.default_devel()

@@ -1,5 +1,5 @@
 pkgname = "kitinerary"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 # extractortest: difference in AT/österreich key
@@ -21,7 +21,7 @@ makedepends = [
     "kpkpass-devel",
     "libphonenumber-devel",
     "libxml2-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "poppler-devel",
     "qt6-qtdeclarative-devel",
     "shared-mime-info",
@@ -33,7 +33,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.0-or-later"
 url = "https://api.kde.org/kdepim/kitinerary/html"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/kitinerary-{pkgver}.tar.xz"
-sha256 = "4c11339a5bce980bd061a4437a943200fae82e104bd8472f3b2f7dc36f82b5c7"
+sha256 = "1bdc0b18677634ead42e2fb589cd83b3dba0522730d2668b07a3847906cc41bf"
 
 
 @subpackage("kitinerary-devel")

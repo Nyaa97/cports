@@ -1,6 +1,6 @@
 pkgname = "libcupsfilters"
 pkgver = "2.1.0"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     # TODO mupdf deptree
@@ -22,10 +22,10 @@ makedepends = [
     "libexif-devel",
     "libjpeg-turbo-devel",
     "libpng-devel",
-    "libqpdf-devel",
     "libtiff-devel",
     "linux-headers",
     "poppler-devel",
+    "qpdf-devel",
 ]
 checkdepends = ["bash", "fonts-dejavu-otf"]
 depends = ["ghostscript"]

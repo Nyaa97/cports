@@ -1,6 +1,6 @@
 pkgname = "chromium"
 # https://chromiumdash.appspot.com/releases?platform=Linux
-pkgver = "131.0.6778.204"
+pkgver = "133.0.6943.53"
 pkgrel = 0
 archs = ["aarch64", "ppc64le", "x86_64"]
 configure_args = [
@@ -46,7 +46,6 @@ configure_args = [
     "use_system_freetype=true",
     "use_system_harfbuzz=true",
     "use_system_lcms2=true",
-    "use_system_libdrm=true",
     "use_system_libffi=true",
     "use_system_libjpeg=true",
     "use_system_zlib=true",
@@ -94,7 +93,7 @@ makedepends = [
     "libevdev-devel",
     "libevent-devel",
     "libexif-devel",
-    "libffi-devel",
+    "libffi8-devel",
     "libgcrypt-devel",
     "libjpeg-turbo-devel",
     "libmtp-devel",
@@ -140,7 +139,7 @@ license = "BSD-3-Clause"
 url = "https://www.chromium.org"
 # from gentoo
 source = f"https://chromium-tarballs.syd1.digitaloceanspaces.com/chromium-{pkgver}-linux.tar.xz"
-sha256 = "c57d1db59d96cb8f28c4c9ebc7bb4c828e72bcc4bb39cfa18f550d47a4591faa"
+sha256 = "dbd06314054f738ef6aa4e0f5d7e765602b90df9820e62a21efe068a869de7a3"
 debug_level = 1
 tool_flags = {
     "CFLAGS": [
@@ -230,8 +229,6 @@ def configure(self):
         "harfbuzz-ng",
         "highway",
         "icu",
-        "libdrm",
-        "libevent",
         "libjpeg",
         "libpng",
         "libsecret",

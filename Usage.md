@@ -521,6 +521,8 @@ The following commands are recognized:
   built in the order that is given.
 * `bump-pkgrel` Given a list of template names (at least one), increase
   the `pkgrel` number by one for each.
+* `bump-pkgver` Given a template name and a valid apk version, update the
+  `pkgver` of the template to that version.
 * `chroot` Enter the build root with an interactive shell. In this environment,
   the root is mostly unsandboxed, i.e. writable and with network access. You
   can use this kind of environment for quick testing, as well as entering failed
@@ -530,6 +532,9 @@ The following commands are recognized:
 * `clean` Clean up the build root. This means removing automatic dependencies
   and removing `builddir` and `destdir` within. When given a template name,
   it will only clean the directories for that template.
+* `commit` Commit a given template or templates. Currently, only individual
+  templates are supported, and one commit will be generated for each. Any
+  optional arguments after `--` will be passed to `git commit` directly.
 * `cycle-check` Scan all templates or a single template for build-time
   dependency cycles. Only one cycle at a time is printed. The goal is to
   keep the tree free of cycles at all times. Therefore, if you encounter

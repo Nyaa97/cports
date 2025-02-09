@@ -1,9 +1,10 @@
 pkgname = "qemu"
 pkgver = "9.2.0"
-pkgrel = 0
+pkgrel = 2
 build_style = "gnu_configure"
 # TODO vde
 configure_args = [
+    "--libexecdir=/usr/lib",  # XXX drop libexec
     "--enable-bpf",
     "--enable-cap-ng",
     "--enable-capstone",
@@ -79,7 +80,6 @@ makedepends = [
     "libiscsi-devel",
     "libjpeg-turbo-devel",
     "libnfs-devel",
-    "libnuma-devel",
     "libpulse-devel",
     "libsasl-devel",
     "libseccomp-devel",
@@ -92,12 +92,13 @@ makedepends = [
     "lzo-devel",
     "ncurses-devel",
     "nss-devel",
+    "numactl-devel",
     "pcsc-lite-devel",
     "pipewire-devel",
     "pipewire-jack-devel",
     "pixman-devel",
-    "sdl-devel",
-    "sdl_image-devel",
+    "sdl2-compat-devel",
+    "sdl2_image-devel",
     "snappy-devel",
     "usbredir-devel",
     "virglrenderer-devel",
@@ -119,7 +120,7 @@ tool_flags = {
 }
 file_modes = {
     "etc/qemu/bridge.conf": ("root", "_qemu", 0o640),
-    "usr/libexec/qemu-bridge-helper": ("root", "_qemu", 0o4710),
+    "usr/lib/qemu-bridge-helper": ("root", "_qemu", 0o4710),
 }
 # maybe someday
 options = ["!cross", "!check"]
@@ -204,7 +205,7 @@ def _(self):
     self.depends = []
 
     return [
-        "usr/libexec/vhost-user-gpu",
+        "usr/lib/vhost-user-gpu",
         "usr/lib/qemu/vhost-user/50-qemu-gpu.json",
     ]
 

@@ -1,5 +1,5 @@
 pkgname = "kopeninghours"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 # make_check_wrapper = ["wlheadless-run", "--"]
@@ -28,7 +28,7 @@ url = "https://api.kde.org/kopeninghours/html"
 source = (
     f"$(KDE_SITE)/release-service/{pkgver}/src/kopeninghours-{pkgver}.tar.xz"
 )
-sha256 = "16d29db8c240306794ef5938ce8ef8bea05974c81f4ebe3adf828a14eb6c0656"
+sha256 = "6c80ff799ef3077ca329e0f57a6329731df2814540c1ea4004834d021d2022a9"
 
 
 @subpackage("kopeninghours-devel")
@@ -37,7 +37,10 @@ def _(self):
     return self.default_devel()
 
 
-@subpackage("python-kopeninghours")
+@subpackage("kopeninghours-python")
 def _(self):
     self.subdesc = "python module"
+    # transitional
+    self.provides = [self.with_pkgver("python-kopeninghours")]
+
     return ["usr/lib/python*"]

@@ -1,5 +1,5 @@
 pkgname = "networkmanager"
-pkgver = "1.50.0"
+pkgver = "1.50.2"
 pkgrel = 1
 build_style = "meson"
 configure_args = [
@@ -31,7 +31,7 @@ configure_args = [
     "-Dkernel_firmware_dir=/usr/lib/firmware",
     "-Ddbus_conf_dir=/usr/share/dbus-1/system.d",
     "-Dudev_dir=/usr/lib/udev",
-    "-Dpppd_plugin_dir=/usr/lib/pppd/2.5.1",
+    "-Dpppd_plugin_dir=/usr/lib/pppd/2.5.2",
     "-Dsession_tracking=elogind",
     "-Dsuspend_resume=elogind",
     "-Dvapi=true",
@@ -54,7 +54,7 @@ hostmakedepends = [
     "pkgconf",
     "python-gobject",
     "vala",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "dbus-devel",
@@ -62,12 +62,11 @@ makedepends = [
     "jansson-devel",
     "curl-devel",
     "libedit-devel",
-    "libgirepository-devel",
+    "gobject-introspection-devel",
     "libgudev-devel",
     "libndp-devel",
     "libnl-devel",
     "libpsl-devel",
-    "libuuid-devel",
     "linux-headers",
     "mobile-broadband-provider-info",
     "modemmanager-devel",
@@ -77,6 +76,7 @@ makedepends = [
     "ppp-devel",
     "python-gobject",
     "udev-devel",
+    "util-linux-uuid-devel",
 ]
 depends = [
     "dinit-dbus",
@@ -91,7 +91,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 url = "https://wiki.gnome.org/Projects/NetworkManager"
 source = f"https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/archive/{pkgver}.tar.gz"
-sha256 = "d8bfc48ff787a9f823cf55b53e03313c455b7c73a2404b6e37d19aa1592bb10d"
+sha256 = "bae160012b9413419fbf0b8d4c2a2a0caaea53c53b2b1e6d645f9d533d63dc6a"
 # some tests use sysfs, + LD_BIND_NOW in tests does not work with our musl env
 options = ["!check", "!cross", "linkundefver"]
 
@@ -121,9 +121,10 @@ def post_install(self):
     )
 
 
-@subpackage("libnm")
+@subpackage("networkmanager-libs")
 def _(self):
-    self.subdesc = "runtime library"
+    # transitional
+    self.provides = [self.with_pkgver("libnm")]
 
     return self.default_libs()
 

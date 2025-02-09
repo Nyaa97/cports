@@ -1,5 +1,5 @@
 pkgname = "go"
-pkgver = "1.23.4"
+pkgver = "1.23.6"
 pkgrel = 0
 hostmakedepends = ["bash"]
 checkdepends = [
@@ -7,13 +7,12 @@ checkdepends = [
     "libunwind-devel-static",
     "musl-devel-static",
 ]
-scripts = {"pre-upgrade": True}
 pkgdesc = "Go programming language"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "BSD-3-Clause"
 url = "https://go.dev"
 source = f"{url}/dl/go{pkgver}.src.tar.gz"
-sha256 = "ad345ac421e90814293a9699cca19dd5238251c3f687980bbcae28495b263531"
+sha256 = "039c5b04e65279daceee8a6f71e70bd05cf5b801782b6f77c6e19e2ed0511222"
 env = {}
 # see below
 options = [

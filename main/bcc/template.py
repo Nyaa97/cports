@@ -1,6 +1,6 @@
 pkgname = "bcc"
 # keep in sync with contrib/libbpf-tools
-pkgver = "0.32.0"
+pkgver = "0.33.0"
 pkgrel = 1
 build_style = "cmake"
 configure_args = [
@@ -32,7 +32,7 @@ makedepends = [
     "zlib-ng-compat-devel",
 ]
 depends = [
-    self.with_pkgver("python-bcc"),
+    self.with_pkgver("bcc-python"),
     # dep of half the programs in /usr/share/bcc/tools
     "bash",
 ]
@@ -41,7 +41,7 @@ maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://github.com/iovisor/bcc"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "06d868f789c087dbdf7b52a456b7f3eea1702160dda95a4f0c11298bdd70b1cd"
+sha256 = "83b486bffca939baf74742c29d4f02ce90df740c26fe147549987f5c1fd32a8b"
 tool_flags = {
     # see libbpf comment about bpf headers
     "CFLAGS": ["-I/usr/include/bpf/uapi"],
@@ -70,8 +70,10 @@ def _(self):
     return self.default_libs()
 
 
-@subpackage("python-bcc")
+@subpackage("bcc-python")
 def _(self):
     self.subdesc = "python module"
     self.depends += [self.with_pkgver("bcc-libs")]
+    # transitional
+    self.provides = [self.with_pkgver("python-bcc")]
     return ["usr/lib/python*"]

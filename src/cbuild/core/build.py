@@ -660,6 +660,41 @@ def _build(
         if _step_sentinel("fetch"):
             return
 
+    with flock.lock(flock.rootlock()):
+        return _build_locked(
+            step,
+            pkg,
+            depmap,
+            depn,
+            chost,
+            dirty,
+            keep_temp,
+            check_fail,
+            no_update,
+            update_check,
+            _step_sentinel,
+            oldcwd,
+            oldchd,
+            prof,
+        )
+
+
+def _build_locked(
+    step,
+    pkg,
+    depmap,
+    depn,
+    chost,
+    dirty,
+    keep_temp,
+    check_fail,
+    no_update,
+    update_check,
+    _step_sentinel,
+    oldcwd,
+    oldchd,
+    prof,
+):
     if not dirty or step == "deps":
         # no_update is set when this is a build triggered by a missing dep;
         # in this case chroot.update() was already performed by its parent
@@ -805,7 +840,7 @@ def _build(
                 mount_binpkgs=True,
                 fakeroot=True,
                 binpkgs_rw=True,
-                signkey=asign.get_keypath(),
+                tmpfiles=[asign.get_keypath()],
             )
         # handle whatever error
         if ret.returncode != 0:

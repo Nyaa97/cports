@@ -1,6 +1,6 @@
 pkgname = "kxmlgui"
-pkgver = "6.9.0"
-pkgrel = 0
+pkgver = "6.10.0"
+pkgrel = 1
 build_style = "cmake"
 make_check_env = {"QT_QPA_PLATFORM": "offscreen"}
 make_check_wrapper = ["dbus-run-session"]
@@ -31,8 +31,8 @@ pkgdesc = "KDE Framework for managing menu and toolbar actions"
 maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.1-only AND LGPL-2.1-or-later"
 url = "https://api.kde.org/frameworks/kxmlgui/html"
-source = f"$(KDE_SITE)/frameworks/{pkgver[:pkgver.rfind('.')]}/kxmlgui-{pkgver}.tar.xz"
-sha256 = "39202592c78fe722903c295c891a0b58dd0411933461412000f5627cbbfa7d88"
+source = f"$(KDE_SITE)/frameworks/{pkgver[: pkgver.rfind('.')]}/kxmlgui-{pkgver}.tar.xz"
+sha256 = "561fa755638da16cae204b670f62fab70156b9121b9313612238ca9c9e8e1292"
 hardening = ["vis"]
 
 

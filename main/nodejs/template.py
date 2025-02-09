@@ -1,5 +1,5 @@
 pkgname = "nodejs"
-pkgver = "23.5.0"
+pkgver = "23.7.0"
 pkgrel = 0
 build_style = "configure"
 configure_args = [
@@ -28,7 +28,7 @@ makedepends = [
     "libuv-devel",
     "linux-headers",
     "nghttp2-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "zlib-ng-compat-devel",
 ]
 checkdepends = ["procps"]
@@ -37,7 +37,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "MIT"
 url = "https://nodejs.org"
 source = f"{url}/dist/v{pkgver}/node-v{pkgver}.tar.gz"
-sha256 = "d6c29133361faa7dd7dfda353cb15f150683a2f5c6fe6a8d19c4dcb1594c80e4"
+sha256 = "44288a847f8c2659d225ed1c14bfb557926c571d08465c897c3f41db0216a7a8"
 debug_level = 1  # allow LTO build to not run out of mem
 hardening = ["!vis", "!cfi"]
 options = ["!cross"]

@@ -1,6 +1,6 @@
 pkgname = "git"
-pkgver = "2.47.1"
-pkgrel = 0
+pkgver = "2.48.1"
+pkgrel = 1
 hostmakedepends = [
     "asciidoc",
     "gettext",
@@ -28,7 +28,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "https://git-scm.com"
 source = f"https://www.kernel.org/pub/software/scm/git/git-{pkgver}.tar.xz"
-sha256 = "f3d8f9bb23ae392374e91cd9d395970dabc5b9c5ee72f39884613cd84a6ed310"
+sha256 = "1c5d545f5dc1eb51e95d2c50d98fdf88b1a36ba1fa30e9ae5d5385c6024f82ad"
 hardening = ["!vis", "!cfi"]
 
 
@@ -124,10 +124,11 @@ def install(self):
     self.install_shell("/usr/bin/git-shell")
 
 
-@subpackage("gitk")
+@subpackage("git-gitk")
 def _(self):
     self.depends += [self.parent, "tk"]
     self.pkgdesc = "Git repository browser"
+    self.provides = [self.with_pkgver("gitk")]
     self.license = "GPL-2.0-or-later"
     return ["usr/bin/gitk", "usr/share/gitk", "usr/share/man/man1/gitk.1"]
 

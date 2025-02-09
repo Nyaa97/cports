@@ -1,6 +1,6 @@
 pkgname = "openmw"
 pkgver = "0.47.0"
-pkgrel = 8
+pkgrel = 9
 build_style = "cmake"
 configure_args = [
     # enable once we have proper qt6 support (0.49)
@@ -24,7 +24,7 @@ makedepends = [
     "openal-soft-devel",
     "openscenegraph-devel",
     "qt6-qtbase-devel",
-    "sdl-devel",
+    "sdl2-compat-devel",
     "unshield-devel",
 ]
 pkgdesc = "Open implementation of Morrowind's engine"
@@ -56,15 +56,19 @@ if self.profile().endian == "big":
     broken = "esm loader is not ready etc."
 
 
-@subpackage("esmtool")
+@subpackage("openmw-esmtool")
 def _(self):
     self.pkgdesc = "Tool for inspecting and extracitng Morrowind ESM files"
+    # transitional
+    self.provides = [self.with_pkgver("esmtool")]
 
     return ["usr/bin/esmtool"]
 
 
-@subpackage("bsatool")
+@subpackage("openmw-bsatool")
 def _(self):
     self.pkgdesc = "Tool for inspecting Bethesda BSA archives"
+    # transitional
+    self.provides = [self.with_pkgver("esmtool")]
 
     return ["usr/bin/bsatool"]

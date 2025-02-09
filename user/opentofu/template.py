@@ -1,6 +1,6 @@
 pkgname = "opentofu"
-pkgver = "1.8.6"
-pkgrel = 0
+pkgver = "1.9.0"
+pkgrel = 1
 build_style = "go"
 make_build_args = [
     f"-ldflags=-X main.version={pkgver} -X github.com/opentofu/opentofu/version.dev=no",
@@ -12,4 +12,4 @@ maintainer = "Gabriel M. Dutra <dmdutra@proton.me>"
 license = "MPL-2.0"
 url = "https://github.com/opentofu/opentofu"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "ee1ffaf26b4849dfcfbbc896624c7fafdc4982ad60bc2fa3b0826d0dfd2ef7f7"
+sha256 = "95234f00bb8a6d73bcd3f3920e376a32189004df3aaf26cb95917cec5441f8a8"

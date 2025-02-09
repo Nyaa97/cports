@@ -29,12 +29,12 @@ hostmakedepends = [
 makedepends = [
     "gettext-devel",
     "freetype-devel",
+    "fuse-devel",
+    "lvm2-devel",
     "ncurses-devel",
     "xz-devel",
-    "device-mapper-devel",
-    "fuse-devel",
 ]
-depends = ["os-prober", "cmd:findmnt!mount"]
+depends = ["os-prober", "cmd:findmnt!util-linux-mount"]
 pkgdesc = "GRand Unified Bootloader version 2"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-3.0-or-later"

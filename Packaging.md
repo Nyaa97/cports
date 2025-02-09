@@ -158,13 +158,14 @@ Current architectures with best support:
 Other architectures with repositories:
 
 * `ppc64` (ppc970+, unit tests only run for reference)
+* `ppc` (PowerPC 603+, unit tests only run for reference)
 * `riscv64` (rv64gc, no LTO + unit tests not run)
 
 Other possible targets:
 
 * `armhf` (ARMv6 + VFP)
 * `armv7` (ARMv7 + VFP)
-* `ppc` (PowerPC 603+)
+* `loongarch64`
 
 <a id="quality_requirements"></a>
 ## Quality Requirements
@@ -683,16 +684,12 @@ in a regular system and represent either bootstrap builds of various software
 needed to break dependency cycles in `cbuild` or bootstrap toolchains for
 various programming language compilers.
 
-Every package `foo-bootstrap` gains an implicit dependency on `bootstrap:foo`.
-This package is not provided by anything. Whenever `cbuild` sees a bootstrap
-package in its `hostmakedepends` or `makedepends`, it will implicitly create
-a virtual package in the current build environment to allow such package to
-be installed.
+Every package `foo-bootstrap` gains an implicit dependency on `bootstrap:cbuild`.
 
-You can do so in your own environment like such:
+You can set up a virtual `bootstrap:cbuild` in your own environment:
 
 ```
-$ apk add --virtual bootstrap:foo
+$ apk add --virtual bootstrap:cbuild
 ```
 
 <a id="template_structure"></a>
@@ -2892,7 +2889,7 @@ This is useful if you have e.g. some personal authentication token needed
 to fetch particular sources, and you do not want to paste the token directly
 to the template.
 
-##### def do(self, cmd, *args, env = None, wrksrc = None, capture_output = False, stdout = None, stderr = None, input = None, check = True, allow_network = False, path = None)
+##### def do(self, cmd, *args, env = None, wrksrc = None, capture_output = False, stdout = None, stderr = None, input = None, check = True, allow_network = False, path = None, tmpfiles = None)
 
 Execute a command in the build container, sandboxed. Does not spawn a shell,
 instead directly runs `cmd`, passing it `*args`. You can use `env` to provide
@@ -2930,6 +2927,10 @@ that if needed.
 
 The `stdout` and `stderr` arguments work the same as for Python `subprocess.run`,
 likewise with `input`.
+
+The `tmpfiles` argument can be a list of `pathlib.Path` specifying host-filesystem
+file paths to be bound into the sandbox in `/tmp`. The target filenames will be
+the same as the source filenames.
 
 The return value is the same as from Python `subprocess.run`. There you can
 access the return code as well as possibly captured `stdout`.

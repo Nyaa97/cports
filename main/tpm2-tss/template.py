@@ -12,7 +12,7 @@ configure_args = [
 hostmakedepends = [
     "automake",
     "cmocka",
-    "libltdl-devel",  # ltdl.m4
+    "libtool-devel",  # ltdl.m4
     "libtool",
     "perl",
     "pkgconf",
@@ -22,10 +22,10 @@ makedepends = [
     "json-c-devel",
     "curl-devel",
     "libftdi1-devel",
-    "libuuid-devel",
-    "libusb-bootstrap",
+    "libusb-devel",
     "linux-headers",
-    "openssl-devel",
+    "openssl3-devel",
+    "util-linux-uuid-devel",
 ]
 pkgdesc = "Implementation of TCG TPM2"
 maintainer = "q66 <q66@chimera-linux.org>"

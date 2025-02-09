@@ -1,6 +1,6 @@
 # rebuild on major clang version updates
 pkgname = "gcc"
-_clangver = "18"
+_clangver = "19"
 _mver = "14"
 _mnver = f"{_mver}.1"
 _bver = f"{_mnver}.1"
@@ -111,6 +111,16 @@ broken_symlinks = [
     f"usr/lib/gcc/{_trip}/{_mnver}/libclang_rt.builtins.a",
 ]
 
+# not all archs have gcc-bootstrap and on some using the regular host
+# clang to bootstrap is fine, but where we can bootstrap with gcc, do
+# so in order to avoid trouble
+_use_bootstrap = False
+
+match self.profile().arch:
+    case "aarch64" | "ppc64le" | "ppc64" | "ppc" | "riscv64" | "x86_64":
+        _use_bootstrap = True
+        hostmakedepends += ["gcc-bootstrap"]
+
 match self.profile().arch:
     case "aarch64":
         configure_args += [
@@ -147,6 +157,14 @@ def init_configure(self):
     self.env["BOOT_CFLAGS"] = cfl
     self.env["BOOT_CXXFLAGS"] = cxfl
     self.env["BOOT_LDFLAGS"] = ldfl
+    # bypass clang
+    if _use_bootstrap:
+        self.env["CC"] = (
+            "/usr/lib/gcc-bootstrap/bin/gcc -I/usr/include -L/usr/lib"
+        )
+        self.env["CXX"] = (
+            "/usr/lib/gcc-bootstrap/bin/g++ -I/usr/include -L/usr/lib"
+        )
 
 
 def post_install(self):
@@ -223,19 +241,19 @@ def _(self):
     ]
 
 
-@subpackage("libgfortran")
+@subpackage("gcc-fortran-libs")
 def _(self):
     self.subdesc = "Fortran runtime library"
     return ["usr/lib/libgfortran.so.*"]
 
 
-@subpackage("libobjc")
+@subpackage("gcc-objc-libs")
 def _(self):
     self.subdesc = "Objective-C runtime library"
     return ["usr/lib/libobjc.so.*"]
 
 
-@subpackage("libgomp-devel")
+@subpackage("gcc-gomp-devel")
 def _(self):
     self.subdesc = "OpenMP develpment files"
     return [
@@ -247,13 +265,13 @@ def _(self):
     ]
 
 
-@subpackage("libgomp")
+@subpackage("gcc-gomp-libs")
 def _(self):
     self.subdesc = "OpenMP runtime"
     return ["usr/lib/libgomp.so.*"]
 
 
-@subpackage("libitm-devel")
+@subpackage("gcc-itm-devel")
 def _(self):
     self.subdesc = "transactional memory lib development files"
     return [
@@ -264,7 +282,7 @@ def _(self):
     ]
 
 
-@subpackage("libitm")
+@subpackage("gcc-itm-libs")
 def _(self):
     self.subdesc = "transactional memory library"
     return ["usr/lib/libitm.so.*"]

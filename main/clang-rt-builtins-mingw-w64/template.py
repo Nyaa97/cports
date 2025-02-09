@@ -1,11 +1,11 @@
 pkgname = "clang-rt-builtins-mingw-w64"
-pkgver = "19.1.6"
+pkgver = "19.1.7"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
     "-DCMAKE_BUILD_TYPE=Release",
     "-DCMAKE_SYSTEM_NAME=Windows",
-    f"-DCMAKE_INSTALL_PREFIX=/usr/lib/clang/{pkgver[0:pkgver.find('.')]}",
+    f"-DCMAKE_INSTALL_PREFIX=/usr/lib/clang/{pkgver[0 : pkgver.find('.')]}",
     # prevent executable checks
     "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
     # only build that target
@@ -40,7 +40,7 @@ maintainer = "Erica Z <zerica@callcc.eu>"
 license = "Apache-2.0 WITH LLVM-exception AND NCSA"
 url = "https://llvm.org"
 source = f"https://github.com/llvm/llvm-project/releases/download/llvmorg-{pkgver}/llvm-project-{pkgver}.src.tar.xz"
-sha256 = "e3f79317adaa9196d2cfffe1c869d7c100b7540832bc44fe0d3f44a12861fa34"
+sha256 = "82401fea7b79d0078043f7598b835284d6650a75b93e64b6f761ea7b63097501"
 hardening = ["!scp"]
 # crosstoolchain
 options = ["!check", "empty"]

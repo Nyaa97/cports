@@ -1,5 +1,5 @@
 pkgname = "thunderbird"
-pkgver = "128.5.2"
+pkgver = "128.6.1"
 pkgrel = 0
 hostmakedepends = [
     "automake",
@@ -27,7 +27,7 @@ makedepends = [
     "gtk+3-devel",
     "icu-devel",
     "libevent-devel",
-    "libffi-devel",
+    "libffi8-devel",
     "libjpeg-turbo-devel",
     "libnotify-devel",
     "libogg-devel",
@@ -58,7 +58,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-3.0-only AND LGPL-2.1-only AND LGPL-3.0-only AND MPL-2.0"
 url = "https://www.thunderbird.net"
 source = f"$(MOZILLA_SITE)/thunderbird/releases/{pkgver}esr/source/thunderbird-{pkgver}esr.source.tar.xz"
-sha256 = "ef932fe30fcc3f90f465feffcf641147d678ec3ecda220f317046e715a905547"
+sha256 = "55da5991f82b6463f20a9088c46f637713af637218ad47c3110afb7d83593852"
 debug_level = 1  # defatten, especially with LTO
 tool_flags = {
     "LDFLAGS": ["-Wl,-rpath=/usr/lib/thunderbird", "-Wl,-z,stack-size=2097152"]
@@ -81,6 +81,8 @@ options = ["!cross", "!check"]
 
 if self.profile().endian == "big":
     broken = "broken colors, needs patching, etc."
+elif self.profile().arch == "riscv64":
+    broken = "fails to compile uniffi_bindgen since rust 1.84"
 
 # crashes compiler in gl.c
 if self.profile().arch == "riscv64":

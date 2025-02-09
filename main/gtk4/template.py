@@ -1,6 +1,6 @@
 pkgname = "gtk4"
 pkgver = "4.16.12"
-pkgrel = 0
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "-Dman-pages=true",
@@ -27,7 +27,7 @@ hostmakedepends = [
     "gettext-devel",
     "glib-devel",
     "gobject-introspection",
-    "gtk-update-icon-cache",
+    "gtk+3-update-icon-cache",
     "meson",
     "perl",
     "pkgconf",
@@ -36,7 +36,7 @@ hostmakedepends = [
     "shaderc-progs",
     "wayland-progs",
     "wayland-protocols",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "at-spi2-core-devel",
@@ -68,7 +68,7 @@ makedepends = [
 ]
 depends = [
     "adwaita-icon-theme",
-    "gtk-update-icon-cache",
+    "gtk+3-update-icon-cache",
     "shared-mime-info",
     "virtual:gdk-pixbuf-loader-svg!librsvg",
 ]

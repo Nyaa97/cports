@@ -19,9 +19,9 @@ hostmakedepends = [
 ]
 makedepends = [
     "libedit-devel",
-    "libffi-devel",
+    "libffi8-devel",
     "libyaml-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "zlib-ng-compat-devel",
 ]
 pkgdesc = "Ruby scripting language"

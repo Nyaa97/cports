@@ -19,7 +19,7 @@ hostmakedepends = [
     "docbook-xsl-nons",
     "gettext-devel",
     "glib-devel",
-    "xsltproc",
+    "libxslt-progs",
     "polkit",
     "automake",
     "libtool",
@@ -27,13 +27,13 @@ hostmakedepends = [
 ]
 makedepends = [
     "acl-devel",
+    "btrfs-progs-devel",
     "libatasmart-devel",
     "libgudev-devel",
     "polkit-devel",
     "elogind-devel",
     "libblockdev-devel",
-    "libbtrfs-devel",
-    "device-mapper-devel",
+    "lvm2-devel",
 ]
 pkgdesc = "Daemon, tools and libraries for disk manipulation"
 maintainer = "q66 <q66@chimera-linux.org>"

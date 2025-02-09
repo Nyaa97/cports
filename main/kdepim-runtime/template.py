@@ -1,5 +1,5 @@
 pkgname = "kdepim-runtime"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 make_check_args = ["-j1", "-E", "(akonadi-sqlite-.*)"]
@@ -10,7 +10,7 @@ hostmakedepends = [
     "gettext",
     "ninja",
     "pkgconf",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "akonadi-calendar-devel",
@@ -58,4 +58,4 @@ url = "https://invent.kde.org/pim/kdepim-runtime"
 source = (
     f"$(KDE_SITE)/release-service/{pkgver}/src/kdepim-runtime-{pkgver}.tar.xz"
 )
-sha256 = "80f64309b75ab0be488eff3748143368ec661844f891ef28b3a916ac802a58a2"
+sha256 = "f10659b042e4adcfe4aca206f3ee7d5d6f203ef60c48d294a119b79ed3075e07"

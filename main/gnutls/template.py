@@ -1,6 +1,6 @@
 pkgname = "gnutls"
 pkgver = "3.8.8"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--disable-rpath",
@@ -38,12 +38,12 @@ makedepends = [
     "zstd-devel",
 ]
 # dlopened
-depends = ["libtspi"]
+depends = ["trousers-libs"]
 pkgdesc = "GNU Transport Layer Security library"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "LGPL-2.1-or-later"
 url = "https://gnutls.org"
-source = f"https://www.gnupg.org/ftp/gcrypt/gnutls/v{".".join(pkgver.split(".")[0:2])}/gnutls-{pkgver}.tar.xz"
+source = f"https://www.gnupg.org/ftp/gcrypt/gnutls/v{'.'.join(pkgver.split('.')[0:2])}/gnutls-{pkgver}.tar.xz"
 sha256 = "ac4f020e583880b51380ed226e59033244bc536cad2623f2e26f5afa2939d8fb"
 
 

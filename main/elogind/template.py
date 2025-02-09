@@ -1,6 +1,6 @@
 pkgname = "elogind"
-pkgver = "255.5"
-pkgrel = 5
+pkgver = "255.17"
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "--libexecdir=/usr/lib/elogind",
@@ -23,16 +23,16 @@ hostmakedepends = [
     "pkgconf",
     "python-jinja2",
     "shadow",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "acl-devel",
     "gettext-devel",
     "libcap-devel",
-    "libmount-devel",
     "libseccomp-devel",
     "linux-pam-devel",
     "udev-devel",
+    "util-linux-mount-devel",
 ]
 checkdepends = ["bash", "python-lxml"]
 depends = ["dinit-dbus", "tangle-progs", "turnstile"]
@@ -42,7 +42,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-or-later AND LGPL-2.0-or-later"
 url = "https://github.com/elogind/elogind"
 source = f"{url}/archive/v{pkgver}.tar.gz"
-sha256 = "ef83beb381064516c29290f0fedcbbe36de052f313d72d120eade69ab26b82fe"
+sha256 = "a9725ae3f73f8d910de84c108bc11bfd4c782bef6a4190b2ec70c5d2f22344db"
 # crashes in find_suitable_hibernation_device_full -> btrfs_get_file_physical_offset_fd
 # when logging into plasma from gdm
 tool_flags = {"CFLAGS": ["-U_FORTIFY_SOURCE"]}
@@ -89,17 +89,22 @@ def _(self):
     return []
 
 
-@subpackage("libelogind")
+@subpackage("elogind-libs")
 def _(self):
-    self.subdesc = "library"
+    # transitional
+    self.provides = [self.with_pkgver("libelogind")]
+
     return self.default_libs()
 
 
-@subpackage("pam_elogind")
+@subpackage("elogind-pam")
 def _(self):
     self.subdesc = "PAM"
     self.depends = [self.parent, "linux-pam"]
     self.install_if = [self.parent, "linux-pam"]
+    # transitional
+    self.provides = [self.with_pkgver("pam_elogind")]
+
     return [
         "usr/lib/pam.d",
         "usr/lib/security",

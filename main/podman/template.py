@@ -1,6 +1,6 @@
 pkgname = "podman"
-pkgver = "5.3.1"
-pkgrel = 0
+pkgver = "5.3.2"
+pkgrel = 1
 build_style = "go"
 # for install.bin compat
 make_dir = "bin"
@@ -18,12 +18,12 @@ hostmakedepends = [
     "python",
 ]
 makedepends = [
-    "device-mapper-devel",
+    "btrfs-progs-devel",
     "gpgme-devel",
     "libassuan-devel",
-    "libbtrfs-devel",
     "libseccomp-devel",
     "linux-headers",
+    "lvm2-devel",
     "sqlite-devel",
 ]
 depends = [
@@ -50,7 +50,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://podman.io"
 source = f"https://github.com/containers/podman/archive/v{pkgver}.tar.gz"
-sha256 = "5b4e9ddce69cc2c8c8b8529e90093ae3ea9cb2959e2fceb98469b282dbffbcc7"
+sha256 = "e7d7abf2d4ecae7217af017a4199d555563721bf6c3ae52e68704ee8268c432b"
 # nah
 options = ["!check"]
 

@@ -1,17 +1,17 @@
 pkgname = "gobject-introspection"
 pkgver = "1.82.0"
-pkgrel = 0
+pkgrel = 1
 build_style = "meson"
 hostmakedepends = ["meson", "pkgconf", "flex", "bison"]
 makedepends = [
     "glib-bootstrap",
-    "libffi-devel",
+    "libffi8-devel",
     "python-devel",
     "python-mako",
     "python-markdown",
 ]
 depends = [
-    "libgirepository-devel",
+    "gobject-introspection-devel",
     "python-mako",
     "python-markdown",
     "python-setuptools",
@@ -40,25 +40,28 @@ def post_install(self):
     python.precompile(self, f"usr/lib/{pkgname}/giscanner")
 
 
-@subpackage("gir-freedesktop")
+@subpackage("gobject-introspection-freedesktop")
 def _(self):
     self.pkgdesc = "Introspection data for some freedesktop components"
+    # transitional
+    self.provides = [self.with_pkgver("gir-freedesktop")]
 
     return ["usr/lib/girepository-1.0"]
 
 
-@subpackage("libgirepository")
+@subpackage("gobject-introspection-libs")
 def _(self):
-    self.pkgdesc = "Library for handling gir data"
-    self.subdesc = "runtime library"
-    self.depends += [self.with_pkgver("gir-freedesktop")]
+    self.depends += [self.with_pkgver("gobject-introspection-freedesktop")]
+    # transitional
+    self.provides = [self.with_pkgver("libgirepository")]
 
     return self.default_libs()
 
 
-@subpackage("libgirepository-devel")
+@subpackage("gobject-introspection-devel")
 def _(self):
-    self.pkgdesc = "Library for handling gir data"
-    self.depends += ["cairo-devel", "libffi-devel"]
+    self.depends += ["cairo-devel", "libffi8-devel"]
+    # transitional
+    self.provides = [self.with_pkgver("libgirepository-devel")]
 
     return self.default_devel()

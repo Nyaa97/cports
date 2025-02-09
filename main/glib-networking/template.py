@@ -1,6 +1,6 @@
 pkgname = "glib-networking"
-pkgver = "2.80.0"
-pkgrel = 0
+pkgver = "2.80.1"
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "-Dgnutls=enabled",
@@ -11,7 +11,7 @@ configure_args = [
 ]
 hostmakedepends = ["meson", "pkgconf", "glib-devel", "gettext"]
 makedepends = [
-    "openssl-devel",
+    "openssl3-devel",
     "gnutls-devel",
     "gsettings-desktop-schemas-devel",
     "glib-devel",
@@ -24,7 +24,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "LGPL-2.1-or-later"
 url = "https://gitlab.gnome.org/GNOME/glib-networking"
 source = f"$(GNOME_SITE)/glib-networking/{pkgver[:-2]}/glib-networking-{pkgver}.tar.xz"
-sha256 = "d8f4f1aab213179ae3351617b59dab5de6bcc9e785021eee178998ebd4bb3acf"
+sha256 = "b80e2874157cd55071f1b6710fa0b911d5ac5de106a9ee2a4c9c7bee61782f8e"
 
 
 def post_install(self):
@@ -35,7 +35,7 @@ def post_install(self):
 def _(self):
     self.subdesc = "OpenSSL backend"
     # autoinstall if openssl is installed
-    self.install_if = [self.parent, "openssl"]
+    self.install_if = [self.parent, "openssl3"]
 
     return ["usr/lib/gio/modules/libgioopenssl.so"]
 

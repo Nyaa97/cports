@@ -1,5 +1,5 @@
 pkgname = "solid"
-pkgver = "6.9.1"
+pkgver = "6.10.0"
 pkgrel = 0
 build_style = "cmake"
 hostmakedepends = [
@@ -11,20 +11,18 @@ hostmakedepends = [
 ]
 makedepends = [
     "libimobiledevice-devel",
-    "libmount-devel",
     "libplist-devel",
     "qt6-qtbase-devel",
     "qt6-qttools-devel",
     "udev-devel",
+    "util-linux-mount-devel",
 ]
 pkgdesc = "KDE Hardware integration and detection"
 maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.1-only OR LGPL-3.0-only"
 url = "https://develop.kde.org/docs/features/solid"
-source = (
-    f"$(KDE_SITE)/frameworks/{pkgver[:pkgver.rfind('.')]}/solid-{pkgver}.tar.xz"
-)
-sha256 = "254d562da6611a15f1f617e7afb78d4702455b89ca95de1dba9f6b9928320367"
+source = f"$(KDE_SITE)/frameworks/{pkgver[: pkgver.rfind('.')]}/solid-{pkgver}.tar.xz"
+sha256 = "24892e81a3047f753519dbd384b47635c5a2543d8ee0bf3c299b0fcfef318e8c"
 hardening = ["vis"]
 
 

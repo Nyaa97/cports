@@ -1,6 +1,6 @@
 pkgname = "e2fsprogs"
-pkgver = "1.47.1"
-pkgrel = 0
+pkgver = "1.47.2"
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--enable-elf-shlibs",
@@ -24,10 +24,10 @@ make_install_args = ["-j1", "install-libs"]
 hostmakedepends = ["pkgconf", "texinfo"]
 makedepends = [
     "fuse-devel",
-    "libblkid-devel",
-    "libuuid-devel",
     "linux-headers",
     "udev-devel",
+    "util-linux-blkid-devel",
+    "util-linux-uuid-devel",
 ]
 checkdepends = ["bzip2", "perl"]
 pkgdesc = "Ext2/3/4 file system utilities"
@@ -35,7 +35,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 url = "https://e2fsprogs.sourceforge.net"
 source = f"$(KERNEL_SITE)/kernel/people/tytso/e2fsprogs/v{pkgver}/e2fsprogs-{pkgver}.tar.xz"
-sha256 = "5a33dc047fd47284bca4bb10c13cfe7896377ae3d01cb81a05d406025d99e0d1"
+sha256 = "08242e64ca0e8194d9c1caad49762b19209a06318199b63ce74ae4ef2d74e63c"
 
 
 def post_patch(self):
@@ -74,10 +74,12 @@ def _(self):
     return self.default_libs()
 
 
-@subpackage("fuse2fs")
+@subpackage("e2fsprogs-fuse")
 def _(self):
     self.pkgdesc = "Ext2/3/4 FUSE driver"
     self.depends += ["fuse"]
+    # transitional
+    self.provides = [self.with_pkgver("fuse2fs")]
 
     return [
         "usr/bin/fuse2fs",

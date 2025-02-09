@@ -1,5 +1,5 @@
 pkgname = "mailcommon"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 # sqlite all fail
@@ -12,7 +12,7 @@ hostmakedepends = [
     "gettext",
     "ninja",
     "pkgconf",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "akonadi-contacts-devel",
@@ -50,7 +50,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-3.0-only AND GPL-3.0-only"
 url = "https://api.kde.org/kdepim/mailcommon/html"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/mailcommon-{pkgver}.tar.xz"
-sha256 = "409e8fc2188392e9ae1452d443eed33ec3fbc017aba7e7e0ae02dd0758cf1e1d"
+sha256 = "c58a84b24204f2f768fc72e3cac3159de6be25b346a62cb58db0c1a26d2b4fbd"
 
 
 @subpackage("mailcommon-devel")

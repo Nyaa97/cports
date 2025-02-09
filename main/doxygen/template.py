@@ -1,5 +1,5 @@
 pkgname = "doxygen"
-pkgver = "1.13.0"
+pkgver = "1.13.2"
 pkgrel = 0
 build_style = "cmake"
 configure_args = ["-DCMAKE_BUILD_TYPE=Release"]
@@ -10,7 +10,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "https://doxygen.nl"
 source = f"{url}/files/doxygen-{pkgver}.src.tar.gz"
-sha256 = "99434f8130f68be4a4a817e540620aedf95c617c68cc73434de04207abaaae46"
+sha256 = "3a25e3386c26ea5494c784e946327225debfbc5dbfa8b13549010a315aace66d"
 hardening = ["vis", "cfi"]
 
 

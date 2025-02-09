@@ -1,6 +1,6 @@
 pkgname = "python-numpy"
-pkgver = "2.2.1"
-pkgrel = 0
+pkgver = "2.2.2"
+pkgrel = 1
 build_style = "python_pep517"
 make_build_args = []
 hostmakedepends = [
@@ -21,7 +21,7 @@ maintainer = "Erica Z <zerica@callcc.eu>"
 license = "BSD-3-Clause"
 url = "https://numpy.org"
 source = f"https://github.com/numpy/numpy/releases/download/v{pkgver}/numpy-{pkgver}.tar.gz"
-sha256 = "45681fd7128c8ad1c379f0ca0776a8b0c6583d2f69889ddac01559dfe4390918"
+sha256 = "ed6906f61834d687738d25988ae117683705636936cc605be0bb208b23df4d8f"
 hardening = ["!int"]
 
 if self.profile().arch == "aarch64":
@@ -101,7 +101,10 @@ def post_install(self):
 @subpackage("python-numpy-tests")
 def _(self):
     self.subdesc = "tests"
-    self.depends += ["python"]
+    self.depends = [
+        *checkdepends,
+        self.parent,
+    ]
     return [
         "usr/lib/python*/site-packages/numpy/*/tests/",
         "usr/lib/python*/site-packages/numpy/tests/",

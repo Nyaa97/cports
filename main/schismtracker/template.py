@@ -1,6 +1,6 @@
 pkgname = "schismtracker"
 pkgver = "20241226"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--enable-flac-linking",
@@ -9,7 +9,7 @@ configure_args = [
 hostmakedepends = ["automake", "pkgconf"]
 makedepends = [
     "flac-devel",
-    "sdl-devel",
+    "sdl2-compat-devel",
     "utf8proc-devel",
 ]
 pkgdesc = "Reimplementation of Impulse Tracker"

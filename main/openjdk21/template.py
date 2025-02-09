@@ -1,6 +1,6 @@
 pkgname = "openjdk21"
-pkgver = "21.0.5_p11"
-pkgrel = 0
+pkgver = "21.0.6_p7"
+pkgrel = 1
 _majver = pkgver.split(".")[0]
 _fver = pkgver.split("_")[0]
 _bver = pkgver.split("_p")[-1]
@@ -38,7 +38,7 @@ hostmakedepends = [
     "file",
     "libtool",
     "linux-headers",
-    "openssl",
+    "openssl3",
     "pkgconf",
     "zip",
     "zlib-ng-compat-devel",
@@ -66,7 +66,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only WITH Classpath-exception-2.0"
 url = "https://openjdk.org"
 source = f"https://github.com/openjdk/jdk{_majver}u/archive/jdk-{_fver}+{_bver}.tar.gz"
-sha256 = "8d57ea0ba57310fffb9257d8018e54a264d940c472228eb04d37a21b584885ac"
+sha256 = "260e81ac93d66845c7debcf3b4a1f53b0fcf639124cc3899765f57700539259c"
 # FIXME: SIGILL in jvm
 hardening = ["!int"]
 # TODO later
@@ -273,6 +273,7 @@ def _(self):
 def _(self):
     # default version
     self.provider_priority = 120
+    self.provides = ["java-jre-headless"]
     return [
         "usr/bin/java",
         "usr/bin/jfr",
@@ -297,6 +298,7 @@ def _(self):
         self.with_pkgver(f"java-jre-headless-openjdk{_majver}-default"),
         self.with_pkgver(f"openjdk{_majver}-jre"),
     ]
+    self.provides = ["java-jre"]
     # empty
     self.options = ["empty"]
     return []
@@ -308,6 +310,7 @@ def _(self):
     self.provider_priority = 120
     # requires the stuff
     self.depends += [self.with_pkgver(f"java-jre-openjdk{_majver}-default")]
+    self.provides = ["java-jdk"]
     return [
         "usr/bin",
         "usr/share/man",

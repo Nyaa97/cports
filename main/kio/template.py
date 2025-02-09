@@ -1,6 +1,6 @@
 pkgname = "kio"
-pkgver = "6.9.0"
-pkgrel = 0
+pkgver = "6.10.0"
+pkgrel = 1
 build_style = "cmake"
 # flaky
 make_check_args = ["-E", "kiocore-krecentdocumenttest"]
@@ -50,9 +50,9 @@ license = (
 )
 url = "https://api.kde.org/frameworks/kio/html"
 source = (
-    f"$(KDE_SITE)/frameworks/{pkgver[:pkgver.rfind('.')]}/kio-{pkgver}.tar.xz"
+    f"$(KDE_SITE)/frameworks/{pkgver[: pkgver.rfind('.')]}/kio-{pkgver}.tar.xz"
 )
-sha256 = "5360962b0b9bc06d01f86888c896ca591ccd2d0bca79b7f5cc4367a6e31b368b"
+sha256 = "7eb454438f149e7ed513c3bbd526b67e3e3ecfe32ae7c986168baa59600b699c"
 tool_flags = {"LDFLAGS": ["-Wl,-z,stack-size=0x200000"]}
 hardening = ["vis"]
 # >60% (40/62) tests fail, pain to get working in a limited enviroment due to expecting e.g. real disks

@@ -1,6 +1,6 @@
 pkgname = "flatpak"
-pkgver = "1.15.10"
-pkgrel = 0
+pkgver = "1.16.0"
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "-Ddconf=enabled",
@@ -57,7 +57,7 @@ checkdepends = ["bash", "dbus", "socat"]
 depends = [
     "bubblewrap",
     "desktop-file-utils",
-    "gtk-update-icon-cache",
+    "gtk+3-update-icon-cache",
     "shared-mime-info",
     "xdg-dbus-proxy",
 ]
@@ -68,7 +68,7 @@ maintainer = "eater <=@eater.me>"
 license = "LGPL-2.1-or-later"
 url = "https://flatpak.org"
 source = f"https://github.com/flatpak/flatpak/releases/download/{pkgver}/flatpak-{pkgver}.tar.xz"
-sha256 = "6aa67ca29b4f4da74654888446710b16c9fcfe640c324a51c5025087eecbf42f"
+sha256 = "cb0ac565adcb62127c6d11ed50ee7044d6a836fa69c354b2f4b640a22bfa4b2a"
 # test runner expects a different env (possible FIXME?)
 options = ["!check", "!cross"]
 

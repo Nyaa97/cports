@@ -1,5 +1,5 @@
 pkgname = "haproxy"
-pkgver = "3.0.6"
+pkgver = "3.1.3"
 pkgrel = 0
 build_style = "makefile"
 make_build_args = [
@@ -30,7 +30,7 @@ hostmakedepends = [
 makedepends = [
     "linux-headers",
     "lua5.4-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "pcre2-devel",
     "zlib-ng-compat-devel",
 ]
@@ -39,9 +39,9 @@ maintainer = "ttyyls <contact@behri.org>"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later WITH custom:OpenSSL-exception"
 url = "https://www.haproxy.org"
 source = (
-    f"{url}/download/{pkgver[:pkgver.rfind('.')]}/src/haproxy-{pkgver}.tar.gz"
+    f"{url}/download/{pkgver[: pkgver.rfind('.')]}/src/haproxy-{pkgver}.tar.gz"
 )
-sha256 = "cf1bf58b5bc79c48db7b01667596ffd98343adb29a41096f075f00a8f90a7335"
+sha256 = "6dd21f9a41f0ec7289650e299180b64f9dd225e35113fd1bddc6a3a2e79d5172"
 hardening = ["!vis", "!cfi", "!int"]
 # hard depends on vtest which doesn't have releases
 options = ["!check"]

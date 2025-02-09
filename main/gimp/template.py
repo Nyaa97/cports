@@ -23,7 +23,7 @@ hostmakedepends = [
     "pkgconf",
     "python-gobject",
     "shared-mime-info",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "alsa-lib-devel",
@@ -36,13 +36,13 @@ makedepends = [
     "gdk-pixbuf-devel",
     "gegl-devel",
     "gexiv2-devel",
+    "ghostscript-devel",
     "glib-devel",
     "gtk+3-devel",
     "harfbuzz-devel",
     "json-glib-devel",
     "lcms2-devel",
     "libarchive-devel",
-    "libgs-devel",
     "libgudev-devel",
     "libheif-devel",
     "libomp-devel",

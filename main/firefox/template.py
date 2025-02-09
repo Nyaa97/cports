@@ -1,5 +1,5 @@
 pkgname = "firefox"
-pkgver = "133.0.3"
+pkgver = "135.0"
 pkgrel = 0
 hostmakedepends = [
     "automake",
@@ -28,7 +28,7 @@ makedepends = [
     "gtk+3-devel",
     "icu-devel",
     "libevent-devel",
-    "libffi-devel",
+    "libffi8-devel",
     "libjpeg-turbo-devel",
     "libnotify-devel",
     "libogg-devel",
@@ -50,7 +50,7 @@ makedepends = [
     "zlib-ng-compat-devel",
 ]
 depends = [
-    "libavcodec",
+    "ffmpeg-avcodec-libs",
     "openh264-firefox-plugin-meta",
     "speechd-meta",
 ]
@@ -64,7 +64,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-3.0-only AND LGPL-2.1-only AND LGPL-3.0-only AND MPL-2.0"
 url = "https://www.mozilla.org/firefox"
 source = f"$(MOZILLA_SITE)/firefox/releases/{pkgver}/source/firefox-{pkgver}.source.tar.xz"
-sha256 = "f134a5420200bb03ab460f9d2867507c0edb222ce73faf4064cdbea02a0aca1b"
+sha256 = "827e12a962ef47511089af4498f65ebf42fa57ca31db790bfd7e9a820d16b960"
 debug_level = 1  # defatten, especially with LTO
 tool_flags = {
     "LDFLAGS": ["-Wl,-rpath=/usr/lib/firefox", "-Wl,-z,stack-size=2097152"]

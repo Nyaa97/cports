@@ -1,6 +1,6 @@
 pkgname = "skopeo"
 pkgver = "1.17.0"
-pkgrel = 0
+pkgrel = 1
 build_style = "go"
 # for compatibility with Makefile targets
 make_dir = "bin"
@@ -12,8 +12,8 @@ hostmakedepends = [
     "pkgconf",
 ]
 makedepends = [
+    "btrfs-progs-devel",
     "gpgme-devel",
-    "libbtrfs-devel",
     "linux-headers",
     "sqlite-devel",
 ]

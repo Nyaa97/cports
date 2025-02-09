@@ -1,6 +1,6 @@
 pkgname = "mesa"
-pkgver = "24.3.2"
-pkgrel = 0
+pkgver = "24.3.4"
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "-Db_ndebug=true",
@@ -17,6 +17,7 @@ configure_args = [
     "-Dplatforms=x11,wayland",
     "-Dshared-glapi=enabled",
     "-Dvideo-codecs=all",
+    "-Dgallium-vdpau=disabled",
 ]
 hostmakedepends = [
     "bison",
@@ -54,9 +55,9 @@ makedepends = [
     "elfutils-devel",
     "libarchive-devel",
     "libexpat-devel",
-    "libffi-devel",
-    "libsensors-devel",
+    "libffi8-devel",
     "libxml2-devel",
+    "lm-sensors-devel",
     "lua5.4-devel",
     "ncurses-devel",
     "zlib-ng-compat-devel",
@@ -64,6 +65,7 @@ makedepends = [
     # video accel
     "libva-bootstrap",
 ]
+provider_priority = 999
 pkgdesc = "Mesa 3D Graphics Library"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "MIT"
@@ -87,7 +89,7 @@ _subproject_list = [
     "unicode-ident",
 ]
 source = f"https://mesa.freedesktop.org/archive/mesa-{pkgver.replace('_', '-')}.tar.xz"
-sha256 = "ad9f5f3a6d2169e4786254ee6eb5062f746d11b826739291205d360f1f3ff716"
+sha256 = "e641ae27191d387599219694560d221b7feaa91c900bcec46bf444218ed66025"
 # lots of issues in swrast and so on
 hardening = ["!int"]
 # cba to deal with cross patching nonsense
@@ -208,9 +210,9 @@ if _have_opencl or _have_nvidia:
     makedepends += ["rust"]
 
 if _have_hwdec:
-    configure_args += ["-Dgallium-vdpau=disabled", "-Dgallium-va=enabled"]
+    configure_args += ["-Dgallium-va=enabled"]
 else:
-    configure_args += ["-Dgallium-vdpau=disabled", "-Dgallium-va=disabled"]
+    configure_args += ["-Dgallium-va=disabled"]
 
 if _have_vulkan:
     makedepends += ["vulkan-loader-devel"]
@@ -250,19 +252,22 @@ def post_install(self):
     self.install_license("docs/license.rst")
 
 
-@subpackage("libglapi")
+@subpackage("mesa-glapi-libs")
 def _(self):
     self.pkgdesc = "Free implementation of the GL API"
-    self.subdesc = "runtime library"
     self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libglapi")]
 
     return ["usr/lib/libglapi.so.*"]
 
 
-@subpackage("libgbm")
+@subpackage("mesa-gbm-libs")
 def _(self):
     self.pkgdesc = "Generic Buffer Management"
-    self.subdesc = "runtime library"
+    self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libgbm")]
 
     return [
         "usr/lib/gbm",
@@ -270,9 +275,11 @@ def _(self):
     ]
 
 
-@subpackage("libgbm-devel")
+@subpackage("mesa-gbm-devel")
 def _(self):
     self.pkgdesc = "Generic Buffer Management"
+    # transitional
+    self.provides = [self.with_pkgver("libgbm-devel")]
 
     return [
         "usr/include/gbm.h",
@@ -281,55 +288,62 @@ def _(self):
     ]
 
 
-@subpackage("libosmesa")
+@subpackage("mesa-osmesa-libs")
 def _(self):
     self.pkgdesc = "Mesa off-screen interface"
-    self.subdesc = "runtime library"
     self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libosmesa")]
 
     return ["usr/lib/libOSMesa.so.*"]
 
 
-@subpackage("libgles1")
+@subpackage("mesa-gles1-libs")
 def _(self):
     self.pkgdesc = "Free implementation of OpenGL ES 1.x API"
-    self.subdesc = "runtime library"
     self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libgles1")]
 
     return ["usr/lib/libGLESv1_CM.so.*"]
 
 
-@subpackage("libgles2")
+@subpackage("mesa-gles2-libs")
 def _(self):
     self.pkgdesc = "Free implementation of OpenGL ES 2.x API"
-    self.subdesc = "runtime library"
     self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libgles2")]
 
     return ["usr/lib/libGLESv2.so.*"]
 
 
-@subpackage("libegl")
+@subpackage("mesa-egl-libs")
 def _(self):
     self.pkgdesc = "Free implementation of the EGL API"
-    self.subdesc = "runtime library"
     self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libegl")]
 
     return ["usr/lib/libEGL.so.*"]
 
 
-@subpackage("libgl")
+@subpackage("mesa-gl-libs")
 def _(self):
     self.pkgdesc = "Free implementation of the OpenGL API"
-    self.subdesc = "runtime library"
     self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libgl")]
 
     return ["usr/lib/libGL.so.*"]
 
 
-@subpackage("libxatracker", _have_vmware)
+@subpackage("mesa-xatracker-libs", _have_vmware)
 def _(self):
     self.pkgdesc = "X acceleration library"
-    self.subdesc = "runtime library"
+    self.depends += [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("libxatracker")]
 
     return ["usr/lib/libxatracker*.so.*"]
 
@@ -337,6 +351,7 @@ def _(self):
 @subpackage("mesa-gallium-nine", _have_nine)
 def _(self):
     self.pkgdesc = "Mesa implementation of D3D9"
+    self.depends += [self.parent]
 
     return ["usr/lib/d3d"]
 
@@ -344,7 +359,7 @@ def _(self):
 @subpackage("mesa-opencl", _have_opencl)
 def _(self):
     self.pkgdesc = "Mesa implementation of OpenCL"
-    self.depends += ["libclc"]
+    self.depends += [self.parent, "libclc"]
 
     return [
         "etc/OpenCL",
@@ -357,12 +372,15 @@ def _(self):
 @subpackage("mesa-libgallium")
 def _(self):
     self.pkgdesc = "Mesa gallium loader"
+    self.depends += [self.parent]
+
     return ["usr/lib/libgallium-*.so"]
 
 
 @subpackage("mesa-dri")
 def _(self):
     self.pkgdesc = "Mesa DRI drivers"
+    self.depends += [self.parent]
     self.install_if = [self.parent]
     # transitional
     self.provides = [self.with_pkgver("mesa-vaapi")]
@@ -373,6 +391,7 @@ def _(self):
 @subpackage("mesa-vulkan", _have_vulkan)
 def _(self):
     self.pkgdesc = "Mesa Vulkan drivers"
+    self.depends += [self.parent]
     self.install_if = [self.with_pkgver("mesa-dri"), "vulkan-loader"]
 
     return [
@@ -388,6 +407,6 @@ def _(self):
 
 @subpackage("mesa-devel")
 def _(self):
-    self.depends += ["libgbm-devel"]
+    self.depends += [self.parent, self.with_pkgver("mesa-gbm-devel")]
 
     return self.default_devel()

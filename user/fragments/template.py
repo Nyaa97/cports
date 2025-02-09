@@ -8,14 +8,14 @@ hostmakedepends = [
     "gettext",
     "git",
     "glib-devel",
-    "gtk-update-icon-cache",
+    "gtk+3-update-icon-cache",
     "meson",
     "pkgconf",
 ]
 makedepends = [
     "dbus-devel",
     "libadwaita-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "rust-std",
 ]
 depends = ["transmission-daemon"]

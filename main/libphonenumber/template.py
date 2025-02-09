@@ -1,6 +1,6 @@
 pkgname = "libphonenumber"
-pkgver = "8.13.52"
-pkgrel = 2
+pkgver = "8.13.54"
+pkgrel = 1
 build_style = "cmake"
 configure_args = [
     "-DREGENERATE_METADATA=OFF",
@@ -26,7 +26,7 @@ maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "Apache-2.0"
 url = "https://github.com/google/libphonenumber"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "672758f48fdffcf0be48894824c72c729c07b914a04626e24fa01945bb09ca53"
+sha256 = "95a2f6b522aad6834920ec53d94dd7ef676358ecbf2c95ee58918a5cce6d7044"
 
 
 @subpackage("libphonenumber-devel")

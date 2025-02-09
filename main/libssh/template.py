@@ -15,14 +15,14 @@ hostmakedepends = [
 makedepends = [
     "cmocka-devel",
     "heimdal-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "zlib-ng-compat-devel",
 ]
 pkgdesc = "Library for accessing ssh client services through C libraries"
 maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "LGPL-2.1-or-later WITH custom:openssl-exception AND BSD-2-Clause"
 url = "https://www.libssh.org"
-source = f"https://www.libssh.org/files/{pkgver[:pkgver.rfind('.')]}/libssh-{pkgver}.tar.xz"
+source = f"https://www.libssh.org/files/{pkgver[: pkgver.rfind('.')]}/libssh-{pkgver}.tar.xz"
 sha256 = "14b7dcc72e91e08151c58b981a7b570ab2663f630e7d2837645d5a9c612c1b79"
 hardening = ["vis", "cfi"]
 

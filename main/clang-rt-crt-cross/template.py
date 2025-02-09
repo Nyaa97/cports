@@ -1,11 +1,11 @@
 pkgname = "clang-rt-crt-cross"
 _musl_ver = "1.2.5"
-pkgver = "19.1.6"
-pkgrel = 0
+pkgver = "19.1.7"
+pkgrel = 1
 build_style = "cmake"
 configure_args = [
     "-DCMAKE_BUILD_TYPE=Release",
-    f"-DCMAKE_INSTALL_PREFIX=/usr/lib/clang/{pkgver[0:pkgver.find('.')]}",
+    f"-DCMAKE_INSTALL_PREFIX=/usr/lib/clang/{pkgver[0 : pkgver.find('.')]}",
     # prevent executable checks
     "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
     # only build that target
@@ -37,7 +37,7 @@ hostmakedepends = [
     "llvm-devel",
     "python",
 ]
-makedepends = ["zlib-ng-compat-devel", "libffi-devel"]
+makedepends = ["zlib-ng-compat-devel", "libffi8-devel"]
 depends = []
 pkgdesc = "Core cross-compiling runtime for LLVM"
 maintainer = "q66 <q66@chimera-linux.org>"
@@ -49,7 +49,7 @@ source = [
 ]
 source_paths = [".", "musl"]
 sha256 = [
-    "e3f79317adaa9196d2cfffe1c869d7c100b7540832bc44fe0d3f44a12861fa34",
+    "82401fea7b79d0078043f7598b835284d6650a75b93e64b6f761ea7b63097501",
     "a9a118bbe84d8764da0ea0d28b3ab3fae8477fc7e4085d90102b8596fc7c75e4",
 ]
 # crosstoolchain
@@ -71,6 +71,7 @@ _targetlist = [
     "ppc",
     "x86_64",
     "riscv64",
+    "loongarch64",
 ]
 _targets = sorted(filter(lambda p: p != self.profile().arch, _targetlist))
 
@@ -163,7 +164,7 @@ def _gen_subp(an):
         ]
         with self.rparent.profile(an) as pf:
             return [
-                f"usr/lib/clang/{pkgver[0:pkgver.find('.')]}/lib/{pf.triplet}"
+                f"usr/lib/clang/{pkgver[0 : pkgver.find('.')]}/lib/{pf.triplet}"
             ]
 
     if an in _targets:

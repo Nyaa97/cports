@@ -1,6 +1,6 @@
 pkgname = "nheko"
 pkgver = "0.12.0"
-pkgrel = 4
+pkgrel = 5
 build_style = "cmake"
 hostmakedepends = [
     "asciidoctor",
@@ -22,7 +22,7 @@ makedepends = [
     "mtxclient-devel",
     "nlohmann-json",
     "olm-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "qt6-qtbase-private-devel",  # qqmlincubator_p.h
     "qt6-qtdeclarative-devel",
     "qt6-qtmultimedia-devel",

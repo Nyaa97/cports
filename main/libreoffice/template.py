@@ -1,5 +1,5 @@
 pkgname = "libreoffice"
-pkgver = "25.2.0.1"
+pkgver = "25.2.0.3"
 pkgrel = 0
 # riscv64: no handling of libcxxabi + likely too slow
 archs = ["x86_64", "ppc64le", "ppc64", "aarch64"]
@@ -74,7 +74,7 @@ hostmakedepends = [
     "qt6-qtbase",
     "sane-backends",
     "unzip",
-    "xsltproc",
+    "libxslt-progs",
     "xz",
     "zip",
 ]
@@ -90,6 +90,7 @@ makedepends = [
     "fontconfig-devel",
     "freetype-devel",
     "glm",
+    "gobject-introspection-devel",
     "gpgme-devel",
     "graphite2-devel",
     "gst-plugins-base-devel",
@@ -117,9 +118,8 @@ makedepends = [
     "libexttextcat-devel",
     "libfreehand-devel",
     "libgcrypt-devel",
-    "libgirepository-devel",
     "libjpeg-turbo-devel",
-    "libltdl-devel",
+    "libtool-devel",
     "libmspub-devel",
     "libmwaw-devel",
     "libnumbertext-devel",
@@ -145,7 +145,7 @@ makedepends = [
     "nss-devel",
     "openjpeg-devel",
     "openldap-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "poppler-devel",
     "python-devel",
     "qt6-qtbase-devel",
@@ -177,7 +177,7 @@ source = [
     f"{_aurl}/rhino-1.7.15.zip",
     f"{_aurl}/a7983f859eafb2677d7ff386a023bc40-xsltml_2.1.2.zip",
     f"{_aurl}/ace6ab49184e329db254e454a010f56d-libxml-1.1.7.zip",
-    f"{_aurl}/language-subtag-registry-2024-11-19.tar.bz2",
+    f"{_aurl}/language-subtag-registry-2025-01-21.tar.bz2",
     f"{_aurl}/17410483b5b5f267aa18b7e00b65e6e0-hsqldb_1_8_0.zip",
     f"{_aurl}/d8bd5eed178db6e2b18eeed243f85aa8-flute-1.1.6.zip",
     f"{_aurl}/ba2930200c9f019c2d93a8c88c651a0f-flow-engine-0.9.4.zip",
@@ -205,14 +205,14 @@ source = [
     f"{_aurl}/zxcvbn-c-2.5.tar.gz",
 ]
 sha256 = [
-    "9cc5596f1102b878d8b70aa192a6fe55c306c0ff38db6ba49d55d395f73c65b8",
-    "aefae5ee2b6af6c7b9ecf80933c597c43480eff4a909791010ed210040a66f8c",
-    "660cfdd64843483f9f1b9527cef9abba7967e6d16b88544e2ad102314f2e26ae",
-    "71b4e904574ec513db7040c1714a87beabe793d560d40f3789a9e29105a193fc",
+    "982448d736f8bb858b40d1fcb82b9915bdb88e7c98a5cabb741810fc93d525b4",
+    "b6fb6ba9133d7889381d3f1d26db105566e928a12a708635baa472c853223c32",
+    "5f7f02a8ef5728454fc699eaa9e436fb689c3a9e8302163de0c4a6a6d2aed3dd",
+    "2ef584b5859cab6abbf3f753fb36711d498c8a94937759c9c0eb2f4ed9acaceb",
     "42fce6baf1bf789b62bf938b8e8ec18a1ac92c989dd6e7221e9531454cbd97fa",
     "75823776fb51a9c526af904f1503a7afaaab900fba83eda64f8a41073724c870",
     "7d2797fe9f79a77009721e3f14fa4a1dec17a6d706bdc93f85f1f01d124fab66",
-    "121f27bd1fabac9a74fb042cf68396b6df74cdf5d1ccc30f4c9b78584cc13864",
+    "06b37484c2736816e84b8bdd2075011d5961c2316865bc2795831230b925608d",
     "d30b13f4ba2e3b6a2d4f020c0dee0a9fb9fc6fbcc2d561f36b78da4bf3802370",
     "1b5b24f7bc543c0362b667692f78db8bab4ed6dafc6172f104d0bd3757d8a133",
     "233f66e8d25c5dd971716d4200203a612a407649686ef3b52075d04b4c9df0dd",

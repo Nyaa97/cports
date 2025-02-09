@@ -1,11 +1,11 @@
 pkgname = "base-kernel"
 pkgver = "0.2"
-pkgrel = 10
+pkgrel = 12
 depends = [
     "kmod",
     "procps",
     "rsync",
-    "cmd:findmnt!mount",
+    "cmd:findmnt!util-linux-mount",
 ]
 # all paths that should result in kernel.d hooks being rerun
 triggers = [
@@ -143,7 +143,7 @@ def _(self):
         "u-boot-tools",
         "linux-headers",
         "elfutils-devel",
-        "openssl-devel",
+        "openssl3-devel",
         "zlib-ng-compat-devel",
     ]
 

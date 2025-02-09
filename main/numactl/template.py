@@ -1,6 +1,6 @@
 pkgname = "numactl"
 pkgver = "2.0.19"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 hostmakedepends = ["automake", "libtool", "pkgconf"]
 makedepends = ["linux-headers"]
@@ -19,13 +19,17 @@ def post_install(self):
     self.uninstall("usr/share/man/man2")
 
 
-@subpackage("libnuma")
+@subpackage("numactl-libs")
 def _(self):
-    self.subdesc = "runtime library"
+    # transitional
+    self.provides = [self.with_pkgver("libnuma")]
 
     return self.default_libs()
 
 
-@subpackage("libnuma-devel")
+@subpackage("numactl-devel")
 def _(self):
+    # transitional
+    self.provides = [self.with_pkgver("libnuma-devel")]
+
     return self.default_devel()

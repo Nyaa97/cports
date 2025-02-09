@@ -1,6 +1,6 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 8
+pkgrel = 13
 build_style = "meta"
 pkgdesc = "Core package set for cbuild containers"
 maintainer = "q66 <q66@chimera-linux.org>"
@@ -17,11 +17,17 @@ depends = [
     "chimerautils-extra",
     "apk-tools",
     "gmake",
-    "bsdtar",
+    "libarchive-progs",
     "fakeroot-core",
     self.with_pkgver("base-cbuild-progs"),
 ]
-provides = ["apk-tools-cache-link=9999-r0"]
+# bootstrap-llvm is temporary until next llvm release, don't feel like rebuild
+provides = [
+    "bootstrap:cbuild=9999-r0",
+    "bootstrap:llvm=9999-r0",
+]
+replaces = ["apk-tools"]
+replaces_priority = 100
 
 options = ["bootstrap", "brokenlinks"]
 
@@ -31,7 +37,7 @@ if self.stage > 0:
         "bc-gh",
         "resolvconf",
         "resolvconf-none",
-        "tzdata",
+        "tzdb",
     ]
 
 if self.stage > 2:
@@ -56,6 +62,9 @@ def install(self):
     # replace regular ld and ld.lld symlinks
     self.install_link("usr/bin/ld.lld", "cbuild-lld-wrapper")
     self.install_link("usr/bin/ld64.lld", "cbuild-lld-wrapper")
+
+    # different default apk config
+    self.install_file(self.files_path / "config", "usr/lib/apk")
 
 
 @subpackage("base-cbuild-progs")

@@ -1,6 +1,6 @@
 pkgname = "digikam"
 pkgver = "8.5.0"
-pkgrel = 2
+pkgrel = 4
 build_style = "cmake"
 configure_args = [
     "-DBUILD_TESTING=ON",
@@ -35,6 +35,7 @@ makedepends = [
     "exiv2-devel",
     "ffmpeg-devel",
     "glib-devel",
+    "imagemagick-devel",
     "jasper-devel",
     "kcalendarcore-devel",
     "ki18n-devel",
@@ -51,7 +52,6 @@ makedepends = [
     "libheif-devel",
     "libjxl-devel",
     "libksane-devel",
-    "libmagick-devel",
     "libpng-devel",
     "libtiff-devel",
     "libxml2-devel",
@@ -69,7 +69,7 @@ makedepends = [
     "threadweaver-devel",
     "x265-devel",
 ]
-depends = ["exiftool"]
+depends = ["cmd:exiftool!perl-image-exiftool-progs"]
 checkdepends = [*depends]
 pkgdesc = "Digital photo management application"
 maintainer = "Orphaned <orphaned@chimera-linux.org>"

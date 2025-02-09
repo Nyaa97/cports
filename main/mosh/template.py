@@ -1,6 +1,6 @@
 pkgname = "mosh"
 pkgver = "1.4.0"
-pkgrel = 19
+pkgrel = 21
 build_style = "gnu_configure"
 hostmakedepends = [
     "automake",
@@ -13,7 +13,7 @@ makedepends = [
     "abseil-cpp-devel",
     "protobuf-devel",
     "ncurses-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "zlib-ng-compat-devel",
 ]
 depends = ["perl"]

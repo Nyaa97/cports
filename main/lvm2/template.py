@@ -1,6 +1,6 @@
 pkgname = "lvm2"
-pkgver = "2.03.28"
-pkgrel = 0
+pkgver = "2.03.30"
+pkgrel = 2
 build_style = "gnu_configure"
 configure_args = [
     "--enable-editline",
@@ -32,11 +32,11 @@ configure_args = [
     "--with-default-run-dir=/run/lvm",
     "--with-default-locking-dir=/run/lock/lvm",
 ]
+configure_gen = []
 make_dir = "."
 hostmakedepends = ["gsed", "pkgconf", "bash"]
 makedepends = [
     "udev-devel-static",
-    "libblkid-devel-static",
     "libaio-devel-static",
     "libedit-devel-static",
     "musl-devel-static",
@@ -44,15 +44,16 @@ makedepends = [
     "libatomic-chimera-devel-static",
     "ncurses-devel-static",
     "linux-headers",
+    "util-linux-blkid-devel-static",
 ]
-pkgdesc = "Logical Volume Manager 2 utilities"
+pkgdesc = "Logical Volume Manager"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only AND LGPL-2.1-only"
 url = "https://sourceware.org/lvm2"
 source = (
     f"https://mirrors.kernel.org/sourceware/lvm2/releases/LVM2.{pkgver}.tgz"
 )
-sha256 = "b822baff6b62df36382c717ceba98a2688ebb31bf2b768f3ffa2b6d5e2557242"
+sha256 = "ad76abecb8dc887733e06c449cb9add04a3506f9f0780c128817a6e1a17cec05"
 # the tests are full of scary gnuisms + don't work rootless
 options = ["!check"]
 # otherwise we're in for a world of pain
@@ -80,10 +81,11 @@ def post_install(self):
     self.uninstall("usr/sbin")
 
 
-@subpackage("device-mapper-devel")
+@subpackage("lvm2-devel")
 def _(self):
-    self.pkgdesc = "Device Mapper userspace library and tools"
     self.depends += makedepends
+    # transitional
+    self.provides = [self.with_pkgver("device-mapper-devel")]
 
     return [
         "usr/lib/pkgconfig/devmapper*.pc",
@@ -97,9 +99,11 @@ def _(self):
     ]
 
 
-@subpackage("device-mapper")
+@subpackage("lvm2-dm")
 def _(self):
-    self.pkgdesc = "Device Mapper userspace library and tools"
+    self.subdesc = "Device Mapper"
+    # transitional
+    self.provides = [self.with_pkgver("device-mapper")]
 
     return [
         "usr/lib/dinit.d/dmeventd",
@@ -125,6 +129,3 @@ def _(self):
         "usr/bin/lvm_import_vdo",
         "usr/bin/lvmdump",
     ]
-
-
-configure_gen = []

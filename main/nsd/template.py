@@ -1,5 +1,5 @@
 pkgname = "nsd"
-pkgver = "4.10.2"
+pkgver = "4.11.1"
 pkgrel = 0
 build_style = "gnu_configure"
 configure_args = ["--with-user=_nsd"]
@@ -9,14 +9,14 @@ make_check_target = "test"
 hostmakedepends = ["automake", "bison", "flex"]
 makedepends = [
     "libevent-devel",
-    "openssl-devel",
+    "openssl3-devel",
 ]
 pkgdesc = "Authoritative DNS name server"
 maintainer = "yanchan09 <yan@omg.lol>"
 license = "BSD-3-Clause"
 url = "https://nlnetlabs.nl/projects/nsd/about"
 source = f"https://nlnetlabs.nl/downloads/nsd/nsd-{pkgver}.tar.gz"
-sha256 = "c91eef2e73e430fa286bd48f075a8d023fb6e60560e22189cb3583c5da00b69b"
+sha256 = "696e50052008de4fa7ab1d818d5b77eb63247eea2f0575114c9592ff9188a614"
 hardening = ["cfi", "vis"]
 
 

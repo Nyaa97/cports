@@ -1,6 +1,6 @@
 pkgname = "nuclei"
-pkgver = "3.3.6"
-pkgrel = 0
+pkgver = "3.3.8"
+pkgrel = 1
 build_style = "go"
 make_build_args = ["./cmd/nuclei"]
 hostmakedepends = ["go"]
@@ -9,7 +9,7 @@ maintainer = "Gabriel M. Dutra <dmdutra@proton.me>"
 license = "MIT"
 url = "https://github.com/projectdiscovery/nuclei"
 source = f"{url}/archive/refs/tags/v{pkgver}.tar.gz"
-sha256 = "7fb42cf5c9c4fa8800d40a997466dbfeac9954e1cae8d98a7af25c19801eb113"
+sha256 = "e03e36778ff9736882e52c43c19da8888443c9130cafd30a3305e42cbfb86467"
 # Nuclei tests requires network connection
 options = ["!check"]
 

@@ -165,7 +165,7 @@ def setup_keys(rootp):
     for f in (paths.distdir() / "etc/apk/keys").glob("*.pub"):
         shutil.copy2(f, keydir)
 
-    for f in (paths.distdir() / "etc/keys").glob("*.pub"):
+    for f in paths.keys().glob("*.pub"):
         shutil.copy2(f, keydir)
 
     pkey = signi.get_keypath()
@@ -203,6 +203,8 @@ def repo_init():
 
     cfile = apkpath / "cache"
     cfile.unlink(missing_ok=True)
+
+    shutil.rmtree(paths.bldroot() / "var/cache/apk", ignore_errors=True)
 
     return rfile, cfile
 
@@ -351,7 +353,7 @@ def _setup_dummy(rootp, archn):
 
     def _get_ver(pkgn):
         tobj = template.Template(
-            template.sanitize_pkgname(f"main/{pkgn}"),
+            f"main/{pkgn}",
             archn,
             True,
             False,
@@ -635,7 +637,7 @@ def enter(
     fakeroot=False,
     new_session=True,
     binpkgs_rw=False,
-    signkey=None,
+    tmpfiles=None,
     binpath=None,
     lldargs=None,
     term=False,
@@ -806,11 +808,11 @@ def enter(
     # extra file descriptors to pass to sandbox and bind to a file
     fdlist = []
 
-    if signkey:
+    for tmpf in tmpfiles or []:
         # reopen as file descriptor to pass
-        signfd = os.open(signkey, os.O_RDONLY)
-        fdlist.append(signfd)
-        bcmd += ["--ro-bind-data", str(signfd), f"/tmp/{signkey.name}"]
+        tmpfd = os.open(tmpf, os.O_RDONLY)
+        fdlist.append(tmpfd)
+        bcmd += ["--ro-bind-data", str(tmpfd), f"/tmp/{tmpf.name}"]
 
     if lldargs:
         rfd, wfd = os.pipe()

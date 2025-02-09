@@ -1,5 +1,5 @@
 pkgname = "udev"
-pkgver = "256.10"
+pkgver = "256.11"
 pkgrel = 0
 build_style = "meson"
 configure_args = [
@@ -104,18 +104,18 @@ hostmakedepends = [
     "bash",
     "docbook-xsl-nons",
     "python-jinja2",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "acl-devel",
-    "libblkid-devel",
-    "libmount-devel",
+    "kmod-devel",
     "libcap-devel",
-    "libkmod-devel",
     "linux-headers",
+    "util-linux-blkid-devel",
+    "util-linux-mount-devel",
 ]
 checkdepends = ["xz", "perl"]
-depends = ["so:libkmod.so.2!libkmod"]
+depends = ["so:libkmod.so.2!kmod-libs"]
 triggers = ["/usr/lib/udev/rules.d", "/usr/lib/udev/hwdb.d", "/etc/udev/hwdb.d"]
 pkgdesc = "Standalone build of systemd-udev"
 maintainer = "q66 <q66@chimera-linux.org>"
@@ -124,33 +124,9 @@ url = "https://github.com/systemd/systemd"
 source = (
     f"https://github.com/systemd/systemd/archive/refs/tags/v{pkgver}.tar.gz"
 )
-sha256 = "6d63675042b7f248ec2396380457ca9586b507cd2bbcf8a49d1fd4a532abb63f"
+sha256 = "5038424744b2ed8c1d7ecc75b00eeffe68528f9789411da60f199d65762d9ba5"
 # the tests that can run are mostly useless
 options = ["!splitudev", "!check"]
-
-_have_sd_boot = False
-
-# supported efi architectures
-match self.profile().arch:
-    case "x86_64" | "aarch64" | "riscv64":
-        _have_sd_boot = True
-
-if _have_sd_boot:
-    configure_args += [
-        "-Dbootloader=enabled",
-        "-Defi=true",
-        "-Dopenssl=enabled",
-        "-Dtpm2=enabled",
-        "-Dukify=enabled",
-        # secure boot
-        "-Dsbat-distro=chimera",
-        "-Dsbat-distro-summary=Chimera Linux",
-        "-Dsbat-distro-pkgname=systemd-boot",
-        "-Dsbat-distro-url=https://chimera-linux.org",
-        f"-Dsbat-distro-version={self.full_pkgver}",
-    ]
-    hostmakedepends += ["python-pyelftools"]
-    makedepends += ["openssl-devel", "tpm2-tss-devel"]
 
 
 def init_configure(self):
@@ -160,14 +136,6 @@ def init_configure(self):
 
 def post_install(self):
     # oh boy, big cleanup time
-
-    # put measure into lib, we want it for ukify
-    if _have_sd_boot:
-        self.rename(
-            "usr/lib/systemd/systemd-measure",
-            "usr/lib/systemd-measure",
-            relative=False,
-        )
 
     # drop some more systemd bits
     for f in [
@@ -204,18 +172,6 @@ def post_install(self):
     self.install_file(self.files_path / "dinit-devd", "usr/lib", mode=0o755)
     self.install_tmpfiles(self.files_path / "tmpfiles.conf", name="udev")
     self.install_service(self.files_path / "udevd", enable=True)
-    # systemd-boot
-    if _have_sd_boot:
-        self.install_file("build/systemd-bless-boot", "usr/lib", mode=0o755)
-        self.install_file(
-            self.files_path / "99-gen-systemd-boot.sh",
-            "usr/lib/kernel.d",
-            mode=0o755,
-        )
-        self.install_bin(
-            self.files_path / "gen-systemd-boot.sh", name="gen-systemd-boot"
-        )
-        self.install_file(self.files_path / "systemd-boot", "etc/default")
 
 
 @subpackage("udev-devel")
@@ -226,56 +182,6 @@ def _(self):
 @subpackage("udev-libs")
 def _(self):
     return self.default_libs()
-
-
-@subpackage("systemd-boot", _have_sd_boot)
-def _(self):
-    self.pkgdesc = "UEFI boot manager"
-    self.depends += [self.with_pkgver("systemd-boot-efi")]
-
-    return [
-        "etc/default/systemd-boot",
-        "usr/bin/bootctl",
-        "usr/bin/gen-systemd-boot",
-        "usr/lib/kernel.d/99-gen-systemd-boot.sh",
-        "usr/lib/systemd-bless-boot",
-        "usr/share/bash-completion/completions/bootctl",
-        "usr/share/zsh/site-functions/_bootctl",
-        "usr/share/man/man1/bootctl.1",
-        "usr/share/man/man5/loader.conf.5",
-        "usr/share/man/man7/sd-boot.7",
-        "usr/share/man/man7/systemd-boot.7",
-    ]
-
-
-@subpackage("systemd-boot-efi", _have_sd_boot)
-def _(self):
-    self.pkgdesc = "UEFI boot manager"
-    self.subdesc = "EFI binaries"
-
-    return [
-        "usr/lib/systemd/boot/efi",
-        "usr/share/man/man7/linux*.efi.stub.7",
-        "usr/share/man/man7/systemd-stub.7",
-        "usr/share/man/man7/sd-stub.7",
-    ]
-
-
-# only practical for efi so we constrain it by sd-boot
-@subpackage("ukify", _have_sd_boot)
-def _(self):
-    self.pkgdesc = "Tool to generate Unified Kernel Images"
-    self.depends = [
-        self.with_pkgver("systemd-boot-efi"),
-        "python-pefile",
-        "tpm2-tss",  # dlopened
-    ]
-
-    return [
-        "cmd:ukify",
-        # only used here, don't bring in tss2 deps elsewhere
-        "usr/lib/systemd-measure",
-    ]
 
 
 @subpackage("base-udev")

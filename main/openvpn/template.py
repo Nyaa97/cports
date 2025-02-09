@@ -1,5 +1,5 @@
 pkgname = "openvpn"
-pkgver = "2.6.12"
+pkgver = "2.6.13"
 pkgrel = 0
 build_style = "gnu_configure"
 configure_args = [
@@ -25,7 +25,7 @@ makedepends = [
     "linux-pam-devel",
     "lz4-devel",
     "lzo-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "pcre2-devel",
 ]
 depends = ["iproute2"]
@@ -34,7 +34,7 @@ maintainer = "Gnarwhal <git.aspect893@passmail.net>"
 license = "GPL-2.0-only WITH openvpn-openssl-exception"
 url = "https://openvpn.net"
 source = f"https://github.com/OpenVPN/openvpn/releases/download/v{pkgver}/openvpn-{pkgver}.tar.gz"
-sha256 = "1c610fddeb686e34f1367c347e027e418e07523a10f4d8ce4a2c2af2f61a1929"
+sha256 = "1af10b86922bd7c99827cc0f151dfe9684337b8e5ebdb397539172841ac24a6a"
 
 
 def post_install(self):

@@ -28,10 +28,10 @@ hostmakedepends = [
 ]
 makedepends = [
     "libevent-devel",
-    "libltdl-devel",
+    "libtool-devel",
     "libsasl-devel",
     "libsodium-devel",
-    "openssl-devel",
+    "openssl3-devel",
 ]
 pkgdesc = "FOSS implementation of the Lightweight Directory Access Protocol"
 maintainer = "Renato Botelho do Couto <renato@netgate.com>"

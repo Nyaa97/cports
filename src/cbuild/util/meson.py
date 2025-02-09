@@ -16,6 +16,8 @@ def _make_crossfile(pkg, build_dir):
             meson_cpu = "ppc"
         case "armhf" | "armv7":
             meson_cpu = "arm"
+        case "loongarch64":
+            meson_cpu = "loongarch64"
         case _:
             pkg.error(f"unknown meson architecture: {pkg.profile().arch}")
 
@@ -33,7 +35,7 @@ readelf = '{pkg.get_tool("READELF")}'
 objcopy = '{pkg.get_tool("OBJCOPY")}'
 pkgconfig = '{pkg.get_tool("PKG_CONFIG")}'
 llvm-config = '/usr/bin/llvm-config'
-rust = ['rustc', '--target', '{pkg.profile().triplet}', '--sysroot', '{pkg.profile().sysroot / 'usr'}']
+rust = ['rustc', '--target', '{pkg.profile().triplet}', '--sysroot', '{pkg.profile().sysroot / "usr"}']
 
 [properties]
 needs_exe_wrapper = true

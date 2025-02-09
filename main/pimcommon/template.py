@@ -1,5 +1,5 @@
 pkgname = "pimcommon"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 make_check_env = {"QT_QPA_PLATFORM": "offscreen"}
@@ -9,7 +9,7 @@ hostmakedepends = [
     "gettext",
     "ninja",
     "pkgconf",
-    "xsltproc",
+    "libxslt-progs",
 ]
 makedepends = [
     "akonadi-contacts-devel",
@@ -43,7 +43,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.0-or-later AND GPL-3.0-only"
 url = "https://api.kde.org/kdepim/pimcommon/html"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/pimcommon-{pkgver}.tar.xz"
-sha256 = "bcca986072612234a627c15777a530039904615288b9ce0d0d20f975c0adec24"
+sha256 = "6948e9930b5706944347fdeec69cd2bfd53331312919782aec111fea57d9650c"
 
 
 @subpackage("pimcommon-devel")

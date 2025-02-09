@@ -1,6 +1,6 @@
 pkgname = "ntfs-3g"
 pkgver = "2022.10.3"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--exec-prefix=/usr",
@@ -17,8 +17,8 @@ hostmakedepends = ["pkgconf", "automake", "libtool"]
 makedepends = [
     "gnutls-devel",
     "libgcrypt-devel",
-    "libuuid-devel",
     "linux-headers",
+    "util-linux-uuid-devel",
 ]
 depends = ["fuse"]
 pkgdesc = "NTFS FUSE driver and tools"
@@ -39,13 +39,17 @@ def post_install(self):
     self.uninstall("sbin")
 
 
-@subpackage("libntfs-3g")
+@subpackage("ntfs-3g-libs")
 def _(self):
-    self.subdesc = "runtime library"
+    # transitional
+    self.provides = [self.with_pkgver("libntfs-3g")]
 
     return self.default_libs()
 
 
-@subpackage("libntfs-3g-devel")
+@subpackage("ntfs-3g-devel")
 def _(self):
+    # transitional
+    self.provides = [self.with_pkgver("libntfs-3g-devel")]
+
     return self.default_devel()

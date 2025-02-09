@@ -6,12 +6,12 @@ build_style = "makefile"
 depends = [
     "cmd:apk!apk-tools",
     "cmd:chroot!chimerautils",
-    "cmd:findmnt!mount",
+    "cmd:findmnt!util-linux-mount",
     "cmd:id!chimerautils",
-    "cmd:mount!mount",
-    "cmd:mountpoint!mount",
+    "cmd:mount!util-linux-mount",
+    "cmd:mountpoint!util-linux-mount",
     "cmd:realpath!chimerautils",
-    "cmd:tar!bsdtar",
+    "cmd:tar!libarchive-progs",
 ]
 pkgdesc = "Scripts to aid Chimera system installation"
 maintainer = "q66 <q66@chimera-linux.org>"

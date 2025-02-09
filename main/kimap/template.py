@@ -1,5 +1,5 @@
 pkgname = "kimap"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 # no valid mechs
@@ -24,7 +24,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "LGPL-2.0-or-later"
 url = "https://api.kde.org/kdepim/kimap/html"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/kimap-{pkgver}.tar.xz"
-sha256 = "e7c0f4eb3924ecf4c54ca58cfbb51a7dd4b0ea9870f9613075d07cbc05398a9d"
+sha256 = "94dd4072a01a6f804f37482bd1c1f78b2ba2059af9ec4f5b968ffba9f7e871b0"
 
 
 @subpackage("kimap-devel-static")

@@ -1,6 +1,6 @@
 pkgname = "protobuf"
-pkgver = "29.2"
-pkgrel = 0
+pkgver = "29.3"
+pkgrel = 2
 build_style = "cmake"
 configure_args = [
     "-DBUILD_SHARED_LIBS=ON",
@@ -14,12 +14,12 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "BSD-3-Clause"
 url = "https://protobuf.dev"
 source = f"https://github.com/protocolbuffers/protobuf/archive/v{pkgver}.tar.gz"
-sha256 = "63150aba23f7a90fd7d87bdf514e459dd5fe7023fdde01b56ac53335df64d4bd"
+sha256 = "008a11cc56f9b96679b4c285fd05f46d317d685be3ab524b2a310be0fbad987e"
 # FIXME vis breaks linking lite-test, cfi makes protoc not compile any tests
 hardening = ["!vis", "!cfi"]
 
 if self.profile().cross:
-    hostmakedepends += ["protoc"]  # needs host protoc
+    hostmakedepends += ["protobuf-protoc"]  # needs host protoc
     broken = "generated protobuf-targets.cmake looks for protoc in target sysroot, cannot cross-build android-tools etc"
 
 
@@ -41,10 +41,11 @@ def _(self):
     return ["usr/lib/libprotobuf-lite.so.*"]
 
 
-@subpackage("protoc")
+@subpackage("protobuf-protoc")
 def _(self):
     self.pkgdesc = "Protocol buffers compiler and its library"
     self.depends = [self.with_pkgver("protobuf-devel")]
+    self.provides = [self.with_pkgver("protoc")]
 
     return [
         "usr/bin",

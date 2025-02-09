@@ -1,5 +1,5 @@
 pkgname = "kpmcore"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 hostmakedepends = [
@@ -17,15 +17,15 @@ makedepends = [
     "qt6-qtdeclarative-devel",
 ]
 depends = [
-    "fdisk",
     "smartmontools",
+    "util-linux-fdisk",
 ]
 pkgdesc = "KDE library for partition management"
 maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-3.0-or-later"
 url = "https://apps.kde.org/kate"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/kpmcore-{pkgver}.tar.xz"
-sha256 = "cfcc265902680f15031e966f86d5d2a4e7ca124abcbb4428199422ab205461eb"
+sha256 = "c79ab0d8e4bdba6894fb349e190b72aff0bd1e965e78b815f7b2dbd332eabc5d"
 hardening = ["vis"]
 
 

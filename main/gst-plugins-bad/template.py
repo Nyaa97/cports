@@ -1,6 +1,6 @@
 pkgname = "gst-plugins-bad"
-pkgver = "1.24.10"
-pkgrel = 2
+pkgver = "1.24.12"
+pkgrel = 0
 build_style = "meson"
 configure_args = [
     "--auto-features=enabled",
@@ -106,7 +106,6 @@ makedepends = [
     "libmodplug-devel",
     "libnice-devel",
     "librsvg-devel",
-    "librtmp-devel",
     "libsndfile-devel",
     "libsrtp-devel",
     "libssh2-devel",
@@ -122,10 +121,11 @@ makedepends = [
     "openal-soft-devel",
     "openexr-devel",
     "openjpeg-devel",
-    "openssl-devel",
+    "openssl3-devel",
     "opus-devel",
     "pango-devel",
     "qrencode-devel",
+    "rtmpdump-devel",
     "sbc-devel",
     "soundtouch-devel",
     "spandsp-devel",
@@ -143,7 +143,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "LGPL-2.1-or-later"
 url = "https://gstreamer.freedesktop.org"
 source = f"{url}/src/gst-plugins-bad/gst-plugins-bad-{pkgver}.tar.xz"
-sha256 = "1707e3103950c9baed364a8af2ba0495d6b113fcd36e1062dda5f582b8f8904d"
+sha256 = "3d386af3d1dbd1a06c74a6251250c269b481e703f0e3255ba89ef6c1e063afea"
 # FIXME int
 hardening = ["!int"]
 # TODO: a few fails, debug later

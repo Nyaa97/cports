@@ -17,6 +17,7 @@ import pathlib
 import contextlib
 import subprocess
 import builtins
+import tempfile
 import stat
 
 from cbuild.core import logger, chroot, paths, profile, spdx, errors
@@ -715,6 +716,7 @@ class Template(Package):
         allow_restricted=True,
         data=None,
         init=True,
+        contents=None,
     ):
         super().__init__()
 
@@ -726,6 +728,9 @@ class Template(Package):
         # default all the fields
         for fl, dval, tp, mand, sp, inh in core_fields:
             setattr(self, fl, copy_of_dval(dval))
+
+        if isinstance(tmplp, str):
+            tmplp = sanitize_pkgname(tmplp)
 
         # make this available early
         self.pkgname = tmplp.name
@@ -794,13 +799,13 @@ class Template(Package):
             # append and repeat
             self.source_repositories.append(crepo)
 
-        self.exec_module(init)
+        self.exec_module(init, contents)
 
-    def exec_module(self, init):
+    def exec_module(self, init, contents=None):
         def subpkg_deco(spkgname, cond=True, alternative=None):
             def deco(f):
                 if alternative:
-                    pn = f"{alternative}-{spkgname}-default"
+                    pn = f"{alternative.removeprefix('!')}-{spkgname}-default"
                 else:
                     pn = spkgname
                 if f.__name__ != "_":
@@ -826,6 +831,27 @@ class Template(Package):
         setattr(builtins, "subpackage", subpkg_deco)
         setattr(builtins, "custom_target", target_deco)
         setattr(builtins, "self", self)
+
+        if contents:
+            with tempfile.NamedTemporaryFile(
+                "w", delete_on_close=False, suffix=".py"
+            ) as nf:
+                nf.write(contents)
+                # make sure the contents exist...
+                nf.close()
+                # and build a fresh modspec
+                modspec = importlib.util.spec_from_file_location(
+                    self.full_pkgname, nf.name
+                )
+                self._mod_handle = importlib.util.module_from_spec(modspec)
+                modspec.loader.exec_module(self._mod_handle)
+                self._raw_mod = self._mod_handle
+                self._mod_handle = None
+                delattr(builtins, "self")
+                delattr(builtins, "subpackage")
+            if init:
+                self.init_from_mod()
+            return
 
         modh, modspec = Template._tmpl_dict.get(self.full_pkgname, (None, None))
         if modh:
@@ -967,7 +993,9 @@ class Template(Package):
         # link subpackages and fill in their fields
         for spn, spf, spa in self.subpackages:
             if spa:
-                spn = f"{spa}-{spn}-default"
+                spn = f"{spa.removeprefix('!')}-{spn}-default"
+                if spa.startswith("!"):
+                    spa = None
             if spn in spdupes:
                 self.error(f"subpackage '{spn}' already exists")
             if spn.lower() != spn:
@@ -1714,6 +1742,7 @@ class Template(Package):
         check=True,
         allow_network=False,
         path=None,
+        tmpfiles=None,
     ):
         cpf = self.profile()
 
@@ -1835,6 +1864,7 @@ class Template(Package):
             lldargs=lld_args,
             binpath=path,
             term=True,
+            tmpfiles=tmpfiles,
         )
 
     def stamp(self, name):
@@ -2389,7 +2419,7 @@ class Subpackage(Package):
                             # we want pycaches to soft-pull the right python,
                             # in order for them to affect staging (leave no
                             # outdated pycache behind)
-                            ddeps.append(f"base-python{pyver}~{pyver}")
+                            ddeps.append(f"python-python{pyver}-meta~{pyver}")
                     elif not instif.startswith("base-"):
                         ddeps.append(instif)
                     self.install_if = [fbdep, instif]
@@ -2465,7 +2495,7 @@ class Subpackage(Package):
                     case "man":
                         dot = sfx.rfind(".")
                         return self._take_impl(
-                            f"usr/share/man/**/man{sfx[dot + 1:]}/{sfx}",
+                            f"usr/share/man/**/man{sfx[dot + 1 :]}/{sfx}",
                             missing_ok,
                         )
         return self._take_impl(p, missing_ok)
@@ -2634,35 +2664,6 @@ def sanitize_pkgname(pkgname, error=True):
     tmplpath = paths.distdir() / pkgname / "template.py"
     if not tmplpath.is_file():
         if not error:
-            return None
-        raise errors.CbuildException(f"missing template for '{pkgname}'")
-    return tmplpath.resolve().parent
-
-
-def resolve_pkgname(pkgname, resolve, ignore_missing):
-    tmplpath = None
-    for r in resolve.source_repositories:
-        tmplpath = paths.distdir() / r / pkgname / "template.py"
-        if tmplpath.is_file():
-            break
-        else:
-            tmplpath = None
-    if not tmplpath:
-        altname = None
-        for apkg, adesc, iif, takef in autopkgs:
-            if pkgname.endswith(f"-{apkg}"):
-                altname = pkgname.removesuffix(f"-{apkg}")
-                break
-        if altname:
-            for r in resolve.source_repositories:
-                rpath = paths.distdir() / r
-                tmplpath = rpath / altname / "template.py"
-                if tmplpath.is_file():
-                    break
-                else:
-                    tmplpath = None
-    if not tmplpath:
-        if ignore_missing:
             return None
         raise errors.CbuildException(f"missing template for '{pkgname}'")
     return tmplpath.resolve().parent

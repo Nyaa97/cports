@@ -1,6 +1,6 @@
 pkgname = "gnome-shell-extension-gsconnect"
 pkgver = "58"
-pkgrel = 0
+pkgrel = 1
 build_style = "meson"
 configure_args = ["-Dinstalled_tests=false"]
 # Would've used weston-headless-run here instead of xvfb-run, but that runs
@@ -12,12 +12,12 @@ hostmakedepends = [
     "desktop-file-utils",
     "gettext",
     "glib-devel",
-    "gtk-update-icon-cache",
+    "gtk+3-update-icon-cache",
     "libxml2-progs",
     "meson",
     "pkgconf",
 ]
-depends = ["evolution-data-server", "gnome-shell", "gsound", "openssl"]
+depends = ["evolution-data-server", "gnome-shell", "gsound", "openssl3"]
 checkdepends = ["dbus", "gnome-shell", "xserver-xorg-xvfb"]
 pkgdesc = "KDE Connect implementation for GNOME"
 maintainer = "triallax <triallax@tutanota.com>"

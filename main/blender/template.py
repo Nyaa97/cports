@@ -1,6 +1,6 @@
 pkgname = "blender"
 pkgver = "4.3.2"
-pkgrel = 0
+pkgrel = 1
 build_style = "cmake"
 configure_args = [
     "-DCMAKE_BUILD_TYPE=Release",
@@ -35,7 +35,7 @@ makedepends = [
     "ffmpeg-devel",
     "fftw-devel",
     "freetype-devel",
-    "gmpxx-devel",
+    "gmp-gmpxx-devel",
     "libepoxy-devel",
     "libharu-devel",
     "libjpeg-turbo-devel",

@@ -1,6 +1,6 @@
 pkgname = "mandoc"
 pkgver = "1.14.6"
-pkgrel = 3
+pkgrel = 4
 build_style = "configure"
 make_check_target = "regress"
 makedepends = ["zlib-ng-compat-devel"]
@@ -57,15 +57,6 @@ manpath /usr/share/man
     fp = self.destdir / "usr/share/man/man1/whatis.1"
     fp.unlink()
     fp.symlink_to("apropos.1")
-
-
-@subpackage("base-man")
-def _(self):
-    self.pkgdesc = "Base package for manpages"
-    self.depends = [self.parent]
-    self.options = ["empty"]
-
-    return []
 
 
 @subpackage("mandoc-apropos")

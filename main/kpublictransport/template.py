@@ -1,6 +1,6 @@
 pkgname = "kpublictransport"
-pkgver = "24.12.0"
-pkgrel = 1
+pkgver = "24.12.2"
+pkgrel = 0
 build_style = "cmake"
 hostmakedepends = [
     "cmake",
@@ -23,7 +23,7 @@ url = "https://api.kde.org/kdepim/kpublictransport/html"
 source = (
     f"$(KDE_SITE)/release-service/{pkgver}/src/kpublictransport-{pkgver}.tar.xz"
 )
-sha256 = "b1e0f9498219e5733d47d2c8b60082201ea285215e392831a587267e2c683250"
+sha256 = "f2a2391ccfd6f52f421a7cd8f93ee9b243f357d27c223b29b6b3c389c6a6f926"
 
 
 @subpackage("kpublictransport-devel")

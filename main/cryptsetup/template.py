@@ -1,6 +1,6 @@
 pkgname = "cryptsetup"
 pkgver = "2.7.5"
-pkgrel = 0
+pkgrel = 2
 build_style = "gnu_configure"
 configure_args = [
     "--with-crypto_backend=openssl",
@@ -16,12 +16,12 @@ hostmakedepends = [
     "pkgconf",
 ]
 makedepends = [
-    "device-mapper-devel-static",
     "json-c-devel-static",
     "libatomic-chimera-devel-static",
-    "libuuid-devel-static",
+    "lvm2-devel-static",
+    "util-linux-uuid-devel-static",
     "linux-headers",
-    "openssl-devel-static",
+    "openssl3-devel-static",
     "popt-devel-static",
 ]
 checkdepends = ["procps", "xz"]
@@ -47,9 +47,10 @@ def _(self):
     return ["usr/bin/*.static"]
 
 
-@subpackage("libcryptsetup")
+@subpackage("cryptsetup-libs")
 def _(self):
-    self.subdesc = "runtime library"
+    # transitional
+    self.provides = [self.with_pkgver("libcryptsetup")]
 
     return self.default_libs()
 

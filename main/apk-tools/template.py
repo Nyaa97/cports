@@ -1,11 +1,12 @@
 pkgname = "apk-tools"
-pkgver = "3.0.0_rc2"
-pkgrel = 0
+pkgver = "3.0.0_rc4"
+pkgrel = 1
 build_style = "meson"
 configure_args = [
     "-Dlua=disabled",
     "-Dlua_version=5.4",
 ]
+make_check_env = {"APK_CONFIG": "/dev/null"}
 hostmakedepends = [
     "lua5.4",
     "lua5.4-zlib",
@@ -13,13 +14,13 @@ hostmakedepends = [
     "pkgconf",
     "scdoc",
 ]
-makedepends = ["openssl-devel", "zlib-ng-compat-devel"]
+makedepends = ["openssl3-devel", "zlib-ng-compat-devel"]
 pkgdesc = "Alpine package manager"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "http://git.alpinelinux.org/cgit/apk-tools"
 source = f"https://gitlab.alpinelinux.org/alpine/apk-tools/-/archive/v{pkgver}/apk-tools-v{pkgver}.tar.gz"
-sha256 = "c8bbcea845fc9d863f103987da68d8b0df6ae353f21266b3c54316bb702bc92a"
+sha256 = "a5e44a6a1e0e52b864c5f66eea07da04d7e469d2e0e28f30e1c1729447449f9e"
 compression = "deflate"
 options = ["bootstrap"]
 
@@ -29,7 +30,7 @@ if self.stage > 0:
         "libunwind-devel-static",
         "linux-headers",
         "musl-devel-static",
-        "openssl-devel-static",
+        "openssl3-devel-static",
         "zlib-ng-compat-devel-static",
         "zstd-devel-static",
     ]
@@ -94,9 +95,8 @@ def post_install(self):
         return
 
     self.install_bin("build-static/src/apk", name="apk.static")
-    self.install_dir("etc/apk")
-    self.ln_s("../../var/cache/apk", self.destdir / "etc/apk/cache")
-    (self.destdir / "etc/apk/interactive").touch()
+
+    self.install_file(self.files_path / "config", "usr/lib/apk")
 
 
 @subpackage("apk-tools-devel", self.stage > 0)
@@ -113,19 +113,17 @@ def _(self):
 
 @subpackage("apk-tools-cache", self.stage > 0)
 def _(self):
-    self.subdesc = "default cache"
+    self.subdesc = "transitional metapackage"
     self.depends = [self.parent]
-    self.install_if = [self.parent]
-    self.provides = [self.with_pkgver("apk-tools-cache-link")]
-    self.options = ["brokenlinks"]
+    self.options = ["empty"]
 
-    return ["etc/apk/cache"]
+    return []
 
 
 @subpackage("apk-tools-interactive", self.stage > 0)
 def _(self):
-    self.subdesc = "interactive"
+    self.subdesc = "transitional metapackage"
     self.depends = [self.parent]
-    self.install_if = [self.parent]
+    self.options = ["empty"]
 
-    return ["etc/apk/interactive"]
+    return []

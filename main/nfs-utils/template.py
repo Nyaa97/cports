@@ -1,6 +1,6 @@
 pkgname = "nfs-utils"
 pkgver = "2.8.1"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--disable-sbin-override",
@@ -17,20 +17,20 @@ hostmakedepends = [
     "rpcsvc-proto",
 ]
 makedepends = [
-    "device-mapper-devel",
     "heimdal-devel",
     "heimdal-devel-static",
     "keyutils-devel",
     "libcap-devel",
     "libedit-readline-devel",
     "libevent-devel",
-    "libmount-devel",
     "libnl-devel",
     "libtirpc-devel",
     "libxml2-devel",
     "linux-headers",
+    "lvm2-devel",
     "musl-bsd-headers",
     "sqlite-devel",
+    "util-linux-mount-devel",
 ]
 depends = ["python", "rpcbind"]
 pkgdesc = "Utilities for managing NFS"
@@ -76,10 +76,12 @@ def post_install(self):
     self.install_file("nfs.conf", "etc")
 
 
-@subpackage("nfs-server")
+@subpackage("nfs-utils-server")
 def _(self):
-    self.pkgdesc = f"{pkgdesc} (server components)"
+    self.subdesc = "server components"
     self.depends = [self.parent]
+    # transitional
+    self.provides = [self.with_pkgver("nfs-server")]
 
     return [
         "usr/bin/nfsdcld",
@@ -124,6 +126,4 @@ def _(self):
 
 @subpackage("nfs-utils-libs")
 def _(self):
-    self.pkgdesc = f"{pkgdesc} (libraries)"
-
     return ["usr/lib/libnfsidmap.so.*", "usr/lib/libnfsidmap"]

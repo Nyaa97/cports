@@ -1,5 +1,5 @@
 pkgname = "kcharselect"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 hostmakedepends = [
@@ -25,4 +25,4 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-2.0-or-later"
 url = "https://apps.kde.org/kcharselect"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/kcharselect-{pkgver}.tar.xz"
-sha256 = "d0a746000f0ff810b89f6e9ba2b65cdce4f2cd92ccd3e108940f2a9af184de3f"
+sha256 = "799beb4cf93e70158be09fb45006c153c0e67f97eefffec0d152b317f6d5e9f5"

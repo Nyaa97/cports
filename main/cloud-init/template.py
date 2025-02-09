@@ -1,6 +1,6 @@
 pkgname = "cloud-init"
 pkgver = "24.2"
-pkgrel = 0
+pkgrel = 2
 build_style = "python_pep517"
 hostmakedepends = [
     "pkgconf",
@@ -16,7 +16,6 @@ depends = [
     "cloud-utils-growpart",
     "ifupdown-ng",
     "iproute2",
-    "mount",
     "python-configobj",
     "python-jsonpatch",
     "python-jsonschema",
@@ -24,13 +23,12 @@ depends = [
     "python-pyyaml",
     "python-requests",
     "shadow",
-    "tzdata",
+    "tzdb",
+    "util-linux-mount",
 ]
 checkdepends = [
     "bash",
-    "fdisk",
     "gptfdisk",
-    "mount",
     "procps",
     "python-netifaces",
     "python-passlib",
@@ -39,6 +37,8 @@ checkdepends = [
     "python-pytest-mock",
     "python-responses",
     "python-tox",
+    "util-linux-fdisk",
+    "util-linux-mount",
 ]
 pkgdesc = "Cloud init scripts"
 maintainer = "q66 <q66@chimera-linux.org>"

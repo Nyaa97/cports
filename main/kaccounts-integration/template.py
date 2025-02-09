@@ -1,5 +1,5 @@
 pkgname = "kaccounts-integration"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 hostmakedepends = [
@@ -31,7 +31,7 @@ maintainer = "Jami Kettunen <jami.kettunen@protonmail.com>"
 license = "GPL-2.0-or-later"
 url = "https://invent.kde.org/network/kaccounts-integration"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/kaccounts-integration-{pkgver}.tar.xz"
-sha256 = "04e8a00bdd4539027497edcabc4d7c21932ab00f43a51b1184365735f8d3b433"
+sha256 = "d456f36884580e5447fed3f23f85e7d3fae0264cf85093e1eaa621eab65881d8"
 hardening = ["vis"]
 
 

@@ -1,5 +1,5 @@
 pkgname = "elisa"
-pkgver = "24.12.0"
+pkgver = "24.12.2"
 pkgrel = 0
 build_style = "cmake"
 # flaky
@@ -40,7 +40,7 @@ maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "LGPL-3.0-or-later"
 url = "https://apps.kde.org/elisa"
 source = f"$(KDE_SITE)/release-service/{pkgver}/src/elisa-{pkgver}.tar.xz"
-sha256 = "75202d8541aacea3babf84bd021a8aeffb3ee4268fc382b03a00d619de73ff8d"
+sha256 = "8aabb7905b875df43e452b839acad930ac94789616747e84dd9881449241ecb8"
 hardening = ["vis"]
 # TODO
 options = ["!cross"]

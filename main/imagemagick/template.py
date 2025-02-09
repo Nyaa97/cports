@@ -1,5 +1,5 @@
 pkgname = "imagemagick"
-pkgver = "7.1.1.41"
+pkgver = "7.1.1.43"
 pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
@@ -38,7 +38,7 @@ configure_args = [
     # "--with-wmf",
 ]
 configure_gen = []
-hostmakedepends = ["pkgconf", "automake", "libtool", "perl"]
+hostmakedepends = ["pkgconf", "automake", "slibtool", "perl"]
 makedepends = [
     "bzip2-devel",
     "djvulibre-devel",
@@ -46,14 +46,14 @@ makedepends = [
     "fftw-devel",
     "fontconfig-devel",
     "freetype-devel",
+    "ghostscript-devel",
     "graphviz-devel",
     "jbigkit-devel",
     "lcms2-devel",
-    "libgs-devel",
     "libheif-devel",
     "libjpeg-turbo-devel",
     "libjxl-devel",
-    "libltdl-devel",
+    "libtool-devel",
     "libpng-devel",
     "libpng-devel",
     "libraw-devel",
@@ -73,7 +73,7 @@ maintainer = "q66 <q66@chimera-linux.org>"
 license = "ImageMagick"
 url = "https://www.imagemagick.org"
 source = f"https://github.com/ImageMagick/ImageMagick/archive/{'-'.join(pkgver.rsplit('.', 1))}.tar.gz"
-sha256 = "cabf2516dce66da56dd4e3071453b808eefaf4326a93292d2a222a4ea623d601"
+sha256 = "ceb972266b23dc7c1cfce0da5a7f0c9acfb4dc81f40eb542a49476fedbc2618f"
 # runs out of file descriptors
 options = ["!cross", "!check"]
 
@@ -88,9 +88,10 @@ def post_install(self):
     self.install_license("LICENSE")
 
 
-@subpackage("libmagick")
+@subpackage("imagemagick-libs")
 def _(self):
-    self.pkgdesc = "ImageMagick library"
+    # transitional
+    self.provides = [self.with_pkgver("libmagick")]
 
     return [
         "usr/lib/libMagick*.so.*",
@@ -99,17 +100,22 @@ def _(self):
     ]
 
 
-@subpackage("libmagick-perl")
+@subpackage("imagemagick-perl")
 def _(self):
+    # transitional
+    self.provides = [self.with_pkgver("libmagick-perl")]
+
     return [
         "usr/lib/perl5",
         "usr/share/man/man3/Image::Magick*",
     ]
 
 
-@subpackage("libmagick-devel")
+@subpackage("imagemagick-devel")
 def _(self):
     # buildsystem is stupid and does not emit deps
     self.depends += makedepends
+    # transitional
+    self.provides = [self.with_pkgver("libmagick-devel")]
 
     return self.default_devel()

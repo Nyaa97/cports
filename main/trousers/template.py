@@ -1,9 +1,9 @@
 pkgname = "trousers"
 pkgver = "0.3.15"
-pkgrel = 3
+pkgrel = 4
 build_style = "gnu_configure"
 hostmakedepends = ["automake", "libtool", "pkgconf"]
-makedepends = ["openssl-devel", "linux-headers"]
+makedepends = ["openssl3-devel", "linux-headers"]
 pkgdesc = "Trusted Computing Software Stack for the TPM"
 maintainer = "q66 <q66@chimera-linux.org>"
 license = "BSD-3-Clause"
@@ -21,9 +21,10 @@ def post_install(self):
     self.install_tmpfiles(self.files_path / "tmpfiles.conf", name="tss")
 
 
-@subpackage("libtspi")
+@subpackage("trousers-libs")
 def _(self):
-    self.subdesc = "runtime library"
+    # transitional
+    self.provides = [self.with_pkgver("libtspi")]
 
     return self.default_libs()
 

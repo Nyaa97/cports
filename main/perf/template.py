@@ -1,5 +1,5 @@
 pkgname = "perf"
-pkgver = "6.12.5"
+pkgver = "6.13.1"
 pkgrel = 0
 build_wrksrc = "tools/perf"
 build_style = "makefile"
@@ -42,10 +42,10 @@ makedepends = [
     "capstone-devel",
     "elfutils-devel",
     "libbpf-devel",
-    "libnuma-devel",
     "libtraceevent-devel",
     "linux-headers",
-    "openssl-devel",
+    "numactl-devel",
+    "openssl3-devel",
     "perl",
     "python-devel",
     "slang-devel",
@@ -57,8 +57,8 @@ pkgdesc = "Linux performance analyzer"
 maintainer = "Orphaned <orphaned@chimera-linux.org>"
 license = "GPL-2.0-only"
 url = "https://perf.wiki.kernel.org/index.php/Main_Page"
-source = f"https://cdn.kernel.org/pub/linux/kernel/v{pkgver[:pkgver.find('.')]}.x/linux-{pkgver}.tar.xz"
-sha256 = "39207fce1ce42838e085261bae0af5ce4a0843aa777cfc0f5c49bc7729602bcd"
+source = f"https://cdn.kernel.org/pub/linux/kernel/v{pkgver[: pkgver.find('.')]}.x/linux-{pkgver}.tar.xz"
+sha256 = "f011f6c8ea471df1b3dbbdd1eb261b29c92e43360503c3ebd005beec2155b66a"
 # nope
 # docs are a single tips file that gets displayed in the TUI
 options = ["!check", "!splitdoc"]
