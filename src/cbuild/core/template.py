@@ -446,7 +446,6 @@ core_fields = [
     ("subdesc", "", str, False, True, False),
     ("origin", None, str, False, True, True),
     ("triggers", [], list, False, True, False),
-    ("scripts", {}, dict, False, True, False),
     ("file_modes", {}, dict, False, True, False),
     ("file_xattrs", {}, dict, False, True, False),
     ("broken_symlinks", [], list, False, True, False),
@@ -516,7 +515,6 @@ core_fields_priority = [
     ("install_if", True),
     ("ignore_shlibs", True),
     ("triggers", True),
-    ("scripts", True),
     ("origin", True),
     ("pkgdesc", True),
     ("subdesc", True),
@@ -2287,7 +2285,7 @@ autopkgs = [
     (
         "udev",
         "udev rules",
-        "base-udev",
+        "udev-meta",
         lambda p: p.take("usr/lib/udev", missing_ok=True),
     ),
     (

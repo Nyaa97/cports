@@ -1,12 +1,12 @@
 def invoke(pkg):
     # available scripts
     _avail = [
-        "pre-install",
-        "pre-upgrade",
-        "pre-deinstall",
-        "post-install",
-        "post-upgrade",
-        "post-deinstall",
+        # "pre-install",
+        # "pre-upgrade",
+        # "pre-deinstall",
+        # "post-install",
+        # "post-upgrade",
+        # "post-deinstall",
         "trigger",
     ]
 
@@ -18,7 +18,8 @@ def invoke(pkg):
         up = pkg.rparent.template_path / f"{pkg.pkgname}.{h}"
 
         # scripts can be generated or can be files
-        sr = pkg.scripts.get(h, None)
+        # sr = pkg.scripts.get(h, None)
+        sr = None
         tp = "generated"
 
         if up.is_file():

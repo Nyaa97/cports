@@ -10,6 +10,7 @@ cmdline = None
 parser = None
 
 opt_apkcmd = "apk"
+opt_apkrepo = "https://repo.chimera-linux.org/current"
 opt_bwcmd = "bwrap"
 opt_cflags = "-O2"
 opt_cxxflags = "-O2"
@@ -116,7 +117,7 @@ def handle_options():
     global opt_checkfail, opt_stage, opt_altrepo, opt_stagepath, opt_bldroot
     global opt_blddir, opt_pkgpath, opt_srcpath, opt_cchpath, opt_updatecheck
     global opt_acceptsum, opt_comp, opt_maint, opt_epkgs, opt_tdata, opt_nolock
-    global opt_keypath
+    global opt_keypath, opt_apkrepo
 
     # respect NO_COLOR
     opt_nocolor = ("NO_COLOR" in os.environ) or not sys.stdout.isatty()
@@ -336,6 +337,7 @@ def handle_options():
         apkcfg = global_cfg["apk"]
 
         opt_apkcmd = apkcfg.get("command", fallback=opt_apkcmd)
+        opt_apkrepo = apkcfg.get("repo", fallback=opt_apkrepo)
 
     if "build" in global_cfg:
         bcfg = global_cfg["build"]
@@ -914,7 +916,7 @@ def do_prune_obsolete(tgt):
     reposd = paths.repository()
     reposet = {}
 
-    for idx in reposd.rglob("APKINDEX.tar.gz"):
+    for idx in cli.find_indexes(reposd):
         repop = idx.parent.parent
         if not repop.is_relative_to(reposd):
             continue
@@ -1006,7 +1008,7 @@ def do_prune_removed(tgt):
     reposd = paths.repository()
     reposet = {}
     # find all existing indexes
-    for idx in reposd.rglob("APKINDEX.tar.gz"):
+    for idx in cli.find_indexes(reposd):
         repo = idx.parent.parent
         if not repo.is_relative_to(reposd):
             continue
@@ -1057,7 +1059,7 @@ def do_index(tgt):
     reposd = paths.repository()
     reposet = {}
     # find all existing indexes
-    for idx in reposd.rglob("APKINDEX.tar.gz"):
+    for idx in cli.find_indexes(reposd):
         repo = idx.parent.parent
         if not repo.is_relative_to(reposd):
             continue
@@ -1442,7 +1444,11 @@ def _get_unbuilt(outdated=False):
     repovers = {}
 
     def _collect_vers(repop):
-        if not (repop / tarch / "APKINDEX.tar.gz").is_file():
+        rbase = repop / tarch
+        repof = rbase / "Packages.adb"
+        if not repof.is_file():
+            repof = rbase / "APKINDEX.tar.gz"
+        if not repof.is_file():
             return
         outp = subprocess.run(
             [
@@ -1453,7 +1459,7 @@ def _get_unbuilt(outdated=False):
                 "--root",
                 paths.bldroot(),
                 "--repository",
-                repop,
+                str(repof),
                 "search",
                 "--from",
                 "none",
@@ -2853,6 +2859,9 @@ def fire():
 
     # register extra packages
     chroot.set_extras(opt_epkgs.split())
+
+    # set the repo mirror
+    chroot.set_mirror(opt_apkrepo)
 
     # ensure we've got a signing key
     if not opt_signkey and not opt_unsigned and cmdline.command[0] != "keygen":

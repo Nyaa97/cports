@@ -176,6 +176,12 @@ def setup_keys(rootp):
 
 
 _crepos = None
+_mirror = None
+
+
+def set_mirror(mirror):
+    global _mirror
+    _mirror = mirror
 
 
 def get_confrepos():
@@ -188,7 +194,7 @@ def get_confrepos():
     for f in (paths.distdir() / "etc/apk/repositories.d").glob("*.conf"):
         with open(f) as repof:
             for repo in repof:
-                _crepos.append(repo.strip())
+                _crepos.append(repo.strip().replace("@mirror@", _mirror))
 
     return _crepos
 
@@ -218,18 +224,22 @@ def shell_update(rnet, dirty):
                 if not cr.startswith("/"):
                     continue
                 cr = cr.lstrip("/").replace("@section@", rd.name)
-                idxp = rd.parent / cr / hcpu / "APKINDEX.tar.gz"
-                if idxp.is_file():
-                    rfh.write(f"/binpkgs/{cr}\n")
+                idxp = rd.parent / cr / hcpu
+                if (idxp / "Packages.adb").is_file():
+                    rfh.write(f"v3 /binpkgs/{cr}\n")
+                elif (idxp / "APKINDEX.tar.gz").is_file():
+                    rfh.write(f"v2 /binpkgs/{cr}\n")
         if paths.alt_repository():
             for rd in paths.alt_repository().iterdir():
                 for cr in get_confrepos():
                     if not cr.startswith("/"):
                         continue
                     cr = cr.lstrip("/").replace("@section@", rd.name)
-                    idxp = rd.parent / cr / hcpu / "APKINDEX.tar.gz"
-                    if idxp.is_file():
-                        rfh.write(f"/altbinpkgs/{cr}\n")
+                    idxp = rd.parent / cr / hcpu
+                    if (idxp / "Packages.adb").is_file():
+                        rfh.write(f"v3 /altbinpkgs/{cr}\n")
+                    elif (idxp / "APKINDEX.tar.gz").is_file():
+                        rfh.write(f"v2 /altbinpkgs/{cr}\n")
         # remote repos come last
         if rnet:
             from cbuild.core import profile
