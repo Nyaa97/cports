@@ -1,0 +1,44 @@
+diff --git a/build.zig b/build.zig
+index 71e13fc..ed162aa 100644
+--- a/build.zig
++++ b/build.zig
+@@ -10,7 +10,7 @@ const Scanner = @import("zig-wayland").Scanner;
+ /// with the "-dev" suffix.
+ /// When a release is tagged, the "-dev" suffix should be removed for the commit that gets tagged.
+ /// Directly after the tagged commit, the version should be bumped and the "-dev" suffix added.
+-const version = "0.4.0-dev";
++const version = "0.4.0_git250220";
+ 
+ pub fn build(b: *Build) !void {
+     const target = b.standardTargetOptions(.{});
+diff --git a/build.zig.zon b/build.zig.zon
+index 060ab12..bbcac1f 100644
+--- a/build.zig.zon
++++ b/build.zig.zon
+@@ -3,12 +3,6 @@
+     .version = "0.4.0-dev",
+     .paths = .{""},
+     .dependencies = .{
+-        .@"zig-pixman" = .{
+-            .path = "../zig-pixman",
+-        },
+-        .@"zig-wayland" = .{
+-            .path = "../zig-wayland/",
+-        },
+         .@"zig-wlroots" = .{
+             .url = "https://codeberg.org/ifreund/zig-wlroots/archive/afbbbbe5579c750feed8de12b073fa50b0651137.tar.gz",
+             .hash = "122060ddef836b7872cb2088764a8bd2fb2e9254327673e8176b7f7a621ec897484f",
+@@ -17,5 +11,13 @@
+             .url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.2.0.tar.gz",
+             .hash = "1220c90b2228d65fd8427a837d31b0add83e9fade1dcfa539bb56fd06f1f8461605f",
+         },
++        .@"zig-wayland" = .{
++            .url = "git+https://codeberg.org/ifreund/zig-wayland#33eb61512079e681f0be63292ae9215c90fa253d",
++            .hash = "1220471cb751c2be92b33d14b7ef97cf260bfa9e13b12fd009d88a957de298468217",
++        },
++        .@"zig-pixman" = .{
++            .url = "git+https://codeberg.org/ifreund/zig-pixman#a634b6a76bfe7bfc90957a9a2e912f968b82e9a2",
++            .hash = "122037088f1ac07b7c1db08c4ec04173428fc91b9b9ea7242c03b5c01b87d556c2b0",
++        },
+     },
+ }

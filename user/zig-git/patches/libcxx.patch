@@ -1,0 +1,25 @@
+diff --git a/build.zig b/build.zig
+index d79a785c76..6bad34fd2b 100644
+--- a/build.zig
++++ b/build.zig
+@@ -748,12 +748,14 @@ fn addCmakeCfgOptionsToExe(
+             .linux => {
+                 // First we try to link against the detected libcxx name. If that doesn't work, we fall
+                 // back to -lc++ and cross our fingers.
+-                addCxxKnownPath(b, cfg, exe, b.fmt("lib{s}.{s}", .{ cfg.system_libcxx, lib_suffix }), "", need_cpp_includes) catch |err| switch (err) {
+-                    error.RequiredLibraryNotFound => {
+-                        mod.link_libcpp = true;
+-                    },
+-                    else => |e| return e,
+-                };
++                // addCxxKnownPath(b, cfg, exe, b.fmt("lib{s}.{s}", .{ cfg.system_libcxx, lib_suffix }), "", need_cpp_includes) catch |err| switch (err) {
++                    // error.RequiredLibraryNotFound => {
++                        // mod.link_libcpp = true;
++                    // },
++                    // else => |e| return e,
++                // };
++                mod.addObjectFile(.{ .cwd_relative = "/usr/lib/libc++.so.1.0" });
++                mod.linkSystemLibrary("c++abi", .{});
+                 mod.linkSystemLibrary("unwind", .{});
+             },
+             .ios, .macos, .watchos, .tvos, .visionos => {

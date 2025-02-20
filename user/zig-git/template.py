@@ -1,12 +1,13 @@
 pkgname = "zig-git"
-pkgver = "0.14.0_git1702"
-_pkgver = "0.14.0-dev.1702+26d35cc11"
+pkgver = "0.14.0_git3241"
+_pkgver = "0.14.0-dev.3241+55c46870b"
 pkgrel = 0
 build_style = "cmake"
 configure_args = [
     "-DZIG_PIE=ON",
     "-DZIG_SHARED_LLVM=ON",
     "-DZIG_TARGET_MCPU=native",
+    f"-DZIG_VERSION={_pkgver}",
 ]
 hostmakedepends = [
     "cmake",
@@ -26,11 +27,12 @@ maintainer = "psykose <alice@ayaya.dev>"
 license = "MIT"
 url = "https://github.com/ziglang/zig"
 source = f"https://ziglang.org/builds/zig-{_pkgver}.tar.xz"
-sha256 = "8d69b7eb9cd1bbcc44d166d77126486f7f4912ae8c7a5f0d2d664ff59c1604ab"
+sha256 = "34f1ce93e33f277ff942a41971dda3ad09ec916ca1d16a59b1c7a4f3ca52151f"
 # lighten up the build, only applies to bootstrap and just slows down the build
 tool_flags = {"CFLAGS": ["-U_FORTIFY_SOURCE"]}
 hardening = ["!int", "!scp", "!ssp", "!var-init"]
-options = ["!lto"]
+#useless checks
+options = ["!lto", "!check"]
 
 restricted = "work in progress (needs to either not need llvm or for us to multiversion llvm)"
 
@@ -57,5 +59,7 @@ def check(self):
     )
 
 
-def post_install(self):
+def install(self):
     self.install_license("LICENSE")
+    self.install_files(f"{self.make_dir}/stage3/bin", "usr")
+    self.install_files(f"{self.make_dir}/stage3/lib", "usr")

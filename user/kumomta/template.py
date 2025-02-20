@@ -1,6 +1,6 @@
 pkgname = "kumomta"
-pkgver = "2024.09.02"
-_pkgrev = "c5476b89"
+pkgver = "2024.11.08"
+_pkgrev = "d383b033"
 pkgrel = 0
 build_style = "cargo"
 hostmakedepends = [
@@ -12,11 +12,12 @@ hostmakedepends = [
 makedepends = [
     "zstd-devel",
     "libgit2-devel",
+    "linux-headers",
 ]
 pkgdesc = "First Open-Source high-performance MTA developed from the ground-up"
 maintainer = "nyaah <nyaah@ewry.one>"
 license = "Apache-2.0"
 url = "https://github.com/KumoCorp/kumomta"
 source = f"{url}/archive/refs/tags/{pkgver}-{_pkgrev}.tar.gz"
-sha256 = "daead10dd9f1846b95c1be1a9981cbed296da34adf5b32ef2f178a697a936a41"
+sha256 = "90056a2fcc21d588a96c391be4002a58cb391149579add5078c62a12ecbe3066"
 

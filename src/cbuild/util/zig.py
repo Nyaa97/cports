@@ -56,7 +56,7 @@ gcc_dir=
         "/usr",
         "--system",
         ".zig-cache/p",
-        "--release=safe",
+        "--release=fast",
         f"-Dtarget={zig_arch}-linux-musl",
         f"-Dcpu={zig_cpu}",
         *extra_args,

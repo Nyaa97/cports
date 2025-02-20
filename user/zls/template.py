@@ -1,26 +1,21 @@
 pkgname = "zls"
-pkgver = "0.13.0"
+pkgver = "0.14.0_git3241"
+_pkgver = "0.14.0-dev.3241+55c46870b"
+_commit = "7f367a64106d4eb2dc3656e24a1a4370358080ec"
 pkgrel = 0
 build_style = "zig"
 zig_build_args = [
-    f"-Dversion_data_path=ref/langref.html.in"
+    f"-Dversion-string={_pkgver}"
 ]
 hostmakedepends = [
-    "zig",
+    "zig-git",
 ]
 pkgdesc = "Zig language server supporting Zig developers"
 maintainer = "nyaah <nyaah@ewry.one>"
 license = "MIT"
 url = "https://github.com/zigtools/zls"
-source = [
-    f"{url}/archive/{pkgver}.tar.gz",
-    f"https://raw.githubusercontent.com/ziglang/zig/{pkgver}/doc/langref.html.in"
-]
-source_paths = [".", "ref"]
-sha256 = [
-    "2e8046b6b0de765a4bf4bb828345e2badc8b828bc257dc931d0f56b147684d9f",
-    "5d43f599f56a1ee0246958552545d13ee4ddeb7c705c05a432554d5eff6e1902"
-]
+source = f"{url}/archive/{_commit}.tar.gz"
+sha256 = "409fae63c81a0b5b66083f6dd7ee8ad1a578c200cbdaf13e4c9340bdd666023a"
 
 def post_install(self):
     self.install_license("LICENSE")
